@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt=br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Inclua o CSS e o JavaScript do Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/media.css">
+
+    <link rel="icon" sizes="18x18" href="img/favicon-16x16.png">
+
+</head>
+
+<body>
+    <div id="container">
+        <div class="banner">
+            <img src="img/Logomarca Wyntech vertical branco transparente.png" style="margin:5px; width: 40%"
+                alt="Wyntech">
+            <p style="color: #fff; font-weight: 400;">
+                Seja bem vindo ao sistema Projeto XAXIM
+                <br>Sistema de Gestão de chamados.
+                <br>
+                <br>Criado por André Wyntech, 2023.
+                <br>
+            <h1>NOVA VERSÃO 3.0</h1>
+            </p>
+        </div>
+
+        <div class="box-login">
+            <h2>
+                Olá!<br>
+                Seja bem vindo.
+            </h2>
+
+            <div class="box">
+
+                <form method="POST" action="login.php">
+                    <h2>faça o seu login agora</h2>
+                    <br>
+                    <input type="text" name="login" id="login" placeholder="seu login:">
+                    <input type="password" name="senha" id="senha" placeholder="sua senha:">
+                    <br><br>
+                    <input type="submit" class="submit" name="submit" value="Entrar">
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
