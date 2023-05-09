@@ -27,28 +27,6 @@
     <!-- Sweet Alerts 2 -->
     <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
-<?php
-session_start();
-if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
-    unset($_SESSION['login']);
-    unset($_SESSION['senha']);
-    header('location: login.html');
-}
-
-$logado = $_SESSION['login'];
-// chekaro tipo do usuário
-if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
-    echo "<script>
-  Swal.fire({
-      title: 'Acesso Negado!',
-      text: 'Você não tem acesso a esse menu.',
-      icon: 'error'
-  }).then((result) => {
-      window.location.href = 'home.php';
-  });
-</script>";
-}
-?>
 
 <head>
 
@@ -93,26 +71,7 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
             content: '● ';
         }
     </style>
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="img/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
-    <link rel="manifest" href="img/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
 
-    <title>Chamados Offline</title>
     <!-- Sweet Alert -->
     <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Sweet Alerts 2 -->
@@ -122,6 +81,18 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Sweet Alert -->
+    <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Notyf -->
+    <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
+
+    <!-- Volt CSS -->
+    <link type="text/css" href="css/volt.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -142,54 +113,11 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
       text: 'Você não tem acesso a esse menu.',
       icon: 'error'
   }).then((result) => {
-      window.location.href = 'inventario.php';
+      window.location.href = 'home.php';
   });
 </script>";
     }
     ?>
-</body>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <!-- Sweet Alert -->
-    <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-
-    <!-- Notyf -->
-    <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
-
-    <!-- Volt CSS -->
-    <link type="text/css" href="css/volt.css" rel="stylesheet">
-
-</head>
-
-<body>
-
-
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="#">
             <img class="navbar-brand-dark" src="assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
@@ -355,13 +283,13 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
 
                     <!-- Modal -->
                     <div class="modal fade" id="meu-modal" tabindex="-1" aria-labelledby="meu-modal-label" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="meu-modal-label">Solicitação de Peças</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body d-flex justify-content-center align-items-center">
                                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                         <div class="form-group row">
                                             <div class="col-md-6 mb-3">
@@ -433,7 +361,6 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
                             <th>Responsável</th>
                             <th>data</th>
                             <th>REQ</th>
-                            <th>Verificar</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -474,7 +401,6 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
                             echo '<td>' . $row['p_responsavel'] . '</td>';
                             echo '<td>' . $row['p_data'] . '</td>';
                             echo '<td>' . $row['p_req'] . '</td>';
-                            echo '<td></td>';
                             // Define a classe de estilo para o valor do status
                             if ($row['p_status'] == 'aberto') {
                                 $class = 'status-aberto';
@@ -508,7 +434,7 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
                 if (!$conn) {
                     die("Conexão falhou: " . mysqli_connect_error());
                 }
-var_dump($sql);
+                var_dump($sql);
                 $peca = $_POST["peca"];
                 $numserie = $_POST["numserie"];
                 $solicitante = $_POST["solicitante"];

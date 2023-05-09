@@ -28889,7 +28889,7 @@ table.dataTable thead tr th {
 
 /* Adicione um efeito de hover às células da tabela */
 table.dataTable tbody tr td:hover {
-    background-color: #e0dcdc;
+    background-color: #a19f9f;
 }
 
 .nome-logico,

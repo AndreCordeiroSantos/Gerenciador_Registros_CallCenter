@@ -66,11 +66,13 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
     /* Adicione estilos para as células com as classes red e green */
     td.red {
-      background-color: red;
+      background-color: rgb(255, 0, 0);
+      color: white;
     }
 
     td.green {
-      background-color: green;
+      background-color: rgb(76, 175, 80);
+      color: white;
     }
 
     .export-button {
@@ -262,22 +264,32 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       </div>
       <br>
 
-    <?php
-    // Configuração do banco de dados
-    $host = "172.10.20.53";
-    $user = "andre";
-    $password = "somores013";
-    $dbname = "ocsweb";
+      <?php
+      // Configuração do banco de dados
+      $host = "172.10.20.53";
+      $user = "andre";
+      $password = "somores013";
+      $dbname = "ocsweb";
+      // Conexão com o banco de dados
+      $conn = new mysqli($host, $user, $password, $dbname);
 
-    // Conexão com o banco de dados
-    $conn = new mysqli($host, $user, $password, $dbname);
+      // Verifica se houve erro na conexão
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
 
-    // Verifica se houve erro na conexão
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
+      // Conectar ao primeiro banco de dados
+      $usuario_db1 = 'archer';
+      $senha_db1 = 'B5n3Qz2vL7HAUs7z';
+      $database_db1 = 'archerx';
+      $host_db1 = '172.10.20.47';
+      $conn2 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
+      // Verificar se houve erro na conexão com o segundo banco de dados
+      if ($conn2->connect_error) {
+        die("Connection failed: " . $conn2->connect_error);
+      }
 
-    $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
+      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
           JOIN bios ON hardware.id = bios.hardware_id
@@ -285,51 +297,73 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           JOIN accountinfo ON hardware.id = accountinfo.hardware_id
         WHERE accountinfo.fields_3 = 'xaxim' AND drives.total <> 0
         ORDER BY percent_free <= 15 DESC";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-      echo "<table id='minhatabela' class='display'>";
-      echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
-      echo "<tbody>";
-      while ($row = $result->fetch_assoc()) {
-        $percentual_livre = ($row["free"] / $row["total"]) * 100;
-        $cell_class = ($percentual_livre <= 15) ? "red" : "green";
-        echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
-        // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
-        echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
-        echo "<td>" . $row["memory"] . "</td><td>" . $row["ipaddr"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
+      $result = $conn->query($sql);
+
+      // Segunda consulta SQL para juntar informações dos dois bancos de dados
+      $sql2 = "SELECT hosts.hostname, baia.baia
+        FROM acs_uni
+        INNER JOIN hosts ON acs_uni.id_hostname = hosts.id
+        INNER JOIN baia ON acs_uni.id_baia = baia.id";
+      // Executar a segunda consulta no segundo banco de dados
+      $result2 = $conn2->query($sql2);
+
+
+
+      // Crie um array associativo a partir dos resultados da segunda consulta
+      $baia_por_hostname = array();
+      if ($result2->num_rows > 0) {
+        while ($row = $result2->fetch_assoc()) {
+          $baia_por_hostname[$row["hostname"]] = $row["baia"];
+        }
       }
-      echo "</tbody>";
-      echo "</table>";
-    } else {
-      echo "Nenhum resultado encontrado.";
-    }
 
-    //contador de total de inventário do xaxim
-    $query = "SELECT COUNT(*)
-                                                FROM hardware 
-                                                JOIN accountinfo ON hardware.id = accountinfo.hardware_id
-                                                WHERE accountinfo.fields_3 = 'xaxim'";
 
-    // Executa a consulta
-    $resultado = mysqli_query($conn, $query);
+      if ($result->num_rows > 0) {
+        echo "<table id='minhatabela' class='display'>";
+        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+          $percentual_livre = ($row["free"] / $row["total"]) * 100;
+          $cell_class = ($percentual_livre <= 15) ? "red" : "green";
+          // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
+          $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
+          echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
+          // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
+          echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
+          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipaddr"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+      } else {
+        echo "Nenhum resultado encontrado.";
+      }
 
-    // Verifica se ocorreu algum erro na execução da consulta
-    if (!$resultado) {
-      die('Erro na consulta: ' . mysqli_error($conn));
-    }
+      //contador de total de inventário do xaxim
+      $query = "SELECT COUNT(*)
+          FROM hardware 
+          JOIN accountinfo ON hardware.id = accountinfo.hardware_id
+          WHERE accountinfo.fields_3 = 'xaxim'";
 
-    // Recupera o valor retornado pela consulta
-    $quantidade = mysqli_fetch_row($resultado)[0];
+      // Executa a consulta
+      $resultado = mysqli_query($conn, $query);
 
-    // Exibe o valor
-    echo '<br>';
-    echo '<h4>Total: ' . $quantidade;
-    echo ' Estações inventariadas';
-    echo '</h4>';
+      // Verifica se ocorreu algum erro na execução da consulta
+      if (!$resultado) {
+        die('Erro na consulta: ' . mysqli_error($conn));
+      }
 
-    ?>
+      // Recupera o valor retornado pela consulta
+      $quantidade = mysqli_fetch_row($resultado)[0];
 
-    <br>
+      // Exibe o valor
+      echo '<br>';
+      echo '<h4>Total: ' . $quantidade;
+      echo ' Estações inventariadas';
+      echo '</h4>';
+
+      ?>
+
+      <br>
     </div>
     <button class="export-button" onclick="window.location.href='/archerx/public/wyntech/exportarcsv/exportinventario.php'">Exportar em CSV (XAXIM)</button>
     <br><br>
@@ -346,10 +380,10 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
             <form id="myForm" method="POST">
               <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
               <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
-              <br>    
+              <br>
           </div>
           <div id="result">
-            
+
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
@@ -380,8 +414,9 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
           },
-          // Desative a ordenação para a nona coluna (coluna do percentual livre)
+          // Desative a ordenação para a decima coluna (coluna do percentual livre)
           columns: [
+            null,
             null,
             null,
             null,
@@ -403,6 +438,8 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         });
       });
     </script>
+
+    <!--abrir modal-->
     <script>
       $(document).ready(function() {
         $('#myForm').submit(function(event) {

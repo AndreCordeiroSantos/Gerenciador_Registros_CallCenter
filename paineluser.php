@@ -585,29 +585,25 @@
           } else {
             if ($usuario == "") {
               echo "<script>
-                  Swal.fire({
-                      title: 'Erro!',
-                      text: 'Por favor selecione o Responsável para registrar o chamado.',
-                      icon: 'error',
-                      timer: 3000, // tempo em milissegundos
-                      showConfirmButton: false
-                  }).then(function() {
-                      window.location.href = 'paineluser.php';
-                  });
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Por favor , coloque o responsável.',
+                showConfirmButton: false,
+                timer: 2000
+              });
               </script>";
             } else {
               if (substr($req, 0, 3) !== "REQ") {
                 $req = "REQ" . $req;
                 echo "<script>
-            Swal.fire({
-              title: 'Erro!',
-              text: 'Por favor, insira a REQ CORRETAMENTE',
-              icon: 'error',
-              timer: 3000, // tempo em milissegundos
-              showConfirmButton: false
-            }).then((result) => {
-              window.location.href = 'paineluser.php';
-            });
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Erro!',
+                  text: 'Por favor , coloque a REQ corretamente .',
+                  showConfirmButton: false,
+                  timer: 2000
+                });
           </script>";
               } else {
                 if ($stmt->execute()) {

@@ -183,7 +183,7 @@
         </li>
 
         <?php include 'nav.php'; ?>
-        
+
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         <br>
       </ul>
@@ -377,13 +377,13 @@
             if (mysqli_num_rows($resultEtNumserie) == 0) {
               // et e numserie não correspondem na tabela consulta2
               echo "<script>
-                          Swal.fire({
-                              title: 'Erro!',
-                              text: 'Os valores de Estação e Número de Série não correspondem.',
-                              icon: 'error'
-                          }).then((result) => {
-                              window.location.href = 'chamadoff.php';
-                          });
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'As informações, Nome Lógico, Num Série, não correspondem.',
+                showConfirmButton: false,
+                timer: 2000
+              });
                       </script>";
             } else {
               // Inserir informações no banco de dados

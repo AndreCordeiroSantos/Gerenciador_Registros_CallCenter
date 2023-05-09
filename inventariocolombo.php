@@ -44,8 +44,6 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
   <meta name="theme-color" content="#ffffff">
 
 
-
-
   <style>
     .red {
       background-color: rgb(255, 0, 0);
@@ -59,11 +57,13 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
 
     /* Adicione estilos para as células com as classes red e green */
     td.red {
-      background-color: red;
+      background-color: rgb(255, 0, 0);
+      color: white;
     }
 
     td.green {
-      background-color: green;
+      background-color: rgb(76, 175, 80);
+      color: white;
     }
 
     .export-button {
@@ -242,17 +242,43 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
     <br>
     <div role="separator" class="dropdown-divider my-1"></div>
     <br>
-    <div class="card card-body border-0 shadow mb-4 mb-xl-0">
+      <div class="card card-body border-0 shadow mb-4 mb-xl-0">
 
-      <br>
-      <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item"><a class="nav-link" href="inventario.php">Xaxim</a></li>
-          <li class="nav-item"><a class="nav-link active" href="inventariocolombo.php">Colombo</a></li>
+        <br>
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item"><a class="nav-link" href="inventario.php">Xaxim</a></li>
+            <li class="nav-item"><a class="nav-link active" href="inventariocolombo.php">Colombo</a></li>
 
-        </ul>
-      </div>
-      <br>
+          </ul>
+        </div>
+        <br>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Informações de Software</h5>
+                <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              </div>
+              <div class="modal-body">
+                <form id="myForm" method="POST">
+                  <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
+                  <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
+                  <br>
+              </div>
+              <div id="result">
+
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
       <?php
       // Configuração do banco de dados
       $host = "172.10.20.53";
@@ -275,13 +301,12 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
           JOIN drives ON hardware.id = drives.hardware_id
           JOIN accountinfo ON hardware.id = accountinfo.hardware_id
         WHERE accountinfo.fields_3 = 'colombo' AND drives.total <> 0
-        ORDER BY percent_free <= 15 DESC
-        ";
+        ORDER BY percent_free <= 15 DESC ";
 
       $result = $conn->query($sql);
 
       if ($result->num_rows > 0) {
-        echo "<table class='display'>";
+        echo "<table id='minhatabela' class='display'>";
         echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th class='userinv'>Usuário</th><th>Domínio</th><th>Processador</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
         echo "<tbody>";
         while ($row = $result->fetch_assoc()) {
@@ -369,7 +394,49 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
     </script>
 
   </main>
+  <script>
+    function addClickEventToTable() {
+      $('#minhatabela tbody tr td:first-child').on('click', function() {
+        // Obtenha o valor da célula clicada
+        var name = $(this).text();
 
+        // Atualize o valor do campo de entrada no modal
+        $('#nameInput').val(name);
+
+        // Exiba o modal
+        $('#myModal').modal('show');
+      });
+    }
+
+    // Adicione o evento de clique na tabela
+    addClickEventToTable();
+
+    $('#myModal').on('hidden.bs.modal', function() {
+      // Limpa o resultado e o valor do input
+      $('#result').html('');
+      $('#nameInput').val('');
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#myForm').submit(function(event) {
+        event.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
+
+        var name = $('#nameInput').val(); // obtém o valor do input do formulário
+
+        $.ajax({
+          url: 'get_data.php', // o arquivo PHP que receberá o valor
+          method: 'POST',
+          data: {
+            name: name
+          }, // o valor a ser enviado
+          success: function(response) {
+            $('#result').html(response); // exibe a resposta do PHP na div 'result'
+          }
+        });
+      });
+    });
+  </script>
 
   <!-- Core -->
   <script src="vendor/@popperjs/core/dist/umd/popper.min.js"></script>

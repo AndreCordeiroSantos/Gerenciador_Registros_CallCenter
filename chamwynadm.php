@@ -22,7 +22,7 @@
     unset($_SESSION['senha']);
     header('location: login.html');
   }
-  
+
   header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
   $logado = $_SESSION['login'];
@@ -120,6 +120,7 @@
     }
   </style>
 </head>
+
 <body>
   <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
     <a class="navbar-brand me-lg-5" href="#">
@@ -209,7 +210,7 @@
         </li>
 
         <?php include 'nav.php'; ?>
-        
+
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         <br>
         <li class="nav-item">
@@ -398,13 +399,13 @@
             if (mysqli_num_rows($resultEtNumserie) == 0) {
               // et e numserie não correspondem na tabela consulta2
               echo "<script>
-                          Swal.fire({
-                              title: 'Erro!',
-                              text: 'Os valores de Estação e Número de Série não correspondem.',
-                              icon: 'error'
-                          }).then((result) => {
-                              window.location.href = 'chamwynadm.php';
-                          });
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'As informações, Nome Lógico, Num Série, não correspondem.',
+                showConfirmButton: false,
+                timer: 2000
+              });
                       </script>";
             } else {
               // Inserir informações no banco de dados
@@ -416,34 +417,34 @@
               if ($et == "") {
                 echo "<script>
                 Swal.fire({
-                    title: 'Erro!',
-                    text: 'Por favor preencha o Nome Lógico',
-                    icon: 'error'
-                }).then((result) => {
-                    window.location.href = 'chamwynadm.php';
+                  icon: 'error',
+                  title: 'Erro!',
+                  text: 'Por favor , preencha o nome lógico.',
+                  showConfirmButton: false,
+                  timer: 2000
                 });
             </script>";
               } else {
                 if ($numserie == "") {
                   echo "<script>
-                      Swal.fire({
-                          title: 'Erro!',
-                          text: 'Por favor preencha o Número de Série',
-                          icon: 'error'
-                      }).then((result) => {
-                          window.location.href = 'chamwynadm.php';
-                      });
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: 'Por favor , preencha o número de série.',
+                    showConfirmButton: false,
+                    timer: 2000
+                  });
                   </script>";
                 } else {
                   if ($motivo == "") {
                     echo "<script>
-                          Swal.fire({
-                              title: 'Erro!',
-                              text: 'Por favor preencha a Ocorrência.',
-                              icon: 'error'
-                          }).then((result) => {
-                              window.location.href = 'chamwynadm.php';
-                          });
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Erro!',
+                      text: 'Por favor , coloque a ocorrência do chamado.',
+                      showConfirmButton: false,
+                      timer: 2000
+                    });
                         </script>";
                   } else {
                     if (mysqli_query($conn, $sql)) {

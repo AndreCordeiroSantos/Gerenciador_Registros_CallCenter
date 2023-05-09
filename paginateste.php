@@ -10,10 +10,16 @@ $logado = $_SESSION['login'];
 <!DOCTYPE html>
 <html lang="en">
 <?php
-header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
+header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 ?>
 
 <head>
+  <!-- Inclua o CSS e o JavaScript do Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 
   <!-- DataTables CSS -->
@@ -44,25 +50,40 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
   <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
-  <style type="text/css">
-    table {
-      border-collapse: collapse;
-      width: 100%;
+
+
+
+  <style>
+    .red {
+      background-color: rgb(255, 0, 0);
+      /* vermelho */
     }
 
-    th,
-    td {
-      text-align: left;
-      padding: 8px;
+    .green {
+      background-color: rgb(76, 175, 80);
+      /* verde */
     }
 
-    th {
+    /* Adicione estilos para as células com as classes red e green */
+    td.red {
+      background-color: rgb(255, 0, 0);
+    }
+
+    td.green {
+      background-color: rgb(76, 175, 80);
+    }
+
+    .export-button {
       background-color: #4CAF50;
+      border: none;
       color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
     }
   </style>
 
@@ -171,71 +192,8 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
             </ul>
           </div>
         </li>
+        <?php include 'nav.php'; ?>
 
-        <li class="nav-item">
-          <a href="paineluser.php" class="nav-link">
-            <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path>
-                <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path>
-              </svg>
-            </span>
-            <span class="sidebar-text">Painel Plansul</span>
-          </a>
-        </li>
-        <li class="nav-item ">
-          <a href="#" class="nav-link">
-            <span class="sidebar-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mouse2" viewBox="0 0 16 16">
-                <path d="M3 5.188C3 2.341 5.22 0 8 0s5 2.342 5 5.188v5.625C13 13.658 10.78 16 8 16s-5-2.342-5-5.188V5.189zm4.5-4.155C5.541 1.289 4 3.035 4 5.188V5.5h3.5V1.033zm1 0V5.5H12v-.313c0-2.152-1.541-3.898-3.5-4.154zM12 6.5H4v4.313C4 13.145 5.81 15 8 15s4-1.855 4-4.188V6.5z" />
-              </svg>
-            </span>
-            <span class="sidebar-text">Solicitar Peças</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="chamadoff.php" class="nav-link">
-            <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
-                <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path>
-                <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path>
-              </svg>
-            </span>
-            <span class="sidebar-text">Chamados Off</span>
-          </a>
-        </li>
-        <li class="nav-item ">
-          <a href="dashboard.php" class="nav-link">
-            <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
-              </svg>
-            </span>
-            <span class="sidebar-text">Dashboard</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="relatorio.php" class="nav-link">
-            <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z" />
-                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z" />
-              </svg>
-            </span>
-            <span class="sidebar-text">Relatórios</span>
-          </a>
-        </li>
-        <li class="nav-item active">
-          <a href="inventario.php" class="nav-link">
-            <span class="sidebar-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
-                <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
-              </svg>
-            </span>
-            <span class="sidebar-text">Inventário</span>
-          </a>
-        </li>
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         <br>
         <li class="nav-item">
@@ -289,103 +247,219 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
         </div>
       </div>
     </nav>
+    <br>
 
-    <table id="minhatabela">
-      <thead>
-        <tr>
-          <th>Nome lógico</th>
-          <th>Software</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        // Configuração do banco de dados
-        $host = "172.10.20.53";
-        $user = "andre";
-        $password = "somores013";
-        $dbname = "ocsweb";
+    <div role="separator" class="dropdown-divider my-1"></div>
+    <br>
+    <div class="card card-body border-0 shadow mb-4 mb-xl-0">
 
-        // Conexão com o banco de dados
-        $conn = new mysqli($host, $user, $password, $dbname);
+      <br>
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item"><a class="nav-link active" href="inventario.php">Xaxim</a></li>
+          <li class="nav-item"><a class="nav-link" href="inventariocolombo.php">Colombo</a></li>
+        </ul>
+      </div>
+      <br>
 
-        // Verifica se houve erro na conexão
-        if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
+      <?php
+      // Configuração do banco de dados
+      $host = "172.10.20.53";
+      $user = "andre";
+      $password = "somores013";
+      $dbname = "ocsweb";
+      // Conexão com o banco de dados
+      $conn = new mysqli($host, $user, $password, $dbname);
+
+      // Verifica se houve erro na conexão
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      // Conectar ao primeiro banco de dados
+      $usuario_db1 = 'archer';
+      $senha_db1 = 'B5n3Qz2vL7HAUs7z';
+      $database_db1 = 'archerx';
+      $host_db1 = '172.10.20.47';
+      $conn2 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
+      // Verificar se houve erro na conexão com o segundo banco de dados
+      if ($conn2->connect_error) {
+        die("Connection failed: " . $conn2->connect_error);
+      }
+
+      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
+        (drives.free / drives.total) * 100 AS percent_free
+          FROM hardware 
+          JOIN bios ON hardware.id = bios.hardware_id
+          JOIN drives ON hardware.id = drives.hardware_id
+          JOIN accountinfo ON hardware.id = accountinfo.hardware_id
+        WHERE accountinfo.fields_3 = 'xaxim' AND drives.total <> 0
+        ORDER BY percent_free <= 15 DESC";
+      $result = $conn->query($sql);
+
+      // Segunda consulta SQL para juntar informações dos dois bancos de dados
+      $sql2 = "SELECT hosts.hostname, baia.baia
+        FROM acs_uni
+        INNER JOIN hosts ON acs_uni.id_hostname = hosts.id
+        INNER JOIN baia ON acs_uni.id_baia = baia.id";
+      // Executar a segunda consulta no segundo banco de dados
+      $result2 = $conn2->query($sql2);
+
+
+
+      // Crie um array associativo a partir dos resultados da segunda consulta
+      $baia_por_hostname = array();
+      if ($result2->num_rows > 0) {
+        while ($row = $result2->fetch_assoc()) {
+          $baia_por_hostname[$row["hostname"]] = $row["baia"];
         }
-        // Executa a query e armazena o resultado em uma variável
-        $sql = "SELECT 
-        ocsweb.hardware.name,
-        ocsweb.software_name.NAME
-      FROM ocsweb.software
-      INNER JOIN ocsweb.hardware ON ocsweb.software.HARDWARE_ID = ocsweb.hardware.ID
-      INNER JOIN ocsweb.software_name ON ocsweb.software.NAME_ID = ocsweb.software_name.ID
-      JOIN accountinfo ON hardware.id = accountinfo.hardware_id
-      WHERE software.PUBLISHER_ID = 3
-      AND accountinfo.fields_3 = 'xaxim'";
-        $resultado = mysqli_query($conn, $sql);
+      }
 
-        // Percorre o resultado e cria as linhas da tabela
-        while ($linha = mysqli_fetch_assoc($resultado)) {
-          echo "<tr>";
-          echo "<td>" . $linha['name'] . "</td>";
-          echo "<td>" . $linha['NAME'] . "</td>";
-          echo "</tr>";
+
+      if ($result->num_rows > 0) {
+        echo "<table id='minhatabela' class='display'>";
+        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+          $percentual_livre = ($row["free"] / $row["total"]) * 100;
+          $cell_class = ($percentual_livre <= 15) ? "red" : "green";
+          // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
+          $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
+          echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
+          // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
+          echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
+          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipaddr"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
         }
+        echo "</tbody>";
+        echo "</table>";
+      } else {
+        echo "Nenhum resultado encontrado.";
+      }
 
-        // Fecha a conexão com o banco de dados
-        mysqli_close($conn);
-        ?>
-      </tbody>
-    </table>
+      //contador de total de inventário do xaxim
+      $query = "SELECT COUNT(*)
+                                                FROM hardware 
+                                                JOIN accountinfo ON hardware.id = accountinfo.hardware_id
+                                                WHERE accountinfo.fields_3 = 'xaxim'";
 
+      // Executa a consulta
+      $resultado = mysqli_query($conn, $query);
 
-    <!-- Código HTML para o modal -->
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <label for="nameInput">Nome:</label>
-        <input type="text" id="nameInput">
+      // Verifica se ocorreu algum erro na execução da consulta
+      if (!$resultado) {
+        die('Erro na consulta: ' . mysqli_error($conn));
+      }
+
+      // Recupera o valor retornado pela consulta
+      $quantidade = mysqli_fetch_row($resultado)[0];
+
+      // Exibe o valor
+      echo '<br>';
+      echo '<h4>Total: ' . $quantidade;
+      echo ' Estações inventariadas';
+      echo '</h4>';
+
+      ?>
+
+      <br>
+    </div>
+    <button class="export-button" onclick="window.location.href='/archerx/public/wyntech/exportarcsv/exportinventario.php'">Exportar em CSV (XAXIM)</button>
+    <br><br>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Informações de Software</h5>
+            <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </div>
+          <div class="modal-body">
+            <form id="myForm" method="POST">
+              <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
+              <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
+              <br>
+          </div>
+          <div id="result">
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
+          </div>
+          </form>
+        </div>
       </div>
     </div>
-
+    </div>
 
     <?php include 'footer.php'; ?>
 
+    <!-- Inicialize o DataTables com as opções desejadas -->
+    <script>
+      $(document).ready(function() {
+        // Inicialize a tabela como DataTable
+        var table = $('table.display').DataTable({
+          "select": true,
+          // Desative a ordenação inicial da tabela
+          "order": [],
+          // Opções de exibição de registros por página
+          "lengthMenu": [30, 50, 100, 500],
+          // Opção de paginação
+          "paging": true,
+          // Habilita a responsividade da tabela
+          "responsive": true,
+          // Adicione a opção de idioma
+          language: {
+            url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+          },
+          // Desative a ordenação para a nona coluna (coluna do percentual livre)
+          columns: [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              orderable: false
+            }
+          ],
+          // Adicione uma classe CSS personalizada às células da tabela
+          "columnDefs": [{
+            "className": "minha-classe-personalizada",
+            "targets": "_all"
+          }]
+        });
+      });
+    </script>
+
+    <!--abrir modal-->
+    <script>
+      $(document).ready(function() {
+        $('#myForm').submit(function(event) {
+          event.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
+
+          var name = $('#nameInput').val(); // obtém o valor do input do formulário
+
+          $.ajax({
+            url: 'get_data.php', // o arquivo PHP que receberá o valor
+            method: 'POST',
+            data: {
+              name: name
+            }, // o valor a ser enviado
+            success: function(response) {
+              $('#result').html(response); // exibe a resposta do PHP na div 'result'
+            }
+          });
+        });
+      });
+    </script>
   </main>
 
-  <script>
-    $('#tabelaChamados tbody tr:not(:first-child)').on('click', function() {
-      // Obtenha o valor da primeira célula da linha
-      var name = $(this).find('td:eq(0)').text();
-
-      // Atualize o valor do campo de entrada no modal
-      $('#nameInput').val(name);
-
-      // Exiba o modal
-      $('#myModal').modal('show');
-    });
-
-    // Botão de Fechar o Modal
-    $('#closeButton').on('click', function() {
-      // Feche o modal
-      $('#myModal').modal('hide');
-    });
-  </script>
-
-
-  <!-- Adicione esse código JavaScript para inicializar o DataTables na sua tabela -->
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#minhatabela').DataTable({
-        // Adicione a opção de idioma
-        language: {
-          url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
-        },
-        // Opções de exibição de registros por página
-        "lengthMenu": [30, 50, 100, 300],
-      });
-    });
-  </script>
   <!-- Adicione os scripts do DataTables -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
@@ -432,7 +506,29 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
   <script src="assets/js/volt.js"></script>
 
 
+  <script>
+    function addClickEventToTable() {
+      $('#minhatabela tbody tr td:first-child').on('click', function() {
+        // Obtenha o valor da célula clicada
+        var name = $(this).text();
 
+        // Atualize o valor do campo de entrada no modal
+        $('#nameInput').val(name);
+
+        // Exiba o modal
+        $('#myModal').modal('show');
+      });
+    }
+
+    // Adicione o evento de clique na tabela
+    addClickEventToTable();
+
+    $('#myModal').on('hidden.bs.modal', function() {
+      // Limpa o resultado e o valor do input
+      $('#result').html('');
+      $('#nameInput').val('');
+    });
+  </script>
 </body>
 
 </html>
