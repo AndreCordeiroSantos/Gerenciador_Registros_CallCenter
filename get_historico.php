@@ -1,27 +1,21 @@
-<?php
-session_start();
-if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
-    unset($_SESSION['login']);
-    unset($_SESSION['senha']);
-    header('location: login.html');
-}
-$logado = $_SESSION['login'];
-?>
-<!DOCTYPE html>
-<html lang="en">
+
+    <?php
+    session_start();
+    if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        header('location: login.html');
+    }
+    $logado = $_SESSION['login'];
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <?php
+    header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
+    ?>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
-
-    <!-- jQuery library -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- DataTables JS -->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
+    <title>Histórico Inventário</title>
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
@@ -40,33 +34,12 @@ $logado = $_SESSION['login'];
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-
-    <style type="text/css">
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
-
-    <!-- Adicione os estilos do DataTables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Inclua essas bibliotecas no cabeçalho do seu arquivo HTML -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
     <!-- Sweet Alert -->
     <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
@@ -74,13 +47,17 @@ $logado = $_SESSION['login'];
     <!-- Notyf -->
     <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
 
-    <!-- Volt CSS -->
+    <!-- CSS -->
     <link type="text/css" href="css/volt.css" rel="stylesheet">
+
+    <!-- Inclua as bibliotecas do jQuery e DataTables -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 </head>
 
 <body>
-
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="#">
@@ -98,7 +75,7 @@ $logado = $_SESSION['login'];
             <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
                 <div class="d-flex align-items-center">
                     <div class="avatar-lg me-4">
-                        <img src="img/149071.png" class="card-img-top rounded-circle border-white" alt="Bonnie Green">
+                        <img src="img/149071.png" class="card-img-top rounded-circle border-white" alt="Avatar">
                     </div>
 
                 </div>
@@ -113,7 +90,12 @@ $logado = $_SESSION['login'];
             <ul class="nav flex-column pt-3 pt-md-0">
                 <h4 style="color: #f46524;">Sistema P.X</h4>
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+
+
                 <?php include 'nav.php'; ?>
+
+                <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+                <br>
             </ul>
         </div>
     </nav>
@@ -123,9 +105,9 @@ $logado = $_SESSION['login'];
             <div class="container-fluid px-0">
                 <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
                     <div class="d-flex align-items-center">
-                        <!-- Titulo da página -->
-                        <h1>Home</h1>
-                        <!-- / Titulo da página -->
+                        <!-- Título da página -->
+                        <h1>Histórico Inventário</h1>
+                        <!-- Título da página -->
                     </div>
                     <div class="d-flex align-items-center">
                     </div>
@@ -159,43 +141,100 @@ $logado = $_SESSION['login'];
                 </div>
             </div>
         </nav>
+        <br>
         <div role="separator" class="dropdown-divider my-1"></div>
         <br>
         <div class="container">
-            <div class="card card-body border-0 shadow mb-4 mb-xl-0">
-                <h3>Seja bem vindo!</h3>
-                <h6>O Sistema PX (PROJETO-XAXIM), está sendo desenvolvido com o objetivo de auxilizar o suporte de TI (wyntech, Plansul)</h6>
-                <h6>facilitando o acesso a essa informação.</h6>
-                <br>
-                <h6>O PROJETO XAXIM conta com ferramentas como:</h6>
-                <div style="color: black;">
-                    <br>
-                    <ul>
-                        <li>Cadastros de informações de REQ's</li>
-                        <li>Gerência de Registros, suporte TI</li>
-                        <li>Dashboard</li>
-                        <li>Relatórios</li>
-                        <li>Inventário completo</li>
-                    </ul>
-                </div>
-                <br>
-                <h6>Algumas ferramentas mencionadas, ainda estão em desenvolvimento</h6>
-                <h6>e as ferramentas prontas podem apresentar BUGS.</h6>
-                <br>
-                <h6>Caso encontre algum bug, reporte ao responsável.</h6>
-                <br><br><br>
+            <div class="card card-body border-0 shadow mb-4">
+                <h3>Histórico Xaxim</h3>
+                <h6 style="color: #f46524">Histórico feito por data e ordem.</h6>
+                <?php
+                // Configurações de conexão com o banco de dados
+                $servername = "172.10.20.47";
+                $username = "archer";
+                $password = "B5n3Qz2vL7HAUs7z";
+                $dbname = "archerx";
+
+                // Criando a conexão
+                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                // Verificando a conexão
+                if ($conn->connect_error) {
+                    die("Conexão falhou: " . $conn->connect_error);
+                }
+
+                // Query SQL com JOIN para selecionar os dados necessários
+                $sql = "SELECT b.baia, rb.ramal, h.hostname, h.serial, m.serie, f.nome, hg.data
+                            FROM historico_gps hg
+                            LEFT JOIN baia b ON hg.id_baia = b.id
+                            LEFT JOIN ramal_baia rb ON hg.id_ramal_baia = rb.id
+                            LEFT JOIN hosts h ON hg.id_hostname = h.id
+                            LEFT JOIN monitores m ON hg.id_monitores = m.id
+                            LEFT JOIN usuarios f ON hg.Id_funcionario = f.login
+                            ";
+
+                // Executando a query e armazenando o resultado na variável $result
+                $result = $conn->query($sql);
+
+                // Verificando se a query retornou algum resultado
+                if ($result->num_rows > 0) {
+                    // Criando a tabela para exibir os resultados
+
+                    echo "<table class='TabelaChamados' id='minhaTabela'>
+        <thead>
+            <tr>
+                <th>Baia</th>
+                <th>Ramal Baia</th>
+                <th>Estação</th>
+                <th>Num/serie</th>
+                <th>Monitores/Serial</th>
+                <th>Funcionário</th>
+                <th>Última Alteração</th>
+            </tr>
+        </thead>
+        <tbody>";
+                    // Percorrendo cada linha do resultado e exibindo na tabela
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>
+            <td>" . $row["baia"] . "</td>
+            <td>" . $row["ramal"] . "</td>
+            <td>" . $row["hostname"] . "</td>
+            <td>" . $row["serial"] . "</td>
+            <td>" . $row["serie"] . "</td>
+            <td>" . $row["nome"] . "</td>
+            <td>" . $row["data"] . "</td>
+        </tr>";
+                    }
+                    echo "</tbody></table>";
+                } else {
+                    echo "Nenhum resultado encontrado.";
+                }
+                // Fechando a conexão com o banco de dados
+                $conn->close();
+                ?>
             </div>
         </div>
+
+        <!-- DataTables CSS -->
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#minhaTabela').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+                    },
+                    "pageLength": 15,
+                    "lengthMenu": [15, 30, 50, 100],
+                    "order": [
+                        [0, 'desc']
+                    ]
+                });
+            });
+        </script>
 
         <?php include 'footer.php'; ?>
 
     </main>
-
-
-    <!-- Adicione os scripts do DataTables -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
     <!-- Core -->
     <script src="vendor/@popperjs/core/dist/umd/popper.min.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -236,8 +275,7 @@ $logado = $_SESSION['login'];
 
     <!-- Volt JS -->
     <script src="assets/js/volt.js"></script>
-
-
+    <script src="js/custom.js"></script>
 
 </body>
 

@@ -67,10 +67,12 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
     /* Adicione estilos para as células com as classes red e green */
     td.red {
       background-color: rgb(255, 0, 0);
+      color: white;
     }
 
     td.green {
       background-color: rgb(76, 175, 80);
+      color: white;
     }
 
     .export-button {
@@ -263,7 +265,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       <br>
 
       <?php
-      // Configuração do banco de dados
+      // Conectar ao primeiro banco de dados
       $host = "172.10.20.53";
       $user = "andre";
       $password = "somores013";
@@ -276,17 +278,18 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         die("Connection failed: " . $conn->connect_error);
       }
 
-      // Conectar ao primeiro banco de dados
+      // Conectar ao segundo banco de dados
       $usuario_db1 = 'archer';
       $senha_db1 = 'B5n3Qz2vL7HAUs7z';
       $database_db1 = 'archerx';
       $host_db1 = '172.10.20.47';
-      $conn2 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
+      $conn1 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
       // Verificar se houve erro na conexão com o segundo banco de dados
-      if ($conn2->connect_error) {
-        die("Connection failed: " . $conn2->connect_error);
+      if ($conn1->connect_error) {
+        die("Connection failed: " . $conn1->connect_error);
       }
 
+      //consulta primeira tabela do ocs
       $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
@@ -295,6 +298,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           JOIN accountinfo ON hardware.id = accountinfo.hardware_id
         WHERE accountinfo.fields_3 = 'xaxim' AND drives.total <> 0
         ORDER BY percent_free <= 15 DESC";
+      // Executar a primeira consulta no primeiro banco de dados
       $result = $conn->query($sql);
 
       // Segunda consulta SQL para juntar informações dos dois bancos de dados
@@ -303,11 +307,11 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         INNER JOIN hosts ON acs_uni.id_hostname = hosts.id
         INNER JOIN baia ON acs_uni.id_baia = baia.id";
       // Executar a segunda consulta no segundo banco de dados
-      $result2 = $conn2->query($sql2);
+      $result2 = $conn1->query($sql2);
 
 
 
-      // Crie um array associativo a partir dos resultados da segunda consulta
+      // array associativo a partir dos resultados da segunda consulta
       $baia_por_hostname = array();
       if ($result2->num_rows > 0) {
         while ($row = $result2->fetch_assoc()) {
@@ -323,8 +327,10 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         while ($row = $result->fetch_assoc()) {
           $percentual_livre = ($row["free"] / $row["total"]) * 100;
           $cell_class = ($percentual_livre <= 15) ? "red" : "green";
+
           // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
           $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
+
           echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
@@ -338,9 +344,9 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
       //contador de total de inventário do xaxim
       $query = "SELECT COUNT(*)
-                                                FROM hardware 
-                                                JOIN accountinfo ON hardware.id = accountinfo.hardware_id
-                                                WHERE accountinfo.fields_3 = 'xaxim'";
+          FROM hardware 
+          JOIN accountinfo ON hardware.id = accountinfo.hardware_id
+          WHERE accountinfo.fields_3 = 'xaxim'";
 
       // Executa a consulta
       $resultado = mysqli_query($conn, $query);
@@ -366,7 +372,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
     <button class="export-button" onclick="window.location.href='/archerx/public/wyntech/exportarcsv/exportinventario.php'">Exportar em CSV (XAXIM)</button>
     <br><br>
 
-    <!-- Modal -->
+    <!-- Modal 1-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -377,11 +383,16 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           <div class="modal-body">
             <form id="myForm" method="POST">
               <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
+              <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                  <li class="nav-item"><a class="nav-link active" href="#">Softwares Instalados</a></li>
+                  <li class="nav-item"><a class="nav-link" href="get_historico.php">Históricos</a></li>
+                </ul>
+              </div>
               <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
               <br>
           </div>
           <div id="result">
-
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
@@ -390,11 +401,12 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         </div>
       </div>
     </div>
-    </div>
+
+
 
     <?php include 'footer.php'; ?>
 
-    <!-- Inicialize o DataTables com as opções desejadas -->
+    <!-- InicializA o DataTables com as opções desejadas -->
     <script>
       $(document).ready(function() {
         // Inicialize a tabela como DataTable
@@ -412,7 +424,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
           },
-          // Desative a ordenação para a nona coluna (coluna do percentual livre)
+          // Desative a ordenação para a decima coluna (coluna do percentual livre)
           columns: [
             null,
             null,
@@ -437,7 +449,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       });
     </script>
 
-    <!--abrir modal-->
+    <!--PEGAR O GERAR DO MODAL E ENVIAR PARA O PHP PARA OBERT OS VALORES-->
     <script>
       $(document).ready(function() {
         $('#myForm').submit(function(event) {
@@ -451,6 +463,22 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
             data: {
               name: name
             }, // o valor a ser enviado
+            success: function(response) {
+              $('#result').html(response); // exibe a resposta do PHP na div 'result'
+            }
+          });
+        });
+
+        // Adiciona um evento de clique no link do Histórico
+        $('.nav-link').eq(1).click(function(event) {
+          event.preventDefault();
+
+          // Altera o conteúdo do card-header
+          $('#card-header').html('<ul class="nav nav-tabs card-header-tabs"><li class="nav-item"><a class="nav-link" href="#">Softwares Instalados</a></li><li class="nav-item"><a class="nav-link active" href="#">Históricos</a></li></ul>');
+
+          $.ajax({
+            url: 'get_historico.php', // o arquivo PHP que receberá o valor
+            method: 'POST',
             success: function(response) {
               $('#result').html(response); // exibe a resposta do PHP na div 'result'
             }
@@ -505,7 +533,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
   <!-- Volt JS -->
   <script src="assets/js/volt.js"></script>
 
-
+  <!--exiba o modal para consultar os softwares-->
   <script>
     function addClickEventToTable() {
       $('#minhatabela tbody tr td:first-child').on('click', function() {
@@ -519,7 +547,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         $('#myModal').modal('show');
       });
     }
-
     // Adicione o evento de clique na tabela
     addClickEventToTable();
 

@@ -150,61 +150,6 @@
                 <h4 style="color: #f46524;">Sistema P.X</h4>
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
-                <li class="nav-item">
-                    <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-app">
-                        <span>
-                            <span class="sidebar-icon">
-                                <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-                                </svg>
-                            </span>
-                            <span class="sidebar-text">Gerência</span>
-                        </span>
-                        <span class="link-arrow">
-                            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                            </svg>
-                        </span>
-                    </span>
-                    <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-                        <ul class="flex-column nav">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="chamwynadm.php">
-                                    <span class="sidebar-text">Painel Principal</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-                        <ul class="flex-column nav">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="usuarios.php">
-                                    <span class="sidebar-text">Gerenciar Usuários</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-                        <ul class="flex-column nav">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="inserirtabela.php">
-                                    <span class="sidebar-text">Consultar/Registrar</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-                        <ul class="flex-column nav">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="alterarregistros.php">
-                                    <span class="sidebar-text">Gerenciar Registros</span>
-                                </a>
-                            </li>
-                            <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
-                        </ul>
-                    </div>
-                </li>
-
                 <?php include 'nav.php'; ?>
 
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
@@ -311,28 +256,14 @@
 
                                         <div class="form-group row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="solicitante">Solicitante*</label>
-                                                <select class="form-select" name="solicitante" id="solicitante">
-                                                    <option value=""></option>
-                                                    <option value="Sandro">Sandro</option>
-                                                    <option value="Geysebel">Geysebel</option>
-                                                    <option value="Salmo">Salmo</option>
-                                                    <option value="Kemily">Kemily</option>
-                                                    <option value="Daniel">Daniel</option>
-                                                    <option value="Mateus">Mateus</option>
-                                                    <option value="Marcelo">Marcelo Nawa</option>
-                                                    <option value="Juliano">Juliano</option>
-                                                </select>
+                                                <label for="num-serie">REQ*</label>
+                                                <input type="text" class="form-control" name="req" id="req">
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="quantidade">Quantidade</label>
                                                 <input type="range" min="1" max="10" class="form-control-range" name="quantidade" id="myRange" value="1" oninput="updateRangeValue()">
                                                 <h6>Total: <span id="rangeValue">1</span></h6>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="num-serie">REQ*</label>
-                                            <input type="text" class="form-control" name="req" id="req">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="observacao">Observação*</label>
@@ -437,7 +368,7 @@
                 var_dump($sql);
                 $peca = $_POST["peca"];
                 $numserie = $_POST["numserie"];
-                $solicitante = $_POST["solicitante"];
+                $solicitante = $_SESSION['login'];
                 $quantidade = $_POST["quantidade"];
                 $req = $_POST["req"];
                 $observacao = $_POST["descricao"];

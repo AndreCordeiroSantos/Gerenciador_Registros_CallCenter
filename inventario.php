@@ -140,60 +140,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         <h4 style="color: #f46524;">Sistema P.X</h4>
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
-        <li class="nav-item">
-          <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-app">
-            <span>
-              <span class="sidebar-icon">
-                <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                  <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-                </svg>
-              </span>
-              <span class="sidebar-text">Gerência</span>
-            </span>
-            <span class="link-arrow">
-              <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-              </svg>
-            </span>
-          </span>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="chamwynadm.php">
-                  <span class="sidebar-text">Painel Principal</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="usuarios.php">
-                  <span class="sidebar-text">Gerenciar Usuários</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="inserirtabela.php">
-                  <span class="sidebar-text">Consultar/Registrar</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="alterarregistros.php">
-                  <span class="sidebar-text">Gerenciar Registros</span>
-                </a>
-              </li>
-              <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
-            </ul>
-          </div>
-        </li>
         <?php include 'nav.php'; ?>
 
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
@@ -265,7 +211,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       <br>
 
       <?php
-      // Configuração do banco de dados
+      // Conectar ao primeiro banco de dados
       $host = "172.10.20.53";
       $user = "andre";
       $password = "somores013";
@@ -278,17 +224,18 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         die("Connection failed: " . $conn->connect_error);
       }
 
-      // Conectar ao primeiro banco de dados
+      // Conectar ao segundo banco de dados
       $usuario_db1 = 'archer';
       $senha_db1 = 'B5n3Qz2vL7HAUs7z';
       $database_db1 = 'archerx';
       $host_db1 = '172.10.20.47';
-      $conn2 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
+      $conn1 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
       // Verificar se houve erro na conexão com o segundo banco de dados
-      if ($conn2->connect_error) {
-        die("Connection failed: " . $conn2->connect_error);
+      if ($conn1->connect_error) {
+        die("Connection failed: " . $conn1->connect_error);
       }
 
+      //consulta primeira tabela do ocs
       $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
@@ -297,6 +244,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           JOIN accountinfo ON hardware.id = accountinfo.hardware_id
         WHERE accountinfo.fields_3 = 'xaxim' AND drives.total <> 0
         ORDER BY percent_free <= 15 DESC";
+      // Executar a primeira consulta no primeiro banco de dados
       $result = $conn->query($sql);
 
       // Segunda consulta SQL para juntar informações dos dois bancos de dados
@@ -305,11 +253,11 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         INNER JOIN hosts ON acs_uni.id_hostname = hosts.id
         INNER JOIN baia ON acs_uni.id_baia = baia.id";
       // Executar a segunda consulta no segundo banco de dados
-      $result2 = $conn2->query($sql2);
+      $result2 = $conn1->query($sql2);
 
 
 
-      // Crie um array associativo a partir dos resultados da segunda consulta
+      // array associativo a partir dos resultados da segunda consulta
       $baia_por_hostname = array();
       if ($result2->num_rows > 0) {
         while ($row = $result2->fetch_assoc()) {
@@ -325,8 +273,10 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         while ($row = $result->fetch_assoc()) {
           $percentual_livre = ($row["free"] / $row["total"]) * 100;
           $cell_class = ($percentual_livre <= 15) ? "red" : "green";
+
           // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
           $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
+
           echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
@@ -368,7 +318,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
     <button class="export-button" onclick="window.location.href='/archerx/public/wyntech/exportarcsv/exportinventario.php'">Exportar em CSV (XAXIM)</button>
     <br><br>
 
-    <!-- Modal -->
+    <!-- Modal 1-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -383,7 +333,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
               <br>
           </div>
           <div id="result">
-
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
@@ -392,11 +341,12 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         </div>
       </div>
     </div>
-    </div>
+
+
 
     <?php include 'footer.php'; ?>
 
-    <!-- Inicialize o DataTables com as opções desejadas -->
+    <!-- InicializA o DataTables com as opções desejadas -->
     <script>
       $(document).ready(function() {
         // Inicialize a tabela como DataTable
@@ -439,7 +389,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       });
     </script>
 
-    <!--abrir modal-->
+    <!--PEGAR O GERAR DO MODAL E ENVIAR PARA O PHP PARA OBERT OS VALORES-->
     <script>
       $(document).ready(function() {
         $('#myForm').submit(function(event) {
@@ -507,7 +457,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
   <!-- Volt JS -->
   <script src="assets/js/volt.js"></script>
 
-
+  <!--exiba o modal para consultar os softwares-->
   <script>
     function addClickEventToTable() {
       $('#minhatabela tbody tr td:first-child').on('click', function() {
@@ -521,7 +471,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         $('#myModal').modal('show');
       });
     }
-
     // Adicione o evento de clique na tabela
     addClickEventToTable();
 
