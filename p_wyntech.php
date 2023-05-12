@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Gerenciar peças</title>
+    <title>Gerenciar Material</title>
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
@@ -179,7 +179,7 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
                 <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
                     <div class="d-flex align-items-center">
                         <!-- Titulo da página -->
-                        <h1>Gerenciar Peças</h1>
+                        <h1>Painel Principal</h1>
                         <!-- / Titulo da página -->
                     </div>
                     <div class="d-flex align-items-center">
@@ -296,13 +296,6 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
                                     <label for="num-serie">Situação</label>
                                     <input type="text" class="form-control" name="status" id="status" readonly="">
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="responsavel">Finalizar Solicitação</label>
-                                    <select class="form-select" name="status1" id="status1">
-                                        <option value=""></option>
-                                        <option value="finalizado">finalizar</option>
-                                    </select>
-                                </div>
                             </div>
 
                             <br>
@@ -329,7 +322,7 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
         </div>
         <div class="container">
             <div class="card card-body border-0 shadow mb-4">
-                <h3 class="card-title">Gerenciar Solicitação de peças.</h3>
+                <h3 class="card-title">Gerenciar Solicitação de Material.</h3>
                 <br>
                 <div class="d-flex justify-content-start">
 

@@ -14,6 +14,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 ?>
 
 <head>
+  <title>Inventário Xaxim</title>
   <!-- Inclua o CSS e o JavaScript do Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -277,7 +278,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
           $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
 
-          echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
+          echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
           echo "<td>" . $row["memory"] . "</td><td>" . $row["ipaddr"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";

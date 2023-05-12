@@ -226,7 +226,7 @@
                     "pageLength": 15,
                     "lengthMenu": [15, 30, 50, 100],
                     "order": [
-                        [0, 'desc']
+                        [6, 'desc']
                     ]
                 });
             });

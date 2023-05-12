@@ -14,7 +14,7 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
 ?>
 
 <head>
-
+<title>Inventário Colombo</title>
   <!-- DataTables CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
 

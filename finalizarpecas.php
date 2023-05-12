@@ -30,6 +30,7 @@
         //receber valor do formulário pelo metodo POST
         $id = $_POST['id1'];
 
+
         //Preparar a query de update:
         $sql = "UPDATE p_wyntech SET p_status = 'finalizado' WHERE id=:id1";
         $stmt1 = $conn->prepare($sql);
@@ -37,7 +38,6 @@
         //Vincular os valores aos parâmetros da query:
         $stmt1->bindParam(':id1', $id);
 
-        //tratativa de erros caso alguma informação do formulário esteja faltando
 
             if ($stmt1->execute()) {
                 echo "<script>
@@ -53,7 +53,7 @@
             else{
                 echo "erro ao finalizar solicitação";
             }
-    
+          
     ?>
 </body>
 </html>

@@ -18,6 +18,25 @@ if ($_SESSION['tipo'] != 'admin') {
 <html lang="en">
 
 <head>
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>Painel Principal</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Inclua essas bibliotecas no cabeçalho do seu arquivo HTML -->
@@ -122,12 +141,6 @@ if ($_SESSION['tipo'] != 'admin') {
 
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
                 <br>
-                <li class="nav-item">
-                    <span class="sidebar-icon d-inline-flex align-items-center justify-content-center">
-                        <a href="#" class="logout-button"><img src="img/logo-removebg.png" style="width: 80%"></a>
-                    </span>
-                    </a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -350,159 +363,6 @@ if ($_SESSION['tipo'] != 'admin') {
     <!-- Volt JS -->
     <script src="assets/js/volt.js"></script>
 
-
-    <script>
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-gray'
-            },
-            buttonsStyling: false
-        });
-
-        // SweetAlert 2
-        document.getElementById('basicAlert').addEventListener('click', function() {
-            swalWithBootstrapButtons.fire(
-                'Basic alert',
-                'You clicked the button!'
-            )
-        });
-
-        document.getElementById('infoAlert').addEventListener('click', function() {
-            swalWithBootstrapButtons.fire(
-                'Info alert',
-                'You clicked the button!',
-                'info'
-            )
-        });
-
-        document.getElementById('successAlert').addEventListener('click', function() {
-            swalWithBootstrapButtons.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: 'Chamado Lançado com sucesso',
-                showConfirmButton: true,
-                timer: 3500
-            })
-        });
-
-        document.getElementById('warningAlert').addEventListener('click', function() {
-            swalWithBootstrapButtons.fire(
-                'Warning alert',
-                'You clicked the button!',
-                'warning'
-            )
-        });
-
-        document.getElementById('dangerAlert').addEventListener('click', function() {
-            swalWithBootstrapButtons.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-                footer: '<a href>Why do I have this issue?</a>'
-            })
-        });
-
-        document.getElementById('questionAlert').addEventListener('click', function() {
-            swalWithBootstrapButtons.fire(
-                'The Internet?',
-                'That thing is still around?',
-                'question'
-            );
-        });
-
-        document.getElementById('notifyTopLeft').addEventListener('click', function() {
-            const notyf = new Notyf({
-                position: {
-                    x: 'left',
-                    y: 'top',
-                },
-                types: [{
-                    type: 'info',
-                    background: '#0948B3',
-                    icon: {
-                        className: 'fas fa-info-circle',
-                        tagName: 'span',
-                        color: '#fff'
-                    },
-                    dismissible: false
-                }]
-            });
-            notyf.open({
-                type: 'info',
-                message: 'Send us <b>an email</b> to get support'
-            });
-        });
-
-        document.getElementById('notifyTopRight').addEventListener('click', function() {
-            const notyf = new Notyf({
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-                types: [{
-                    type: 'error',
-                    background: '#FA5252',
-                    icon: {
-                        className: 'fas fa-times',
-                        tagName: 'span',
-                        color: '#fff'
-                    },
-                    dismissible: false
-                }]
-            });
-            notyf.open({
-                type: 'error',
-                message: 'This action is not allowed.'
-            });
-        });
-
-        document.getElementById('notifyBottomLeft').addEventListener('click', function() {
-            const notyf = new Notyf({
-                position: {
-                    x: 'left',
-                    y: 'bottom',
-                },
-                types: [{
-                    type: 'warning',
-                    background: '#F5B759',
-                    icon: {
-                        className: 'fas fa-exclamation-triangle',
-                        tagName: 'span',
-                        color: '#fff'
-                    },
-                    dismissible: false
-                }]
-            });
-            notyf.open({
-                type: 'warning',
-                message: 'This might be dangerous.'
-            });
-        });
-
-        document.getElementById('notifyBottomRight').addEventListener('click', function() {
-            const notyf = new Notyf({
-                position: {
-                    x: 'right',
-                    y: 'bottom',
-                },
-                types: [{
-                    type: 'info',
-                    background: '#262B40',
-                    icon: {
-                        className: 'fas fa-comment-dots',
-                        tagName: 'span',
-                        color: '#fff'
-                    },
-                    dismissible: false
-                }]
-            });
-            notyf.open({
-                type: 'info',
-                message: 'John Garreth: Are you ready for the presentation?'
-            });
-        });
-    </script>
 
 </body>
 

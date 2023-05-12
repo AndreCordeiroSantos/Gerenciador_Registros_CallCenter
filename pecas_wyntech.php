@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Solicitar Peças</title>
+    <title>Solicitar Material</title>
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
@@ -164,7 +164,7 @@
                 <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
                     <div class="d-flex align-items-center">
                         <!-- Titulo da página -->
-                        <h1>Solicitar Peças</h1>
+                        <h1>Solicitar Material</h1>
                         <!-- / Titulo da página -->
                     </div>
                     <div class="d-flex align-items-center">
@@ -231,14 +231,14 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="meu-modal-label">Solicitação de Peças</h5>
+                                    <h5 class="modal-title" id="meu-modal-label">Solicitação de Material</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body d-flex justify-content-center align-items-center">
                                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                         <div class="form-group row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="peca">Peças*</label>
+                                                <label for="peca">Material*</label>
                                                 <select class="form-select" name="peca" id="peca">
                                                     <option value=""></option>
                                                     <option value="Monitor">Monitor</option>
