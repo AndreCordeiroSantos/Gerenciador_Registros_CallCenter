@@ -209,7 +209,7 @@
     <div role="separator" class="dropdown-divider my-1"></div>
     <br>
     <div class="container">
-      <div class="card card-body border-0 shadow mb-4">
+      <div class="card card-body border-1 shadow mb-4">
         <h3 class="card-title">Fechar Registros.</h3>
 
         <?php

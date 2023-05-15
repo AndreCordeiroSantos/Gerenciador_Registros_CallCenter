@@ -242,7 +242,7 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
     <br>
     <div role="separator" class="dropdown-divider my-1"></div>
     <br>
-      <div class="card card-body border-0 shadow mb-4 mb-xl-0">
+      <div class="card card-body border-1 shadow mb-4 mb-xl-0">
 
         <br>
         <div class="card-header">
@@ -294,7 +294,7 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
         die("Connection failed: " . $conn->connect_error);
       }
 
-      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
+      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipsrc, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
           JOIN bios ON hardware.id = bios.hardware_id
@@ -312,10 +312,10 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
         while ($row = $result->fetch_assoc()) {
           $percentual_livre = ($row["free"] / $row["total"]) * 100;
           $cell_class = ($percentual_livre <= 15) ? "red" : "green";
-          echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
+          echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td>" . substr($row["processort"], 9, 28) . "</td>";
-          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipaddr"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
+          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
         }
         echo "</tbody>";
         echo "</table>";

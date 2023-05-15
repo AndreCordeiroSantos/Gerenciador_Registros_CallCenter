@@ -78,7 +78,7 @@
     function mostrarCampoAdicional() {
       var motivo = document.getElementById("motivo");
       var campoAdicional = document.getElementById("campo-adicional");
-      if (motivo.value == "NAO LIGA" || motivo.value == "TELA AZUL" || motivo.value == "LENTIDAO") {
+      if (motivo.value == "NAO LIGA" || motivo.value == "TELA AZUL" || motivo.value == "LENTIDAO" || motivo.value == "BAIXA DE IMAGEM") {
         campoAdicional.style.display = "block";
       } else {
         campoAdicional.style.display = "none";
@@ -239,9 +239,9 @@
         </ul>
       </div>
     </div>
-    <div class="container">
+    <div class="container" style="padding: 0 10px;">
       <div class="card-block" style="display: inline-block; border-radius: 10px; width: 50%;">
-        <div class="card shadow border-0 text-left p-3">
+        <div class="card shadow border-1 text-left p-3">
           <h3 class="card-title">Lançar Registros.</h3>
 
           <form class="minhaforma" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="buscar" method="post">
@@ -410,8 +410,8 @@
       </div>
       <!--divisão da pagina-->
       <br><br>
-      <div class="card-block" style="display: inline-block; width: 50%;">
-        <div class="card shadow border-0 text-left p-3">
+      <div class="card-block2" style="display: inline-block; width: 50%;">
+        <div class="card shadow border-1 text-left p-3">
           <h3 class="card-title">Chamados Abertos.</h3>
 
           <?php
@@ -518,7 +518,18 @@
   <script src="assets/js/volt.js"></script>
 
   <script src="js/custom2.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Manter colapsos abertos quando submenu está ativo
+      $('.collapse .submenu').on('show.bs.collapse', function() {
+        $(this).closest('.collapse').addClass('show');
+      });
 
+      $('.collapse .submenu').on('hide.bs.collapse', function() {
+        $(this).closest('.collapse').removeClass('show');
+      });
+    });
+  </script>
   <script>
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {

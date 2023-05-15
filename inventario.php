@@ -200,7 +200,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
     <div role="separator" class="dropdown-divider my-1"></div>
     <br>
-    <div class="card card-body border-0 shadow mb-4 mb-xl-0">
+    <div class="card card-body border-1 shadow mb-4 mb-xl-0">
 
       <br>
       <div class="card-header">
@@ -237,7 +237,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       }
 
       //consulta primeira tabela do ocs
-      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
+      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipsrc, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
           JOIN bios ON hardware.id = bios.hardware_id
@@ -281,7 +281,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
-          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipaddr"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
+          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
         }
         echo "</tbody>";
         echo "</table>";

@@ -163,8 +163,9 @@ $logado = $_SESSION['login'];
         <div role="separator" class="dropdown-divider my-1"></div>
         <br>
         <div class="container">
-            <div class="card card-body border-0 shadow mb-4 mb-xl-0">
-                <h3>Seja bem vindo!</h3>
+            <div class="card card-body border-2 shadow mb-4 mb-xl-0">
+                <h5>Seja bem vindo!</h5>
+                <br>
                 <h6>O Sistema PX (PROJETO-XAXIM), está sendo desenvolvido com o objetivo de auxilizar o suporte de TI (wyntech, Plansul)</h6>
                 <h6>facilitando o acesso a essa informação.</h6>
                 <br>
@@ -181,14 +182,17 @@ $logado = $_SESSION['login'];
                 </div>
                 <br>
                 <h6>Algumas ferramentas mencionadas, ainda estão em desenvolvimento</h6>
-                <h6>e as ferramentas prontas podem apresentar BUGS.</h6>
+                <h6>e as ferramentas prontas podem apresentar </h6><h5>BUGS.</h5>
                 <br>
                 <h6>Caso encontre algum bug, reporte ao responsável.</h6>
                 <br><br><br>
+                <h5 class="mb-0 text-center text-lg-start"><span class="current-year"></span> @ Sistema Web, criado desenvolvido e mantido por:
+                    André Santos.
+                </h5>
             </div>
         </div>
 
-        <?php include 'footer.php'; ?>
+
 
     </main>
 

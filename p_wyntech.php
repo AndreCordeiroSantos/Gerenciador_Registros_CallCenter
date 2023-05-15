@@ -27,30 +27,6 @@
     <!-- Sweet Alerts 2 -->
     <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
-<?php
-session_start();
-if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
-    unset($_SESSION['login']);
-    unset($_SESSION['senha']);
-    header('location: login.html');
-}
-
-header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
-
-$logado = $_SESSION['login'];
-// chekaro tipo do usuário
-if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
-    echo "<script>
-  Swal.fire({
-      title: 'Acesso Negado!',
-      text: 'Você não tem acesso a esse menu.',
-      icon: 'error'
-  }).then((result) => {
-      window.location.href = 'home.php';
-  });
-</script>";
-}
-?>
 
 <head>
 
@@ -131,7 +107,30 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
 </head>
 
 <body>
+    <?php
+    session_start();
+    if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        header('location: login.html');
+    }
 
+    header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
+
+    $logado = $_SESSION['login'];
+    // Check the user's type and restrict access to this page if necessary
+    if ($_SESSION['tipo'] != 'admin') {
+        echo "<script>
+  Swal.fire({
+      title: 'Acesso Negado!',
+      text: 'Usuário não possui acesso Admin',
+      icon: 'error'
+  }).then((result) => {
+      window.location.href = 'home.php';
+  });
+</script>";
+    }
+    ?>
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="#">
@@ -321,7 +320,7 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
             </div>
         </div>
         <div class="container">
-            <div class="card card-body border-0 shadow mb-4">
+            <div class="card card-body border-1 shadow mb-4">
                 <h3 class="card-title">Gerenciar Solicitação de Material.</h3>
                 <br>
                 <div class="d-flex justify-content-start">

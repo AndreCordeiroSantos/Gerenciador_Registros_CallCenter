@@ -14,6 +14,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 ?>
 
 <head>
+  <title>Inventário Xaxim</title>
   <!-- Inclua o CSS e o JavaScript do Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -140,60 +141,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         <h4 style="color: #f46524;">Sistema P.X</h4>
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
-        <li class="nav-item">
-          <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-app">
-            <span>
-              <span class="sidebar-icon">
-                <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                  <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-                </svg>
-              </span>
-              <span class="sidebar-text">Gerência</span>
-            </span>
-            <span class="link-arrow">
-              <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-              </svg>
-            </span>
-          </span>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="chamwynadm.php">
-                  <span class="sidebar-text">Painel Principal</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="usuarios.php">
-                  <span class="sidebar-text">Gerenciar Usuários</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="inserirtabela.php">
-                  <span class="sidebar-text">Consultar/Registrar</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
-            <ul class="flex-column nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="alterarregistros.php">
-                  <span class="sidebar-text">Gerenciar Registros</span>
-                </a>
-              </li>
-              <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
-            </ul>
-          </div>
-        </li>
         <?php include 'nav.php'; ?>
 
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
@@ -253,7 +200,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
     <div role="separator" class="dropdown-divider my-1"></div>
     <br>
-    <div class="card card-body border-0 shadow mb-4 mb-xl-0">
+    <div class="card card-body border-1 shadow mb-4 mb-xl-0">
 
       <br>
       <div class="card-header">
@@ -290,11 +237,12 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       }
 
       //consulta primeira tabela do ocs
-      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipaddr, drives.total, drives.free,
+      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, monitors.serial, memory, ipsrc, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
           JOIN bios ON hardware.id = bios.hardware_id
           JOIN drives ON hardware.id = drives.hardware_id
+          JOIN monitors ON hardware.id = monitors.hardware_id
           JOIN accountinfo ON hardware.id = accountinfo.hardware_id
         WHERE accountinfo.fields_3 = 'xaxim' AND drives.total <> 0
         ORDER BY percent_free <= 15 DESC";
@@ -322,7 +270,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
       if ($result->num_rows > 0) {
         echo "<table id='minhatabela' class='display'>";
-        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
+        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Serial/Monitor</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
         echo "<tbody>";
         while ($row = $result->fetch_assoc()) {
           $percentual_livre = ($row["free"] / $row["total"]) * 100;
@@ -331,10 +279,10 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
           $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
 
-          echo "<tr><td class='nome-logico'>" . $row["name"] . "</td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
+          echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
-          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipaddr"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
+          echo "<td>" . $row["serial"] . "</td><td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
         }
         echo "</tbody>";
         echo "</table>";
@@ -383,12 +331,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           <div class="modal-body">
             <form id="myForm" method="POST">
               <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
-              <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                  <li class="nav-item"><a class="nav-link active" href="#">Softwares Instalados</a></li>
-                  <li class="nav-item"><a class="nav-link" href="get_historico.php">Históricos</a></li>
-                </ul>
-              </div>
               <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
               <br>
           </div>
@@ -436,6 +378,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
             null,
             null,
             null,
+            null,
             {
               orderable: false
             }
@@ -463,22 +406,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
             data: {
               name: name
             }, // o valor a ser enviado
-            success: function(response) {
-              $('#result').html(response); // exibe a resposta do PHP na div 'result'
-            }
-          });
-        });
-
-        // Adiciona um evento de clique no link do Histórico
-        $('.nav-link').eq(1).click(function(event) {
-          event.preventDefault();
-
-          // Altera o conteúdo do card-header
-          $('#card-header').html('<ul class="nav nav-tabs card-header-tabs"><li class="nav-item"><a class="nav-link" href="#">Softwares Instalados</a></li><li class="nav-item"><a class="nav-link active" href="#">Históricos</a></li></ul>');
-
-          $.ajax({
-            url: 'get_historico.php', // o arquivo PHP que receberá o valor
-            method: 'POST',
             success: function(response) {
               $('#result').html(response); // exibe a resposta do PHP na div 'result'
             }

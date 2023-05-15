@@ -182,7 +182,7 @@
     <div role="separator" class="dropdown-divider my-1"></div>
     <br>
     <div class="container">
-      <div class="card card-body border-0 shadow mb-4">
+      <div class="card card-body border-1 shadow mb-4">
 
         <h4>Campo para registrar <mark>chamados e REQ</mark>, enquanto a <mark>Wyntech</mark> estiver off.</h4>
         <h4>Atenção! Busque somente o número da ET, não precisa colocar (PR6534ET)</h4>
