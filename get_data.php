@@ -42,6 +42,7 @@
             }
 
             echo "</tbody></table>";
+            echo "<br>";
 
 
             // Inicializa a tabela com DataTables

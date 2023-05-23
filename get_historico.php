@@ -1,18 +1,14 @@
-
-    <?php
-    session_start();
-    if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
-        unset($_SESSION['login']);
-        unset($_SESSION['senha']);
-        header('location: login.html');
-    }
-    $logado = $_SESSION['login'];
-    ?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <?php
-    header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
-    ?>
+<?php
+session_start();
+if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
+    unset($_SESSION['login']);
+    unset($_SESSION['senha']);
+    header('location: login.html');
+}
+$logado = $_SESSION['login'];
+?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <title>Histórico Inventário</title>
@@ -44,32 +40,21 @@
     <!-- Sweet Alert -->
     <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <!-- Notyf -->
-    <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
-
     <!-- CSS -->
     <link type="text/css" href="css/volt.css" rel="stylesheet">
-
-    <!-- Inclua as bibliotecas do jQuery e DataTables -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 </head>
 
 <body>
-
+    <!--Menu hamburguer-->
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-        <a class="navbar-brand me-lg-5" href="#">
-            <img class="navbar-brand-dark" src="assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
-        </a>
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
     </nav>
-
+    <!--menu lateral esquerda-->
     <nav id="sidebarMenu" class="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
         <div class="sidebar-inner px-4 pt-3">
             <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
@@ -91,9 +76,10 @@
                 <h4 style="color: #f46524;">Sistema P.X</h4>
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
-
+                <!-- puxa o código padrao do navbar -->
                 <?php include 'nav.php'; ?>
-
+                <!-- puxa o código padrao do navbar -->
+                
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
                 <br>
             </ul>
@@ -171,7 +157,7 @@
                             LEFT JOIN hosts h ON hg.id_hostname = h.id
                             LEFT JOIN monitores m ON hg.id_monitores = m.id
                             LEFT JOIN usuarios f ON hg.Id_funcionario = f.login
-                            ";
+                            ORDER BY hg.data DESC";
 
                 // Executando a query e armazenando o resultado na variável $result
                 $result = $conn->query($sql);

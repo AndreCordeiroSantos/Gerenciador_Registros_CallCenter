@@ -44,60 +44,11 @@ if ($_SESSION['tipo'] != 'admin') {
   <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-  <!-- Sweet Alert -->
-  <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-
   <!-- Notyf -->
   <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
 
   <!-- Volt CSS -->
   <link type="text/css" href="css/volt.css" rel="stylesheet">
-
-  <script>
-    function mostrarCampoAdicional() {
-      var motivo = document.getElementById("motivo");
-      var campoAdicional = document.getElementById("campo-adicional");
-      if (motivo.value == "NAO LIGA" || motivo.value == "TELA AZUL" || motivo.value == "LENTIDAO") {
-        campoAdicional.style.display = "block";
-      } else {
-        campoAdicional.style.display = "none";
-      }
-    }
-  </script>
-  <style>
-    .my-form {
-      display: none;
-      opacity: 1;
-      transition: opacity 2.9s ease;
-      align-items: center;
-    }
-
-    .my-form.show {
-      display: block;
-      opacity: 1;
-      align-items: center;
-    }
-  </style>
-  <script>
-    function toggleForms() {
-      var forms = document.getElementsByClassName("my-form");
-      for (var i = 0; i < forms.length; i++) {
-        if (forms[i].style.display === "none") {
-          forms[i].style.display = "block"; /* Mostra o formulário */
-        } else {
-          forms[i].style.display = "none"; /* Oculta o formulário */
-        }
-      }
-    }
-  </script>
-  <style>
-    .my-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
 
 
 </head>
@@ -150,9 +101,9 @@ if ($_SESSION['tipo'] != 'admin') {
       <div class="container-fluid px-0">
         <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
           <div class="d-flex align-items-center">
-            <!-- Search form -->
+            <!-- Titulo da página -->
             <h1>Painel Principal</h1>
-            <!-- / Search form -->
+            <!-- Titulo da página -->
           </div>
           <div class="d-flex align-items-center">
           </div>
@@ -228,7 +179,7 @@ if ($_SESSION['tipo'] != 'admin') {
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         <br>
 
-        <!-- Adicione um ID à sua tabela para poder selecioná-la com o jQuery -->
+        <!-- Adicione um ID à tabela para poder selecioná-la com o jQuery -->
         <table id="minhaTabela">
           <thead>
             <tr>
@@ -245,11 +196,11 @@ if ($_SESSION['tipo'] != 'admin') {
           </tbody>
         </table>
 
-        <!-- Adicione esse código JavaScript para inicializar o DataTables na sua tabela -->
+        <!-- Adicione esse código JavaScript para inicializar o DataTables na tabela -->
         <script type="text/javascript">
           $(document).ready(function() {
             $('#minhaTabela').DataTable({
-              // Adicione a opção de idioma
+              // idioma portugues BR
               language: {
                 url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
               },
@@ -354,8 +305,6 @@ if ($_SESSION['tipo'] != 'admin') {
   <!-- Simplebar -->
   <script src="vendor/simplebar/dist/simplebar.min.js"></script>
 
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   <!-- Volt JS -->
   <script src="assets/js/volt.js"></script>

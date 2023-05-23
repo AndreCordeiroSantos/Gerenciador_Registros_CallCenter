@@ -6,6 +6,8 @@
 	<link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 	<!-- Sweet Alerts 2 -->
 	<script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+	
 </head>
 
 <body>
@@ -33,7 +35,6 @@
 		$sql = "SELECT * FROM usuarios_wyntech WHERE BINARY LOGIN = '$login' AND BINARY SENHA ='$senha'";
 
 		$result = $conn->query($sql);
-		//print_r($result);
 
 		if (mysqli_num_rows($result) < 1) {
 			unset($_SESSION['login']);
@@ -57,7 +58,6 @@
 			// Fetch the user data from the database
 			$user = mysqli_fetch_assoc($result);
 
-			// Set session variables for login, senha, and user_type
 			$_SESSION['login'] = $login;
 			$_SESSION['senha'] = $senha;
 			$_SESSION['tipo'] = $user['tipo'];
@@ -71,7 +71,7 @@
 					showConfirmButton: false,
 					timer: 2000
 				}).then((result) => {
-					window.location.href = 'home.php';
+					window.location.href = 'chamwynadm.php';
 				});
 			</script>";
 			} else {

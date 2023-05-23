@@ -9,20 +9,29 @@ $logado = $_SESSION['login'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php
-header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
-?>
 
 <head>
-<title>Inventário Colombo</title>
-  <!-- DataTables CSS -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+  <title>Inventário Colombo</title>
+  <!-- Inclua o CSS e o JavaScript do Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 
   <!-- jQuery library -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- DataTables JS -->
   <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+  <!-- Biblioteca DataTables -->
+  <script type="text/javascript" src="assets/dataTables/datatables.min.js"></script>
+  <script src="assets/dataTables/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
+
+  <!-- CSS Datatables -->
+  <link rel="stylesheet" href="../../bibli/dataTables/Buttons-2.3.6/css/buttons.dataTables.min.css">
+ <!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />-->
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
@@ -66,20 +75,27 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
       color: white;
     }
 
-    .export-button {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
+    /* Estilos para o botão */
+    div.dt-buttons .btn-export-csv {
+      background-color: #141f2e;
+      width: 150px;
+      height: 28px;
+      margin-left: 30px;
+      line-height: 14px;
       cursor: pointer;
+      color: white;
+    }
+    div.dt-buttons :hover.btn-export-csv {
+      background-color: #243854;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+      line-height: 20px;
+      height: 28px;
     }
   </style>
-
+  <!-- Adicione os estilos do DataTables -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -242,42 +258,40 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
     <br>
     <div role="separator" class="dropdown-divider my-1"></div>
     <br>
-      <div class="card card-body border-1 shadow mb-4 mb-xl-0">
+    <div class="card card-body border-1 shadow mb-4 mb-xl-0">
 
-        <br>
-        <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item"><a class="nav-link" href="inventario.php">Xaxim</a></li>
-            <li class="nav-item"><a class="nav-link active" href="inventariocolombo.php">Colombo</a></li>
+      <br>
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item"><a class="nav-link" href="inventario.php">Xaxim</a></li>
+          <li class="nav-item"><a class="nav-link active" href="inventariocolombo.php">Colombo</a></li>
 
-          </ul>
-        </div>
-        <br>
+        </ul>
+      </div>
+      <br>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Informações de Software</h5>
-                <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-              </div>
-              <div class="modal-body">
-                <form id="myForm" method="POST">
-                  <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
-                  <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
-                  <br>
-              </div>
-              <div id="result">
-
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
-              </div>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="myModalLabel">Informações de Software</h5>
+              <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </div>
+            <div class="modal-body">
+              <form id="myForm" method="POST">
+                <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
+                <br>
+                <div id="result">
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
+                </div>
               </form>
             </div>
           </div>
         </div>
+      </div>
 
       <?php
       // Configuração do banco de dados
@@ -289,12 +303,23 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
       // Conexão com o banco de dados
       $conn = new mysqli($host, $user, $password, $dbname);
 
+      // Conectar ao segundo banco de dados
+      $usuario_db1 = 'archer';
+      $senha_db1 = 'B5n3Qz2vL7HAUs7z';
+      $database_db1 = 'archer';
+      $host_db1 = '172.10.20.47';
+      $conn1 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
+      // Verificar se houve erro na conexão com o segundo banco de dados
+      if ($conn1->connect_error) {
+        die("Connection failed: " . $conn1->connect_error);
+      }
+
       // Verifica se houve erro na conexão
       if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
       }
 
-      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipsrc, drives.total, drives.free,
+      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipsrc, lastdate, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
           JOIN bios ON hardware.id = bios.hardware_id
@@ -305,17 +330,40 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
 
       $result = $conn->query($sql);
 
+
+      // Segunda consulta SQL para juntar informações dos dois bancos de dados
+      $sql2 = "SELECT hosts.hostname, baia.baia
+            FROM acs_uni
+            INNER JOIN hosts ON acs_uni.id_hostname = hosts.id
+            INNER JOIN baia ON acs_uni.id_baia = baia.id";
+      // Executar a segunda consulta no segundo banco de dados
+      $result2 = $conn1->query($sql2);
+
+      // array associativo a partir dos resultados da segunda consulta
+      $baia_por_hostname = array();
+      if ($result2->num_rows > 0) {
+        while ($row = $result2->fetch_assoc()) {
+          $baia_por_hostname[$row["hostname"]] = $row["baia"];
+        }
+      }
+
+
+
       if ($result->num_rows > 0) {
         echo "<table id='minhatabela' class='display'>";
-        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th class='userinv'>Usuário</th><th>Domínio</th><th>Processador</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
+        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th>Processador</th><th>Memória</th><th>IP ATUAL</th><th>ùltimo Inventário</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
         echo "<tbody>";
         while ($row = $result->fetch_assoc()) {
           $percentual_livre = ($row["free"] / $row["total"]) * 100;
           $cell_class = ($percentual_livre <= 15) ? "red" : "green";
-          echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
+
+          // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
+          $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
+
+          echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td>" . substr($row["processort"], 9, 28) . "</td>";
-          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
+          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["lastdate"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
         }
         echo "</tbody>";
         echo "</table>";
@@ -360,12 +408,14 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
     <script>
       $(document).ready(function() {
         // Inicialize a tabela como DataTable
-        $('table.display').DataTable({
+        var table = $('table.display').DataTable({
           "select": true,
           // Desative a ordenação inicial da tabela
           "order": [],
+          //página aberta incial
+          "pageLength": 15,
           // Opções de exibição de registros por página
-          "lengthMenu": [30, 50, 100, 500],
+          "lengthMenu": [15, 50, 70, 100, 200, 500],
           // Opção de paginação
           "paging": true,
           // Habilita a responsividade da tabela
@@ -374,8 +424,26 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
           language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
           },
-          // Desative a ordenação para a nona coluna (coluna do percentual livre)
+          dom: 'lBfrtip',
+          buttons: [{
+            extend: 'csv',
+            text: 'Exportar CSV',
+            className: 'btn-export-csv',
+            customize: function(csv) {
+              // Formata o CSV em UTF-8
+              csv = "\uFEFF" + csv;
+              // Altera o separador para ";"
+              csv = csv.replace(/,/g, ";");
+              // Remove as aspas das strings
+              csv = csv.replace(/"/g, "");
+              return csv;
+            }
+          }],
+
+          // Desative a ordenação para a decima coluna (coluna do percentual livre)
           columns: [
+            null,
+            null,
             null,
             null,
             null,
@@ -388,33 +456,37 @@ header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
             {
               orderable: false
             }
-          ]
+          ],
+          // Adicione uma classe CSS personalizada às células da tabela
+          "columnDefs": [{
+            "className": "minha-classe-personalizada",
+            "targets": "_all"
+          }]
         });
       });
     </script>
 
   </main>
+  <!--exiba o modal para consultar os softwares-->
   <script>
-    function addClickEventToTable() {
-      $('#minhatabela tbody tr td:first-child').on('click', function() {
-        // Obtenha o valor da célula clicada
-        var name = $(this).text();
+    $(document).ready(function() {
+      function addClickEventToTable() {
+        $('#minhatabela tbody tr td:first-child').on('click', function() {
+          var name = $(this).text();
+          $('#nameInput').val(name);
+          $('#submitButton').trigger('click'); // Aciona o clique automático no botão "Gerar"
+          $('#submitButton').hide(); // Esconde o botão "Gerar"
+          $('#myModal').modal('show');
+        });
+      }
+      // Adicione o evento de clique na tabela
+      addClickEventToTable();
 
-        // Atualize o valor do campo de entrada no modal
-        $('#nameInput').val(name);
-
-        // Exiba o modal
-        $('#myModal').modal('show');
+      $('#myModal').on('hidden.bs.modal', function() {
+        $('#result').html('');
+        $('#nameInput').val('');
+        $('#submitButton').show(); // Mostra o botão "Gerar" quando o modal for fechado
       });
-    }
-
-    // Adicione o evento de clique na tabela
-    addClickEventToTable();
-
-    $('#myModal').on('hidden.bs.modal', function() {
-      // Limpa o resultado e o valor do input
-      $('#result').html('');
-      $('#nameInput').val('');
     });
   </script>
   <script>

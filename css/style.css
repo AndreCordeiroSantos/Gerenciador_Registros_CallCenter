@@ -20,7 +20,12 @@ h1 {
     color: rgb(219, 219, 219);
     padding: 0px 0px 35px 15px;
 }
-
+label {
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em; /* Ajuste o tamanho da fonte conforme necessário */
+  }
+  
 h2 {
     font-size: 1.4em;
     color: rgb(32, 31, 36);

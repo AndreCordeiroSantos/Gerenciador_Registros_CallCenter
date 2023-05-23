@@ -15,7 +15,8 @@ if (!$conn) {
 }
 
 // Define a consulta SQL para verificar se há chamados em aberto
-$sql = "SELECT COUNT(*) as total FROM p_wyntech WHERE p_status = 'aberto'";
+$sql = "SELECT COUNT(*) as total FROM p_wyntech WHERE p_status IN ('aberto', 'em andamento')";
+
 
 // Executa a consulta SQL
 $result = mysqli_query($conn, $sql);

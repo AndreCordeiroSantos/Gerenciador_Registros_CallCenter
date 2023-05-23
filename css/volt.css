@@ -8181,6 +8181,7 @@ fieldset:disabled .btn {
     padding: 2px;
     border-radius: 10px;
 }
+
 .card-block2 {
     display: flex;
     flex-direction: column;
@@ -9615,7 +9616,7 @@ fieldset:disabled .btn {
 .container {
     display: flex;
     flex-wrap: wrap;
-    
+
 }
 
 .toast-container> :not(:last-child) {
@@ -28889,7 +28890,7 @@ table tbody tr:hover {
 /* Adicione padding às células da tabela */
 table.dataTable thead tr th,
 table.dataTable tbody tr td {
-    padding: 3px;
+    padding: 4px;
     text-align: center;
 }
 
@@ -28899,8 +28900,8 @@ table.dataTable thead tr th {
 }
 
 /* Adicione um efeito de hover às células da tabela */
-table.dataTable tbody tr td:hover {
-    background-color: #a19f9f;
+table.dataTable tbody tr:hover td {
+    background-color: #c9c7c7;
 }
 
 .nome-logico,
@@ -28946,7 +28947,7 @@ table.dataTable tbody tr td:hover {
     background-color: #c5c5c5;
     color: #1F2937;
     align-items: center;
-    padding: auto;
+    padding: 10px;
     border-top: 1px solid;
 }
 
@@ -28996,9 +28997,11 @@ table.display tbody tr:hover {
 }
 
 th {
-    background-color: #5a5a5a;
-    color: #fff;
+    background-color: #c5c5c5;
+    color: #1F2937;
+    align-items: center;
     padding: 10px;
+    border-top: 1px solid;
 }
 
 thead {
@@ -29357,6 +29360,7 @@ p {
     line-height: 1.6;
     color: white;
 }
+
 a,
 .text-action {
     color: #1F2937;
@@ -30501,4 +30505,312 @@ article .h6 {
     z-index: 9999;
 }
 
-/*# sourceMappingURL=volt.css.map */
+
+
+
+
+
+
+
+.credit {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+
+    color: inherit;
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: hidden;
+
+    min-width: 900px;
+    max-width: 1300px;
+    width: calc(100% - 100%);
+
+    height: 500px;
+
+    @for $i from 1 through 4 {
+        @media screen and (max-width:798px - $i*80) {
+            min-width: 600px - $i*80;
+
+            .option:nth-child(#{6-$i}) {
+                display: none;
+            }
+        }
+    }
+
+    .option {
+        position: relative;
+        overflow: hidden;
+
+        min-width: 60px;
+        margin: 10px;
+        border: 0px solid --defaultColor;
+
+        background: var(--optionBackground, var(--defaultBackground, #E6E9ED));
+        background-size: auto 200%;
+        background-position: center;
+
+        cursor: pointer;
+
+        transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+
+        @for $i from 1 through length($optionDefaultColours) {
+            &:nth-child(#{$i}) {
+                --defaultBackground:#{nth($optionDefaultColours, $i)};
+            }
+        }
+
+        &.active {
+            flex-grow: 10000;
+            transform: scale(1);
+
+            max-width: 900px;
+            margin: 0px;
+            border-radius: 10px;
+
+            background-size: auto 100%;
+
+            .shadow {
+                box-shadow: inset 0 -120px 120px -120px black, inset 0 -120px 120px -100px black;
+            }
+
+            .label {
+                bottom: 20px;
+                left: 20px;
+
+                .info>div {
+                    left: 0px;
+                    opacity: 1;
+                }
+            }
+
+            /*&:active {
+               transform:scale(0.9);
+            }*/
+        }
+
+        &:not(.active) {
+            flex-grow: 1;
+
+            border-radius: 30px;
+
+            .shadow {
+                bottom: -40px;
+                box-shadow: inset 0 -120px 0px -120px black, inset 0 -120px 0px -100px black;
+            }
+
+            .label {
+                bottom: 10px;
+                left: 10px;
+
+                .info>div {
+                    left: 20px;
+                    opacity: 0;
+                }
+            }
+        }
+
+        .shadow {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+
+            height: 120px;
+
+            transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+        }
+
+        .label {
+            display: flex;
+            position: absolute;
+            right: 0px;
+
+            height: 40px;
+            transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+
+            .icon {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                min-width: 40px;
+                max-width: 40px;
+                height: 40px;
+                border-radius: 100%;
+
+                background-color: white;
+                color: var(--defaultBackground);
+            }
+
+            .info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                margin-left: 10px;
+
+                color: white;
+
+                white-space: pre;
+
+                >div {
+                    position: relative;
+
+                    transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95), opacity .5s ease-out;
+                }
+
+                .main {
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                }
+
+                .sub {
+                    transition-delay: .1s;
+                }
+            }
+        }
+    }
+}
+
+.corpomapa {
+    width: 100%;
+    height: 100%;
+    padding: 2%;
+    box-sizing: border-box;
+    border: solid;
+    display: flex;
+}
+
+.ladoesquerdo {
+    width: 20%;
+    height: 100%;
+    float: left;
+    background-color: lightblue;
+    border: solid;
+}
+
+.ladodireito {
+    margin-top: 15%;
+    width: 80%;
+    background-color: lightgray;
+    border: solid;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.blocoA {
+    flex-grow: 0;
+    width: 13%;
+    height: calc(100% - 10px);
+    background-color: yellow;
+    margin: 5px;
+}
+
+.blocoB,
+.blocoC,
+.blocoD {
+    flex-grow: 1;
+    height: calc(100% - 10px);
+    margin: 5px;
+}
+
+.blocoD {
+    background-color: red;
+}
+
+.blocoC {
+    background-color: blue;
+}
+
+.blocoB {
+    background-color: green;
+}
+
+.blocoA {
+    background-color: yellow;
+}
+
+.banheirodireito {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.banheirodireito1 {
+    width: 5%;
+    height: 40px;
+    background-color: blue;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    transform: translateX(30%);
+}
+
+.coordenacao {
+    width: 60px;
+    height: 100px;
+    background-color: green;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.coordenacao::before {
+    content: "";
+    width: 2px;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    left: 30%;
+    transform: translateX(-50%);
+}
+
+.coordenacao::after {
+    content: "";
+    width: calc(50% - 1px);
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    left: 0;
+}
+
+.coordenacao1 {
+    width: 80px;
+    height: 100px;
+    background-color: yellow;
+    position: absolute;
+    top: 100px;
+    left: 0;
+}
+
+.coordenacao2 {
+    width: 80px;
+    height: 100px;
+    background-color: orange;
+    position: absolute;
+    top: 200px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coordenacao2::before {
+    content: "";
+    width: 2px;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

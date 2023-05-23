@@ -266,6 +266,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <h6>Ao solicitar <b>(MONITOR)</b> por favor, descreva completo o problema da peça.</h6>
                                             <label class="form-label" for="observacao">Observação*</label>
                                             <textarea class="form-control" id="descricao" name="descricao" rows="3" cols="50" maxlength="255" oninput="contarCaracteres()" rows="3"></textarea>
                                             <span id="contador"></span>

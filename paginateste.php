@@ -161,7 +161,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
           <div class="d-flex align-items-center">
             <!-- Titulo da página -->
-            <h1>Inventário Xaxim</h1>
+            <h1>Página para Testes</h1>
             <!-- / Titulo da página -->
           </div>
           <div class="d-flex align-items-center">
@@ -202,287 +202,98 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
     <br>
     <div class="card card-body border-1 shadow mb-4 mb-xl-0">
 
-      <br>
-      <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item"><a class="nav-link active" href="inventario.php">Xaxim</a></li>
-          <li class="nav-item"><a class="nav-link" href="inventariocolombo.php">Colombo</a></li>
-        </ul>
-      </div>
-      <br>
-
-      <?php
-      // Conectar ao primeiro banco de dados
-      $host = "172.10.20.53";
-      $user = "andre";
-      $password = "somores013";
-      $dbname = "ocsweb";
-      // Conexão com o banco de dados
-      $conn = new mysqli($host, $user, $password, $dbname);
-
-      // Verifica se houve erro na conexão
-      if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-      }
-
-      // Conectar ao segundo banco de dados
-      $usuario_db1 = 'archer';
-      $senha_db1 = 'B5n3Qz2vL7HAUs7z';
-      $database_db1 = 'archerx';
-      $host_db1 = '172.10.20.47';
-      $conn1 = new mysqli($host_db1, $usuario_db1, $senha_db1, $database_db1);
-      // Verificar se houve erro na conexão com o segundo banco de dados
-      if ($conn1->connect_error) {
-        die("Connection failed: " . $conn1->connect_error);
-      }
-
-      //consulta primeira tabela do ocs
-      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, monitors.serial, memory, ipsrc, drives.total, drives.free,
-        (drives.free / drives.total) * 100 AS percent_free
-          FROM hardware 
-          JOIN bios ON hardware.id = bios.hardware_id
-          JOIN drives ON hardware.id = drives.hardware_id
-          JOIN monitors ON hardware.id = monitors.hardware_id
-          JOIN accountinfo ON hardware.id = accountinfo.hardware_id
-        WHERE accountinfo.fields_3 = 'xaxim' AND drives.total <> 0
-        ORDER BY percent_free <= 15 DESC";
-      // Executar a primeira consulta no primeiro banco de dados
-      $result = $conn->query($sql);
-
-      // Segunda consulta SQL para juntar informações dos dois bancos de dados
-      $sql2 = "SELECT hosts.hostname, baia.baia
-        FROM acs_uni
-        INNER JOIN hosts ON acs_uni.id_hostname = hosts.id
-        INNER JOIN baia ON acs_uni.id_baia = baia.id";
-      // Executar a segunda consulta no segundo banco de dados
-      $result2 = $conn1->query($sql2);
-
-
-
-      // array associativo a partir dos resultados da segunda consulta
-      $baia_por_hostname = array();
-      if ($result2->num_rows > 0) {
-        while ($row = $result2->fetch_assoc()) {
-          $baia_por_hostname[$row["hostname"]] = $row["baia"];
-        }
-      }
-
-
-      if ($result->num_rows > 0) {
-        echo "<table id='minhatabela' class='display'>";
-        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Serial/Monitor</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
-        echo "<tbody>";
-        while ($row = $result->fetch_assoc()) {
-          $percentual_livre = ($row["free"] / $row["total"]) * 100;
-          $cell_class = ($percentual_livre <= 15) ? "red" : "green";
-
-          // Obtenha o valor de baia correspondente ao valor de name usando o array associativo
-          $baia = isset($baia_por_hostname[$row["name"]]) ? $baia_por_hostname[$row["name"]] : "";
-
-          echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
-          // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
-          echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
-          echo "<td>" . $row["serial"] . "</td><td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
-        }
-        echo "</tbody>";
-        echo "</table>";
-      } else {
-        echo "Nenhum resultado encontrado.";
-      }
-
-      //contador de total de inventário do xaxim
-      $query = "SELECT COUNT(*)
-          FROM hardware 
-          JOIN accountinfo ON hardware.id = accountinfo.hardware_id
-          WHERE accountinfo.fields_3 = 'xaxim'";
-
-      // Executa a consulta
-      $resultado = mysqli_query($conn, $query);
-
-      // Verifica se ocorreu algum erro na execução da consulta
-      if (!$resultado) {
-        die('Erro na consulta: ' . mysqli_error($conn));
-      }
-
-      // Recupera o valor retornado pela consulta
-      $quantidade = mysqli_fetch_row($resultado)[0];
-
-      // Exibe o valor
-      echo '<br>';
-      echo '<h4>Total: ' . $quantidade;
-      echo ' Estações inventariadas';
-      echo '</h4>';
-
-      ?>
-
-      <br>
-    </div>
-    <button class="export-button" onclick="window.location.href='/archerx/public/wyntech/exportarcsv/exportinventario.php'">Exportar em CSV (XAXIM)</button>
-    <br><br>
-
-    <!-- Modal 1-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel">Informações de Software</h5>
-            <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          </div>
-          <div class="modal-body">
-            <form id="myForm" method="POST">
-              <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
-              <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
-              <br>
-          </div>
-          <div id="result">
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
-          </div>
-          </form>
+      <div class="corpomapa">
+        <div class="ladoesquerdo">
+          Conteúdo da div ladoesquerdo -->
+          <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br><br> <br> <br>
         </div>
+        <div class="ladodireito">
+          <div class="blocoD">D</div>
+          <div class="blocoC">C</div>
+          <div class="blocoB">B</div>
+          <div class="blocoA">A</div>
+          <div class="banheirodireito"></div>
+          <div class="banheirodireito1"></div>
+          <div class="coordenacao"></div>
+          <div class="coordenacao1"></div>
+          <div class="coordenacao2"></div>
+          <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        </div>
+        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
       </div>
     </div>
-
-
-
     <?php include 'footer.php'; ?>
 
-    <!-- InicializA o DataTables com as opções desejadas -->
+
+
+    <!-- Adicione os scripts do DataTables -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <!-- Core -->
+    <script src="vendor/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Vendor JS -->
+    <script src="vendor/onscreen/dist/on-screen.umd.min.js"></script>
+
+    <!-- Slider -->
+    <script src="vendor/nouislider/distribute/nouislider.min.js"></script>
+
+    <!-- Smooth scroll -->
+    <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+    <!-- Charts -->
+    <script src="vendor/chartist/dist/chartist.min.js"></script>
+    <script src="vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+
+    <!-- Datepicker -->
+    <script src="vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+
+    <!-- Sweet Alerts 2 -->
+    <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+    <!-- Moment JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+
+    <!-- Vanilla JS Datepicker -->
+    <script src="vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+
+    <!-- Notyf -->
+    <script src="vendor/notyf/notyf.min.js"></script>
+
+    <!-- Simplebar -->
+    <script src="vendor/simplebar/dist/simplebar.min.js"></script>
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- Volt JS -->
+    <script src="assets/js/volt.js"></script>
+
+    <!--exiba o modal para consultar os softwares-->
     <script>
       $(document).ready(function() {
-        // Inicialize a tabela como DataTable
-        var table = $('table.display').DataTable({
-          "select": true,
-          // Desative a ordenação inicial da tabela
-          "order": [],
-          // Opções de exibição de registros por página
-          "lengthMenu": [30, 50, 100, 500],
-          // Opção de paginação
-          "paging": true,
-          // Habilita a responsividade da tabela
-          "responsive": true,
-          // Adicione a opção de idioma
-          language: {
-            url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
-          },
-          // Desative a ordenação para a decima coluna (coluna do percentual livre)
-          columns: [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            {
-              orderable: false
-            }
-          ],
-          // Adicione uma classe CSS personalizada às células da tabela
-          "columnDefs": [{
-            "className": "minha-classe-personalizada",
-            "targets": "_all"
-          }]
-        });
-      });
-    </script>
-
-    <!--PEGAR O GERAR DO MODAL E ENVIAR PARA O PHP PARA OBERT OS VALORES-->
-    <script>
-      $(document).ready(function() {
-        $('#myForm').submit(function(event) {
-          event.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
-
-          var name = $('#nameInput').val(); // obtém o valor do input do formulário
-
-          $.ajax({
-            url: 'get_data.php', // o arquivo PHP que receberá o valor
-            method: 'POST',
-            data: {
-              name: name
-            }, // o valor a ser enviado
-            success: function(response) {
-              $('#result').html(response); // exibe a resposta do PHP na div 'result'
-            }
+        function addClickEventToTable() {
+          $('#minhatabela tbody tr td:first-child').on('click', function() {
+            var name = $(this).text();
+            $('#nameInput').val(name);
+            $('#submitButton').trigger('click'); // Aciona o clique automático no botão "Gerar"
+            $('#submitButton').hide(); // Esconde o botão "Gerar"
+            $('#myModal').modal('show');
           });
+        }
+        // Adicione o evento de clique na tabela
+        addClickEventToTable();
+
+        $('#myModal').on('hidden.bs.modal', function() {
+          $('#result').html('');
+          $('#nameInput').val('');
+          $('#submitButton').show(); // Mostra o botão "Gerar" quando o modal for fechado
         });
       });
     </script>
-  </main>
 
-  <!-- Adicione os scripts do DataTables -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
-  <!-- Core -->
-  <script src="vendor/@popperjs/core/dist/umd/popper.min.js"></script>
-  <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-
-  <!-- Vendor JS -->
-  <script src="vendor/onscreen/dist/on-screen.umd.min.js"></script>
-
-  <!-- Slider -->
-  <script src="vendor/nouislider/distribute/nouislider.min.js"></script>
-
-  <!-- Smooth scroll -->
-  <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-
-  <!-- Charts -->
-  <script src="vendor/chartist/dist/chartist.min.js"></script>
-  <script src="vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-
-  <!-- Datepicker -->
-  <script src="vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
-
-  <!-- Sweet Alerts 2 -->
-  <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
-
-  <!-- Moment JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-
-  <!-- Vanilla JS Datepicker -->
-  <script src="vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
-
-  <!-- Notyf -->
-  <script src="vendor/notyf/notyf.min.js"></script>
-
-  <!-- Simplebar -->
-  <script src="vendor/simplebar/dist/simplebar.min.js"></script>
-
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-  <!-- Volt JS -->
-  <script src="assets/js/volt.js"></script>
-
-  <!--exiba o modal para consultar os softwares-->
-  <script>
-    function addClickEventToTable() {
-      $('#minhatabela tbody tr td:first-child').on('click', function() {
-        // Obtenha o valor da célula clicada
-        var name = $(this).text();
-
-        // Atualize o valor do campo de entrada no modal
-        $('#nameInput').val(name);
-
-        // Exiba o modal
-        $('#myModal').modal('show');
-      });
-    }
-    // Adicione o evento de clique na tabela
-    addClickEventToTable();
-
-    $('#myModal').on('hidden.bs.modal', function() {
-      // Limpa o resultado e o valor do input
-      $('#result').html('');
-      $('#nameInput').val('');
-    });
-  </script>
 </body>
 
 </html>

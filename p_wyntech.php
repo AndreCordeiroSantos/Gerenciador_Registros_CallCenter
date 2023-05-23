@@ -30,62 +30,6 @@
 
 <head>
 
-    <style>
-        .custom-btn {
-            border: 1px solid black;
-            padding: 8px 16px;
-            font-size: 16px;
-            font-weight: bold;
-            color: black;
-            background-color: transparent;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .custom-btn:hover {
-            background-color: #f2f2f2;
-        }
-
-        #minhaTabela td.status .status-circle {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: green;
-            margin-right: 5px;
-        }
-
-        #minhaTabela td.status .status-circle.purple {
-            background-color: purple;
-            margin-right: 5px;
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        #minhaTabela td.status .status-circle.orange {
-            background-color: orange;
-            margin-right: 5px;
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        #minhaTabela td.status:contains('finalizado') {
-            color: purple;
-        }
-
-        #minhaTabela td.status:contains('em andamento') {
-            color: orange;
-        }
-
-        #minhaTabela td.status {
-            color: green;
-        }
-    </style>
 
     <!-- Inclua as bibliotecas do jQuery e DataTables -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -94,9 +38,6 @@
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <!-- Sweet Alert -->
-    <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
     <!-- Notyf -->
     <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
@@ -133,9 +74,6 @@
     ?>
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-        <a class="navbar-brand me-lg-5" href="#">
-            <img class="navbar-brand-dark" src="assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
-        </a>
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -214,7 +152,6 @@
             </div>
         </nav>
         <br>
-
 
         <!-- Modal 1 -->
         <div class="modal fade" id="meu-modal1" tabindex="-1" aria-labelledby="meu-modal-label" aria-hidden="true">
@@ -310,6 +247,7 @@
 
         <div role="separator" class="dropdown-divider my-1"></div>
         <br>
+
         <div class="container">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -319,12 +257,12 @@
                 </ul>
             </div>
         </div>
+
         <div class="container">
             <div class="card card-body border-1 shadow mb-4">
                 <h3 class="card-title">Gerenciar Solicitação de Material.</h3>
                 <br>
                 <div class="d-flex justify-content-start">
-
 
                 </div>
                 <br>
@@ -399,7 +337,8 @@
 
         <?php include 'footer.php'; ?>
     </main>
-    <!-- Adicione esse código JavaScript para inicializar o DataTables na sua tabela -->
+
+    <!-- JavaScript para inicializar o DataTables na tabela -->
     <script>
         $(document).ready(function() {
             $('#minhaTabela').DataTable({
@@ -422,6 +361,7 @@
         });
     </script>
 
+    <!-- JavaScript para pegar a informação do icone svg e se for tratado o status abrir o modal -->
     <script>
         $('svg.bi-pencil-square').on('click', function() {
             // Obtenha a linha da tabela que contém o elemento SVG clicado
@@ -437,6 +377,8 @@
                     showConfirmButton: false,
                     timer: 2000
                 });
+
+                // Se nao for finalizado o status, abrir o modal para status em andamento
             } else if (status.trim() == 'em andamento' || $(this).closest('tr').find('.status:before').text().trim() == '● em andamento') {
                 // Obtenha os valores das células da linha
                 var id1 = row.find('td:eq(0)').text();
@@ -448,7 +390,7 @@
                 $('#descricao').val(descricao);
                 $('#status').val(status);
 
-                // Exiba o modal
+                // Se nao for status finalizado e nem em andamento, entao o status é aberto , abrir o modal para status aberto
                 $('#meu-modal2').modal('show');
             } else if (status.trim() == 'aberto' || $(this).closest('tr').find('.status:before').text().trim() == '● aberto') {
                 // Obtenha os valores das células da linha
@@ -465,7 +407,7 @@
                 $('#req').val(req);
                 $('#modalStatus').val(status);
 
-                // Exiba o modal
+                // Exiba o modal sempre que os status estiver correto para abertura do modal
                 $('#meu-modal1').modal('show');
             }
         });
@@ -476,52 +418,10 @@
         });
     </script>
 
-    <script>
-        function contarCaracteres() {
-            var descricao = document.getElementById("descricao");
-            var contador = document.getElementById("contador");
-            var limite = 255;
-            var caracteresDigitados = descricao.value.length;
-            contador.innerHTML = caracteresDigitados + "/" + limite;
-            if (caracteresDigitados >= limite) {
-                contador.style.color = "red";
-            } else {
-                contador.style.color = "black";
-            }
-        }
-    </script>
-    <script>
-        const range = document.getElementById('myRange');
-        const rangeValue = document.getElementById('rangeValue');
-
-        // Define o valor inicial do span
-        rangeValue.textContent = range.value;
-
-        // Atualiza o valor do span sempre que o valor do input mudar
-        range.addEventListener('input', () => {
-            rangeValue.textContent = range.value;
-        });
-    </script>
-    <script>
-        const btnAtualizar = document.getElementById('btn-atualizar');
-        btnAtualizar.addEventListener('click', function() {
-            const spinner = this.querySelector('.spinner-border');
-            spinner.classList.remove('d-none');
-            location.reload();
-        });
-
-        window.addEventListener('load', function() {
-            const spinner = btnAtualizar.querySelector('.spinner-border');
-            spinner.classList.add('d-none');
-        });
-    </script>
-
-
-
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        //Incluir a conexao com o banco de dados
+        //conexao com o banco de dados
         $servername = "172.10.20.47";
         $usernameDB = "archer";
         $passwordDB = "B5n3Qz2vL7HAUs7z";
@@ -613,13 +513,8 @@
     <!-- Simplebar -->
     <script src="vendor/simplebar/dist/simplebar.min.js"></script>
 
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-
     <!-- Volt JS -->
     <script src="assets/js/volt.js"></script>
-
-
 
 </body>
 

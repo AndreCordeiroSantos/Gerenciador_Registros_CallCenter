@@ -9,9 +9,6 @@ $logado = $_SESSION['login'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php
-header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
-?>
 
 <head>
   <title>Inventário Xaxim</title>
@@ -21,16 +18,20 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-
-  <!-- DataTables CSS -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
 
   <!-- jQuery library -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- DataTables JS -->
   <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+  <!-- Biblioteca DataTables -->
+  <script type="text/javascript" src="assets/dataTables/datatables.min.js"></script>
+  <script src="assets/dataTables/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
+
+  <!-- CSS Datatables -->
+  <link rel="stylesheet" href="../../bibli/dataTables/Buttons-2.3.6/css/buttons.dataTables.min.css">
+  <!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />-->
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
@@ -50,9 +51,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
-
-
-
 
   <style>
     .red {
@@ -76,17 +74,23 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       color: white;
     }
 
-    .export-button {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
+    /* Estilos para o botão */
+    div.dt-buttons .btn-export-csv {
+      background-color: #141f2e;
+      width: 150px;
+      height: 28px;
+      margin-left: 30px;
+      line-height: 14px;
       cursor: pointer;
+      color: white;
+    }
+    div.dt-buttons :hover.btn-export-csv {
+      background-color: #243854;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+      line-height: 20px;
+      height: 28px;
     }
   </style>
 
@@ -237,7 +241,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
       }
 
       //consulta primeira tabela do ocs
-      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipsrc, drives.total, drives.free,
+      $sql = "SELECT name, bios.ssn, userid, workgroup, processort, memory, ipsrc, lastdate, drives.total, drives.free,
         (drives.free / drives.total) * 100 AS percent_free
           FROM hardware 
           JOIN bios ON hardware.id = bios.hardware_id
@@ -269,7 +273,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
       if ($result->num_rows > 0) {
         echo "<table id='minhatabela' class='display'>";
-        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Memória</th><th>IP ATUAL</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
+        echo "<thead><tr><th class='nome-logico'>Estação</th><th class='num-serie'>Num/Série</th><th>Baia</th><th class='userinv'>Usuário</th><th>Domínio</th><th class='processs'>Processador</th><th>Memória</th><th>IP ATUAL</th><th>Último Inventário</th><th>HD TOTAL</th><th>HD Livre</th><th>% Livre</th></tr></thead>";
         echo "<tbody>";
         while ($row = $result->fetch_assoc()) {
           $percentual_livre = ($row["free"] / $row["total"]) * 100;
@@ -281,7 +285,7 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           echo "<tr><td class='nome-logico'><a>" . $row["name"] . "</a></td><td class='num-serie'>" . $row["ssn"] . "</td><td>" . $baia . "</td><td class='userinv'>" . $row["userid"] . "</td><td>" . $row["workgroup"] . "</td>";
           // Use a função substr para exibir apenas os primeiros 20 caracteres do valor da coluna processort
           echo "<td class='processs'>" . substr($row["processort"], 9, 28) . "</td>";
-          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 1) . "%</td></tr>";
+          echo "<td>" . $row["memory"] . "</td><td>" . $row["ipsrc"] . "</td><td>" . $row["lastdate"] . "</td><td>" . $row["total"] . "</td><td>" . $row["free"] . "</td><td class='" . $cell_class . "'>" . round($percentual_livre, 2) . "%</td></tr>";
         }
         echo "</tbody>";
         echo "</table>";
@@ -316,7 +320,6 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
       <br>
     </div>
-    <button class="export-button" onclick="window.location.href='/archerx/public/wyntech/exportarcsv/exportinventario.php'">Exportar em CSV (XAXIM)</button>
     <br><br>
 
     <!-- Modal 1-->
@@ -329,21 +332,18 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           </div>
           <div class="modal-body">
             <form id="myForm" method="POST">
-              <label for=" nameInput">Clique para gerar informações dos Softwares da Estação.</label>
               <input class="form-control" type="text" id="nameInput" readonly="" style="display: none">
               <br>
+              <div id="result">
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
+              </div>
+            </form>
           </div>
-          <div id="result">
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id="submitButton">Gerar</button>
-          </div>
-          </form>
         </div>
       </div>
     </div>
-
-
 
     <?php include 'footer.php'; ?>
 
@@ -355,8 +355,10 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           "select": true,
           // Desative a ordenação inicial da tabela
           "order": [],
+          //página aberta incial
+          "pageLength": 15,
           // Opções de exibição de registros por página
-          "lengthMenu": [30, 50, 100, 500],
+          "lengthMenu": [15, 50, 70, 100, 200, 500],
           // Opção de paginação
           "paging": true,
           // Habilita a responsividade da tabela
@@ -365,8 +367,25 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
           language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
           },
+          dom: 'lBfrtip',
+          buttons: [{
+            extend: 'csv',
+            text: 'Exportar CSV',
+            className: 'btn-export-csv',
+            customize: function(csv) {
+              // Formata o CSV em UTF-8
+              csv = "\uFEFF" + csv;
+              // Altera o separador para ";"
+              csv = csv.replace(/,/g, ";");
+              // Remove as aspas das strings
+              csv = csv.replace(/"/g, "");
+              return csv;
+            }
+          }],
+
           // Desative a ordenação para a decima coluna (coluna do percentual livre)
           columns: [
+            null,
             null,
             null,
             null,
@@ -411,11 +430,8 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
         });
       });
     </script>
-  </main>
 
-  <!-- Adicione os scripts do DataTables -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  </main>
 
   <!-- Core -->
   <script src="vendor/@popperjs/core/dist/umd/popper.min.js"></script>
@@ -460,27 +476,27 @@ header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
 
   <!--exiba o modal para consultar os softwares-->
   <script>
-    function addClickEventToTable() {
-      $('#minhatabela tbody tr td:first-child').on('click', function() {
-        // Obtenha o valor da célula clicada
-        var name = $(this).text();
+    $(document).ready(function() {
+      function addClickEventToTable() {
+        $('#minhatabela tbody tr td:first-child').on('click', function() {
+          var name = $(this).text();
+          $('#nameInput').val(name);
+          $('#submitButton').trigger('click'); // Aciona o clique automático no botão "Gerar"
+          $('#submitButton').hide(); // Esconde o botão "Gerar"
+          $('#myModal').modal('show');
+        });
+      }
+      // Adicione o evento de clique na tabela
+      addClickEventToTable();
 
-        // Atualize o valor do campo de entrada no modal
-        $('#nameInput').val(name);
-
-        // Exiba o modal
-        $('#myModal').modal('show');
+      $('#myModal').on('hidden.bs.modal', function() {
+        $('#result').html('');
+        $('#nameInput').val('');
+        $('#submitButton').show(); // Mostra o botão "Gerar" quando o modal for fechado
       });
-    }
-    // Adicione o evento de clique na tabela
-    addClickEventToTable();
-
-    $('#myModal').on('hidden.bs.modal', function() {
-      // Limpa o resultado e o valor do input
-      $('#result').html('');
-      $('#nameInput').val('');
     });
   </script>
+
 </body>
 
 </html>

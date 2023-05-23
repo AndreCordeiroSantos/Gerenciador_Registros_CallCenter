@@ -39,20 +39,10 @@
 </script>";
   }
 
-  // Conecte-se ao banco de dados
-  $servername = "172.10.20.47";
-  $usernameDB = "archer";
-  $passwordDB = "B5n3Qz2vL7HAUs7z";
-  $dbname = "archerx";
-
-  $conn = mysqli_connect($servername, $usernameDB, $passwordDB, $dbname);
-  if (!$conn) {
-    die("Conexão falhou: " . mysqli_connect_error());
-  }
   ?>
 </body>
-
 </html>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,10 +53,8 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#ffffff">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-  <!-- Sweet Alert -->
-  <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+  <!-- Inclua o arquivo JavaScript do Clipboard.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 
   <!-- Notyf -->
   <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
@@ -123,9 +111,6 @@
 
 <body>
   <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-    <a class="navbar-brand me-lg-5" href="#">
-      <img class="navbar-brand-dark" src="assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
-    </a>
     <div class="d-flex align-items-center">
       <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -154,7 +139,6 @@
         <h4 style="color: #f46524;">Sistema P.X</h4>
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
-
         <?php include 'nav.php'; ?>
 
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
@@ -168,9 +152,10 @@
       <div class="container-fluid px-0">
         <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
           <div class="d-flex align-items-center">
-            <!-- Search form -->
+
+            <!-- Titulo da página -->
             <h1>Painel Principal</h1>
-            <!-- / Search form -->
+            <!-- Titulo da página -->
           </div>
           <div class="d-flex align-items-center">
           </div>
@@ -313,8 +298,8 @@
             <h2></h2>
             <input class="btn btn-primary" type="submit" value="Lançar Registro">
             <br>
-
           </form>
+          
           <?php
           if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //conectar ao banco de dados
@@ -408,7 +393,9 @@
           ?>
         </div>
       </div>
+
       <!--divisão da pagina-->
+
       <br><br>
       <div class="card-block2" style="display: inline-block; width: 50%;">
         <div class="card shadow border-1 text-left p-3">
@@ -416,7 +403,7 @@
 
           <?php
           // Consulta à tabela
-          $result = mysqli_query($conn, "SELECT * FROM dados_wyntech WHERE status='aberto' ORDER BY id DESC LIMIT 12");
+          $result = mysqli_query($conn, "SELECT * FROM dados_wyntech WHERE status='aberto' ORDER BY id DESC LIMIT 15");
 
           // Verifica se a consulta retornou algum resultado
           if (mysqli_num_rows($result) > 0) {
@@ -472,6 +459,45 @@
         </div>
       </div>
     </div>
+    <script>
+      // Obtém todas as linhas da tabela
+      var rows = document.getElementsByTagName("tr");
+
+      // Percorre todas as linhas, exceto o cabeçalho
+      for (var i = 1; i < rows.length; i++) {
+        // Adiciona um evento de clique a cada linha
+        rows[i].addEventListener("click", function() {
+          // Obtém os valores das colunas "Nome Lógico" e "Num/Serie"
+          var nomeLogico = this.cells[1].innerHTML;
+          var numSerie = this.cells[2].innerHTML;
+
+          // Concatena os valores das colunas
+          var textoCopiar = nomeLogico + " - " + numSerie;
+
+          // Cria um elemento de botão temporário
+          var tempButton = document.createElement("button");
+          tempButton.setAttribute("data-clipboard-text", textoCopiar);
+
+          // Inicializa o Clipboard.js com o botão temporário
+          new ClipboardJS(tempButton);
+
+          // Simula o clique no botão para copiar o texto
+          tempButton.click();
+
+          // Remove o botão temporário
+          tempButton.remove();
+
+          // Exibe o SweetAlert com a mensagem de confirmação
+          Swal.fire({
+            icon: 'success',
+            title: "Copiado",
+            text: textoCopiar,
+            timer: 1000, // Tempo em milissegundos (2 segundos)
+            showConfirmButton: false
+          });
+        });
+      }
+    </script>
 
     <?php include 'footer.php'; ?>
   </main>
@@ -508,180 +534,11 @@
   <!-- Notyf -->
   <script src="vendor/notyf/notyf.min.js"></script>
 
-  <!-- Simplebar -->
-  <script src="vendor/simplebar/dist/simplebar.min.js"></script>
-
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
   <!-- Volt JS -->
   <script src="assets/js/volt.js"></script>
 
   <script src="js/custom2.js"></script>
-  <script>
-    $(document).ready(function() {
-      // Manter colapsos abertos quando submenu está ativo
-      $('.collapse .submenu').on('show.bs.collapse', function() {
-        $(this).closest('.collapse').addClass('show');
-      });
 
-      $('.collapse .submenu').on('hide.bs.collapse', function() {
-        $(this).closest('.collapse').removeClass('show');
-      });
-    });
-  </script>
-  <script>
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-primary',
-        cancelButton: 'btn btn-gray'
-      },
-      buttonsStyling: false
-    });
-
-    // SweetAlert 2
-    document.getElementById('basicAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Basic alert',
-        'You clicked the button!'
-      )
-    });
-
-    document.getElementById('infoAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Info alert',
-        'You clicked the button!',
-        'info'
-      )
-    });
-
-    document.getElementById('successAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: 'Chamado Lançado com sucesso',
-        showConfirmButton: true,
-        timer: 3500
-      })
-    });
-
-    document.getElementById('warningAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Warning alert',
-        'You clicked the button!',
-        'warning'
-      )
-    });
-
-    document.getElementById('dangerAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        footer: '<a href>Why do I have this issue?</a>'
-      })
-    });
-
-    document.getElementById('questionAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'The Internet?',
-        'That thing is still around?',
-        'question'
-      );
-    });
-
-    document.getElementById('notifyTopLeft').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'left',
-          y: 'top',
-        },
-        types: [{
-          type: 'info',
-          background: '#0948B3',
-          icon: {
-            className: 'fas fa-info-circle',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'info',
-        message: 'Send us <b>an email</b> to get support'
-      });
-    });
-
-    document.getElementById('notifyTopRight').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'right',
-          y: 'top',
-        },
-        types: [{
-          type: 'error',
-          background: '#FA5252',
-          icon: {
-            className: 'fas fa-times',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'error',
-        message: 'This action is not allowed.'
-      });
-    });
-
-    document.getElementById('notifyBottomLeft').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'left',
-          y: 'bottom',
-        },
-        types: [{
-          type: 'warning',
-          background: '#F5B759',
-          icon: {
-            className: 'fas fa-exclamation-triangle',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'warning',
-        message: 'This might be dangerous.'
-      });
-    });
-
-    document.getElementById('notifyBottomRight').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'right',
-          y: 'bottom',
-        },
-        types: [{
-          type: 'info',
-          background: '#262B40',
-          icon: {
-            className: 'fas fa-comment-dots',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'info',
-        message: 'John Garreth: Are you ready for the presentation?'
-      });
-    });
-  </script>
 </body>
 
 </html>

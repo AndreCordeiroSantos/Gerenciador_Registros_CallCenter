@@ -6,7 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
+    <style>
+        .mensagem-erro {
+          color: red;
+        }
+      </style>
     <!-- Inclua o CSS e o JavaScript do Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -14,8 +18,64 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var senhaInput = document.getElementById('senha');
+          var mensagemErro = document.getElementById('mensagem-erro');
+      
+          senhaInput.addEventListener('input', function () {
+            var senha = this.value;
+      
+            var caracteresEspeciais = ['.', ',', '(', ')', '[', ']', '~', '´', '`', "'", '#', '@', '$', '%', '¨', '&', '*', '<', '>', '/', '\\', '-', '+', ':', ';', '?'];
+      
+            var contemCaractereEspecial = caracteresEspeciais.some(function (caractere) {
+              return senha.includes(caractere);
+            });
+      
+            if (contemCaractereEspecial) {
+              this.classList.add('error');
+              mensagemErro.textContent = 'Caractere inválido.';
+            } else {
+              this.classList.remove('error');
+              mensagemErro.textContent = '';
+            }
+          });
+        });
+      </script>
+
+    <style>
+        .error {
+            animation: shake 0.5s;
+            border-color: #f81212;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -54,13 +114,13 @@
                 <form method="POST" action="login.php">
                     <h2>faça o seu login agora</h2>
                     <br>
-                    <input type="text" name="login" id="login" placeholder="seu login:">
-                    <input type="password" name="senha" id="senha" placeholder="sua senha:">
+                    <input type="text" name="login" id="login" placeholder="informe seu login:">
+
+                    <input type="password" name="senha" id="senha" placeholder="informe sua senha:">
+                    <span id="mensagem-erro" class="mensagem-erro"></span>
                     <br><br>
                     <input type="submit" class="submit" name="submit" value="Entrar">
                 </form>
-
-
             </div>
         </div>
     </div>
