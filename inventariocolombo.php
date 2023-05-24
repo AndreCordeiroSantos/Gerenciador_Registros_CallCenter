@@ -31,7 +31,7 @@ $logado = $_SESSION['login'];
 
   <!-- CSS Datatables -->
   <link rel="stylesheet" href="../../bibli/dataTables/Buttons-2.3.6/css/buttons.dataTables.min.css">
- <!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />-->
+  <!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />-->
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
@@ -85,6 +85,7 @@ $logado = $_SESSION['login'];
       cursor: pointer;
       color: white;
     }
+
     div.dt-buttons :hover.btn-export-csv {
       background-color: #243854;
     }
@@ -234,14 +235,21 @@ $logado = $_SESSION['login'];
                   <img class="avatar rounded-circle" alt="Image placeholder" src="img/149071.png">
                   <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                     <span class="mb-0 font-small fw-bold text-gray-900">
-                      <?php
-                      echo "<h4> $logado </h4>"
-                      ?></span>
+                      <h5> <?php
+                            echo $_SESSION['nome'];
+                            ?>
+                    </span></h5>
                   </div>
                 </div>
               </a>
               <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-
+                <a class="dropdown-item d-flex align-items-center" href="agenda.php">
+                  <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                  </svg>
+                  Agenda Perfil
+                </a>
+                <div role="separator" class="dropdown-divider my-1"></div>
                 <a class="dropdown-item d-flex align-items-center" href="logoff.php">
                   <svg class="dropdown-icon text-danger me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="#">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">

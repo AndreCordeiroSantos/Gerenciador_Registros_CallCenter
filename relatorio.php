@@ -116,7 +116,7 @@
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
         <?php include 'nav.php'; ?>
-        
+
         <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         <br>
       </ul>
@@ -143,14 +143,21 @@
                   <img class="avatar rounded-circle" alt="Image placeholder" src="img/149071.png">
                   <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                     <span class="mb-0 font-small fw-bold text-gray-900">
-                      <?php
-                      echo "<h4> $logado </h4>"
-                      ?></span>
+                      <h5> <?php
+                            echo $_SESSION['nome'];
+                            ?>
+                    </span></h5>
                   </div>
                 </div>
               </a>
               <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-
+                <a class="dropdown-item d-flex align-items-center" href="agenda.php">
+                  <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                  </svg>
+                  Agenda Perfil
+                </a>
+                <div role="separator" class="dropdown-divider my-1"></div>
                 <a class="dropdown-item d-flex align-items-center" href="logoff.php">
                   <svg class="dropdown-icon text-danger me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="#">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
@@ -285,159 +292,6 @@
   <!-- Volt JS -->
   <script src="assets/js/volt.js"></script>
 
-
-  <script>
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-primary',
-        cancelButton: 'btn btn-gray'
-      },
-      buttonsStyling: false
-    });
-
-    // SweetAlert 2
-    document.getElementById('basicAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Basic alert',
-        'You clicked the button!'
-      )
-    });
-
-    document.getElementById('infoAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Info alert',
-        'You clicked the button!',
-        'info'
-      )
-    });
-
-    document.getElementById('successAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: 'Chamado Lançado com sucesso',
-        showConfirmButton: true,
-        timer: 3500
-      })
-    });
-
-    document.getElementById('warningAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Warning alert',
-        'You clicked the button!',
-        'warning'
-      )
-    });
-
-    document.getElementById('dangerAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        footer: '<a href>Why do I have this issue?</a>'
-      })
-    });
-
-    document.getElementById('questionAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'The Internet?',
-        'That thing is still around?',
-        'question'
-      );
-    });
-
-    document.getElementById('notifyTopLeft').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'left',
-          y: 'top',
-        },
-        types: [{
-          type: 'info',
-          background: '#0948B3',
-          icon: {
-            className: 'fas fa-info-circle',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'info',
-        message: 'Send us <b>an email</b> to get support'
-      });
-    });
-
-    document.getElementById('notifyTopRight').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'right',
-          y: 'top',
-        },
-        types: [{
-          type: 'error',
-          background: '#FA5252',
-          icon: {
-            className: 'fas fa-times',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'error',
-        message: 'This action is not allowed.'
-      });
-    });
-
-    document.getElementById('notifyBottomLeft').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'left',
-          y: 'bottom',
-        },
-        types: [{
-          type: 'warning',
-          background: '#F5B759',
-          icon: {
-            className: 'fas fa-exclamation-triangle',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'warning',
-        message: 'This might be dangerous.'
-      });
-    });
-
-    document.getElementById('notifyBottomRight').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'right',
-          y: 'bottom',
-        },
-        types: [{
-          type: 'info',
-          background: '#262B40',
-          icon: {
-            className: 'fas fa-comment-dots',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'info',
-        message: 'John Garreth: Are you ready for the presentation?'
-      });
-    });
-  </script>
 
 </body>
 

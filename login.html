@@ -6,11 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        .mensagem-erro {
-          color: red;
-        }
-      </style>
+
     <!-- Inclua o CSS e o JavaScript do Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -25,30 +21,58 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-          var senhaInput = document.getElementById('senha');
-          var mensagemErro = document.getElementById('mensagem-erro');
-      
-          senhaInput.addEventListener('input', function () {
-            var senha = this.value;
-      
-            var caracteresEspeciais = ['.', ',', '(', ')', '[', ']', '~', '´', '`', "'", '#', '@', '$', '%', '¨', '&', '*', '<', '>', '/', '\\', '-', '+', ':', ';', '?'];
-      
-            var contemCaractereEspecial = caracteresEspeciais.some(function (caractere) {
-              return senha.includes(caractere);
+            var loginInput = document.getElementById('login');
+            var senhaInput = document.getElementById('senha');
+            var mensagemErro = document.getElementById('mensagem-erro');
+            var entrarButton = document.getElementById('entrar-button');
+
+            loginInput.addEventListener('input', function () {
+                var login = this.value;
+
+                var caracteresEspeciais = ['.', ',', '(', ')', '[', ']', '~', '´', '!', '`', "'", '#', '@', '$', '%', '¨', '&', '*', '<', '>', '/', '\\', '-', '+', ':', ';', '?'];
+
+                var contemCaractereEspecial = caracteresEspeciais.some(function (caractere) {
+                    return login.includes(caractere);
+                });
+
+                if (contemCaractereEspecial) {
+                    this.classList.add('error');
+                    mensagemErro.textContent = 'Caractere inválido.';
+                    entrarButton.disabled = true; // Desativa o botão de Entrar
+                } else {
+                    this.classList.remove('error');
+                    mensagemErro.textContent = '';
+                    entrarButton.disabled = false; // Ativa o botão de Entrar
+                }
             });
-      
-            if (contemCaractereEspecial) {
-              this.classList.add('error');
-              mensagemErro.textContent = 'Caractere inválido.';
-            } else {
-              this.classList.remove('error');
-              mensagemErro.textContent = '';
-            }
-          });
+
+            senhaInput.addEventListener('input', function () {
+                var senha = this.value;
+
+                var caracteresEspeciais = ['.', ',', '(', ')', '[', ']', '~', '´', '!', '`', "'", '#', '@', '$', '%', '¨', '&', '*', '<', '>', '/', '\\', '-', '+', ':', ';', '?'];
+
+                var contemCaractereEspecial = caracteresEspeciais.some(function (caractere) {
+                    return senha.includes(caractere);
+                });
+
+                if (contemCaractereEspecial) {
+                    this.classList.add('error');
+                    mensagemErro.textContent = 'Caractere inválido.';
+                    entrarButton.disabled = true; // Desativa o botão de Entrar
+                } else {
+                    this.classList.remove('error');
+                    mensagemErro.textContent = '';
+                    entrarButton.disabled = false; // Ativa o botão de Entrar
+                }
+            });
         });
-      </script>
+    </script>
 
     <style>
+        .mensagem-erro {
+            color: red;
+        }
+
         .error {
             animation: shake 0.5s;
             border-color: #f81212;
@@ -115,9 +139,9 @@
                     <h2>faça o seu login agora</h2>
                     <br>
                     <input type="text" name="login" id="login" placeholder="informe seu login:">
-
-                    <input type="password" name="senha" id="senha" placeholder="informe sua senha:">
                     <span id="mensagem-erro" class="mensagem-erro"></span>
+                    <input type="password" name="senha" id="senha" placeholder="informe sua senha:">
+
                     <br><br>
                     <input type="submit" class="submit" name="submit" value="Entrar">
                 </form>

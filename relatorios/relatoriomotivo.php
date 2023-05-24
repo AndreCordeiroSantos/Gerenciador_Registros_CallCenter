@@ -37,6 +37,11 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
     <!-- Volt CSS -->
     <link type="text/css" href="/archerx/public/wyntech/css/volt.css" rel="stylesheet">
 
+    <!-- Inclua essas bibliotecas no cabeçalho do seu arquivo HTML -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -125,86 +130,68 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
         <div role="separator" class="dropdown-divider my-1"></div>
         <div class="container">
             <div class="card card-body border-0 shadow mb-4 mb-xl-0">
-                <?php
 
-                //conectar ao banco de dados
-                $servername = "172.10.20.47";
-                $usernameDB = "archer";
-                $passwordDB = "B5n3Qz2vL7HAUs7z";
-                $dbname = "archerx";
+                <table id="minhaTabela">
+                    <thead>
+                        <tr>
+                            <th>Nome Lógico</th>
+                            <th>Num/Serie</th>
+                            <th>usuario</th>
+                            <th>motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
 
-                $conn = mysqli_connect($servername, $usernameDB, $passwordDB, $dbname);
-                if (!$conn) {
-                    die("Conexão falhou: " . mysqli_connect_error());
-                }
-
-
-                // configura o total que aparece na página
-                $results_per_page = 3;
-
-                $page = isset($_GET['page']) ? $_GET['page'] : 1;
-                $offset = ($page - 1) * $results_per_page;
-
-
-                
-                // Verificar se o formulário foi enviado
-                if (isset($_POST['submit'])) {
-                    // Obter o valor da coluna "motivo" enviado pelo formulário
-                    $motivo = mysqli_real_escape_string($conn, $_POST['motivo']);
-
-                    // Executar a consulta SQL para buscar as informações
-                    $sql = "SELECT et, numserie, data, usuario, motivo, req, causa, solucao, descricao FROM dados_wyntech
-                     WHERE motivo = '$motivo'
-                     LIMIT $results_per_page OFFSET $offset";
-                    $result = mysqli_query($conn, $sql);
-
-                    // Exibir os resultados na tela
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "Nome Lógico: " . $row["et"] . "<br>";
-                            echo "Num/Serie: " . $row["numserie"] . "<br>";
-                            echo "Data: " . $row["data"] . "<br>";
-                            echo "Usuário: " . $row["usuario"] . "<br>";
-                            echo "Ocorrência: " . $row["motivo"] . "<br>";
-                            echo "Req: " . $row["req"] . "<br>";
-                            echo "Causa: " . $row["causa"] . "<br>";
-                            echo "Solução: " . $row["solucao"] . "<br>";
-                            echo "Observação: " . $row["descricao"] . "<br>";
-                            echo "<h2></h2>";
-                            echo "<br>";
-                        }
-                    } else {
-                        echo "Nenhum resultado encontrado.";
-                    }
-                }
-
-                // Fechar a conexão com o banco de dados
-                mysqli_close($conn);
-                ?>
-                <nav aria-label="Navegação">
-                    <ul class="pagination">
-                        <li class="page-item active">
-                            <a class="page-link" aria-label="Anterior" href="?page=<?php echo $page - 1; ?>">Anterior </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="/archerx/public/wyntech/relatorios/relatoriomotivo.php?page=1">1</a></li>
-                        <li class="page-item"><a class="page-link" href="/archerx/public/wyntech/relatorios/relatoriomotivo.php?page=2">></a></li>
-                        <li class="page-item active">
-                            <a class="page-link" aria-label="Próximo" href="?page=<?php echo $page + 1; ?>">Próximo</a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
-        <br>
-        <div class="container">
-        <br>
-            <button class="btn btn-primary" onclick="goBack()">Voltar</button>
-            <script>
-                function goBack() {
-                    window.history.back();
-                }
-            </script>
-        </div>
+
+        <!-- Adicione esse código JavaScript para inicializar o DataTables na tabela -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#minhaTabela').DataTable({
+                    // idioma portugues BR
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+                    },
+                    columns: [{
+                            data: 'et'
+                        },
+                        {
+                            data: 'numserie'
+                        },
+                        {
+                            data: 'data'
+                        },
+                        {
+                            data: 'usuario'
+                        },
+                        {
+                            data: 'motivo'
+                        }
+                    ],
+                    "pageLength": 15,
+                    "lengthMenu": [15, 30, 50, 100],
+                    "order": [
+                        [0, 'desc']
+                    ],
+                    ajax: {
+                        url: '/archerx/public/wyntech/funcoes/relatorio_motivo.php',
+                        type: 'POST',
+                        data: function(data) {
+                            // Obter o motivo a partir de um elemento do formulário
+                            var motivo = $('#motivo').val();
+
+                            // Adicionar o motivo aos dados enviados pelo Ajax
+                            data.motivo = motivo;
+                        },
+                        dataSrc: ''
+                    },
+                    rowId: 'id'
+                });
+            });
+        </script>
 
         <div role="separator" class="dropdown-divider my-1"></div>
         <?php include '/archer/public/wyntech/footer.php'; ?>
@@ -254,7 +241,6 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
 
     <!-- scrip para puxar o numero de serie da maquina na informação do formulário-->
     <script src="/archerx/public/wyntech/js/custom3.js"></script>
-
 
 </body>
 

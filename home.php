@@ -139,9 +139,10 @@ $logado = $_SESSION['login'];
                                     <img class="avatar rounded-circle" alt="Image placeholder" src="img/149071.png">
                                     <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                                         <span class="mb-0 font-small fw-bold text-gray-900">
-                                            <?php
-                                            echo "<h4> $logado </h4>"
-                                            ?></span>
+                                            <h5> <?php
+                                                    echo $_SESSION['nome'];
+                                                    ?>
+                                        </span></h5>
                                     </div>
                                 </div>
                             </a>
@@ -182,7 +183,8 @@ $logado = $_SESSION['login'];
                 </div>
                 <br>
                 <h6>Algumas ferramentas mencionadas, ainda estão em desenvolvimento</h6>
-                <h6>e as ferramentas prontas podem apresentar </h6><h5>BUGS.</h5>
+                <h6>e as ferramentas prontas podem apresentar </h6>
+                <h5>BUGS.</h5>
                 <br>
                 <h6>Caso encontre algum bug, reporte ao responsável.</h6>
                 <br><br><br>

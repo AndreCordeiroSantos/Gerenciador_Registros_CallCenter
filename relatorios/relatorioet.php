@@ -204,16 +204,16 @@
 				// Fechar a conexão com o banco de dados
 				mysqli_close($conn);
 				?>
+				<BR>
+				<div>
+					<button onclick="goBack()" class="btn btn-gray-800 mt-2 animate-up-2">Voltar</button>
+					<script>
+						function goBack() {
+							window.history.back();
+						}
+					</script>
+				</div>
 			</div>
-		</div>
-
-		<div class="container">
-			<button onclick="goBack()" class="btn btn-gray-800 mt-2 animate-up-2">Voltar</button>
-			<script>
-				function goBack() {
-					window.history.back();
-				}
-			</script>
 		</div>
 		<BR><BR>
 		<?php include 'footer.php'; ?>

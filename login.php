@@ -7,7 +7,7 @@
 	<!-- Sweet Alerts 2 -->
 	<script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
-	
+
 </head>
 
 <body>
@@ -51,21 +51,22 @@
             });
           </script>';
 		} else {
-			$_SESSION['login'] = $login;
-			$_SESSION['senha'] = $senha;
-			$logado = $_SESSION['login'];
-
-			// Fetch the user data from the database
 			$user = mysqli_fetch_assoc($result);
 
 			$_SESSION['login'] = $login;
 			$_SESSION['senha'] = $senha;
 			$_SESSION['tipo'] = $user['tipo'];
+			$_SESSION['nome'] = $user['nome'];
+			$_SESSION['id'] = $user['id'];
+			$logado = $_SESSION['login'];
+			$login_nome = $_SESSION['nome'];
+			$id = $_SESSION['id'];
+
 			// Check the user's type and redirect them to the appropriate page
 			if ($user['tipo'] == 'admin') {
 				echo "<script>
 				Swal.fire({
-					title: 'Bem vindo $logado',
+					title: 'Bem vindo $login_nome',
 					text: 'Login feito com sucesso.',
 					icon: 'success',
 					showConfirmButton: false,
@@ -77,7 +78,7 @@
 			} else {
 				echo "<script>
 				Swal.fire({
-					title: 'Bem vindo $logado',
+					title: 'Bem vindo $login_nome',
 					text: 'Acesso feito com sucesso.',
 					icon: 'success',
 					showConfirmButton: false,
@@ -90,7 +91,7 @@
 			if ($user['tipo'] == 'visitante') {
 				echo "<script>
 				Swal.fire({
-					title: 'Bem vindo $logado',
+					title: 'Bem vindo $login_nome',
 					text: 'Acesso feito com sucesso.',
 					icon: 'success',
 					showConfirmButton: false,

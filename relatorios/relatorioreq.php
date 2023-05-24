@@ -194,17 +194,18 @@
 					echo 'Nenhum registro encontrado.';
 				}
 				?>
-
+				<br>
+				<div>
+					<button onclick="goBack()" class="btn btn-gray-800 mt-2 animate-up-2">Voltar</button>
+					<script>
+						function goBack() {
+							window.history.back();
+						}
+					</script>
+				</div>
 			</div>
 		</div>
-		<div class="container">
-			<button onclick="goBack()" class="btn btn-gray-800 mt-2 animate-up-2">Voltar</button>
-			<script>
-				function goBack() {
-					window.history.back();
-				}
-			</script>
-		</div>
+
 		<?php include 'footer.php'; ?>
 
 	</main>
