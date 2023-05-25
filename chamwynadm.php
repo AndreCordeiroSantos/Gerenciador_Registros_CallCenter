@@ -27,7 +27,7 @@
 
   $logado = $_SESSION['login'];
   // Check the user's type and restrict access to this page if necessary
-  if ($_SESSION['tipo'] != 'admin') {
+  if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'gerencia') {
     echo "<script>
   Swal.fire({
       title: 'Acesso Negado!',
@@ -59,6 +59,7 @@
 
   <!-- Notyf -->
   <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
+  <script src="vendor/notyf/notyf.min.js"></script>
 
   <!-- Volt CSS -->
   <link type="text/css" href="css/volt.css" rel="stylesheet">
@@ -309,66 +310,85 @@
             if (mysqli_num_rows($resultEtNumserie) == 0) {
               // et e numserie não correspondem na tabela consulta2
               echo "<script>
-              Swal.fire({
-                icon: 'error',
-                title: 'Erro!',
-                text: 'As informações, Nome Lógico, Num Série, não correspondem.',
-                showConfirmButton: false,
-                timer: 2000
+              new Notyf().error({
+                message: 'As informações, Nome Lógico, Num Série, não correspondem.',
+                position: {
+                  x: 'left',
+                  y: 'top',
+              },
               });
-                      </script>";
+              </script>";
             } else {
               // Inserir informações no banco de dados
               $sql = "INSERT INTO dados_wyntech (et, numserie, data, motivo, causa, solucao, status, descricao) 
               VALUES 
               ('PR6534ET$et', '$numserie', now(), '$motivo', '$causa', '$solucao', 'aberto', '$descricao')";
 
-              //Verifica se todo o formulário foi preenchido
               if ($et == "") {
                 echo "<script>
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Erro!',
-                  text: 'Por favor , preencha o nome lógico.',
-                  showConfirmButton: false,
-                  timer: 2000
-                });
-            </script>";
+                  new Notyf().error({
+                    message: 'Por favor, preencha o nome lógico.',
+                    position: {
+                      x: 'left',
+                      y: 'top',
+                  },
+                  });
+                  setTimeout(function(){
+                    window.location.href = 'chamwynadm.php';
+                  }, 2000);
+                  </script>";
               } else {
                 if ($numserie == "") {
                   echo "<script>
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Erro!',
-                    text: 'Por favor , preencha o número de série.',
-                    showConfirmButton: false,
-                    timer: 2000
-                  });
-                  </script>";
+                    new Notyf().error({
+                      message: 'Por favor, preencha o número de série.',
+                      position: {
+                        x: 'left',
+                        y: 'top',
+                    },
+                    });
+                    setTimeout(function(){
+                      window.location.href = 'chamwynadm.php';
+                    }, 2000);
+                    </script>";
                 } else {
                   if ($motivo == "") {
                     echo "<script>
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Erro!',
-                      text: 'Por favor , coloque a ocorrência do chamado.',
-                      showConfirmButton: false,
-                      timer: 2000
-                    });
-                        </script>";
+                      new Notyf().error({
+                        message: 'Por favor, coloque a ocorrência do chamado.',
+                        position: {
+                          x: 'left',
+                          y: 'top',
+                      },
+                      });
+                      setTimeout(function(){
+                        window.location.href = 'chamwynadm.php';
+                      }, 2000);
+                      </script>";
                   } else {
                     if (mysqli_query($conn, $sql)) {
                       echo "<script>
-                              Swal.fire({
-                                  title: 'Sucesso!',
-                                  text: 'Chamado Lançado com sucesso',
-                                  icon: 'success'
-                              }).then((result) => {
-                                  window.location.href = 'chamwynadm.php';
-                              });
-                          </script>";
+                      new Notyf().success({
+                        message: 'Chamado registrado com sucesso.',
+                        position: {
+                          x: 'right',
+                          y: 'top',
+                      },
+                      });
+                      setTimeout(function(){
+                        window.location.href = 'chamwynadm.php';
+                      }, 2000);
+                      </script>";
                     } else {
-                      echo "Erro ao registrar informação: " . mysqli_error($conn);
+                      echo "<script>
+                      new Notyf().error({
+                        message: 'Erro ao registrar informação: " . mysqli_error($conn) . "',
+                        position: {
+                          x: 'left',
+                          y: 'top',
+                      },
+                      });
+                      </script>";
                     }
                   }
                 }

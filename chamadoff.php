@@ -40,7 +40,7 @@
 
   $logado = $_SESSION['login'];
   // chekaro tipo do usuário
-  if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
+  if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia') {
     echo "<script>
   Swal.fire({
       title: 'Acesso Negado!',
@@ -86,6 +86,7 @@
 
   <!-- Notyf -->
   <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
+  <script src="vendor/notyf/notyf.min.js"></script>
 
   <!-- Volt CSS -->
   <link type="text/css" href="css/volt.css" rel="stylesheet">
@@ -272,7 +273,7 @@
 
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          //conectar ao banco de dados
+          // Conectar ao banco de dados
           $servername = "172.10.20.47";
           $usernameDB = "archer";
           $passwordDB = "B5n3Qz2vL7HAUs7z";
@@ -298,14 +299,17 @@
           if (mysqli_num_rows($result) > 0) {
             // req já existe no banco de dados
             echo "<script>
-            Swal.fire({
-                title: 'Erro!',
-                text: 'Essa REQ já foi registrada, por favor, insira uma REQ válida.',
-                icon: 'error'
-            }).then((result) => {
-                window.location.href = 'chamadoff.php';
+            new Notyf().error({
+              message: 'Essa Req, ja foi registrada.',
+              position: {
+                x: 'left',
+                y: 'top',
+            },
             });
-        </script>";
+            setTimeout(function(){
+              window.location.href = 'chamwynadm.php';
+            }, 2000);
+            </script>";
           } else {
             // Verificar se et corresponde a numserie na tabela consulta2
             $checkEtNumserie = "SELECT * FROM consulta2 WHERE et='$et' AND numserie='$numserie'";
@@ -313,99 +317,110 @@
             if (mysqli_num_rows($resultEtNumserie) == 0) {
               // et e numserie não correspondem na tabela consulta2
               echo "<script>
-              Swal.fire({
-                icon: 'error',
-                title: 'Erro!',
-                text: 'As informações, Nome Lógico, Num Série, não correspondem.',
-                showConfirmButton: false,
-                timer: 2000
+              new Notyf().error({
+                message: 'As informações, Nome Lógico, Num Série, não correspondem.',
+                position: {
+                  x: 'left',
+                  y: 'top',
+              },
               });
-                      </script>";
+              </script>";
             } else {
               // Inserir informações no banco de dados
               $sql = "INSERT INTO dados_wyntech (et, numserie, data, usuario, motivo, status, req, descricao) 
-                VALUES ('PR6534ET$et', '$numserie', now(), '$usuario', '$motivo', 'registrado', '$req', '$descricao')";
+        VALUES ('PR6534ET$et', '$numserie', now(), '$usuario', '$motivo', 'registrado', '$req', '$descricao')";
 
-              //Verifica se todo o formulário foi preenchido corretamente, se estiver ok, ele executa
+              // Verifica se todo o formulário foi preenchido corretamente, se estiver ok, ele executa
               if ($et == "") {
                 echo "<script>
-            Swal.fire({
-                title: 'Erro!',
-                text: 'Campo ET não preenchido.',
-                icon: 'error'
-            }).then((result) => {
-                window.location.href = 'chamadoff.php';
-            });
-        </script>";
+                new Notyf().error({
+                  message: 'Campo Nome Lógico, nao preenchido.',
+                  position: {
+                    x: 'left',
+                    y: 'top',
+                },
+                });
+                </script>";
               } else {
                 if ($numserie == "") {
                   echo "<script>
-                Swal.fire({
-                    title: 'Erro!',
-                    text: 'Campo Número de Série nao preenchido.',
-                    icon: 'error'
-                }).then((result) => {
-                    window.location.href = 'chamadoff.php';
-                });
-            </script>";
+                  new Notyf().error({
+                    message: 'Campo Número de Série, não preenchido.',
+                    position: {
+                      x: 'left',
+                      y: 'top',
+                  },
+                  });
+                  </script>";
                 } else {
                   if ($motivo == "") {
                     echo "<script>
-                    Swal.fire({
-                        title: 'Erro!',
-                        text: 'Campo de Ocorrência não preenchido.',
-                        icon: 'error'
-                    }).then((result) => {
-                        window.location.href = 'chamadoff.php';
+                    new Notyf().error({
+                      message: 'Campo de ocorrência, não preenchido.',
+                      position: {
+                        x: 'left',
+                        y: 'top',
+                    },
                     });
-                </script>";
+                    </script>";
                   } else {
                     if ($usuario == "") {
                       echo "<script>
-                        Swal.fire({
-                            title: 'Erro!',
-                            text: 'Por favor selecione o usuario, para registrar o chamado.',
-                            icon: 'error'
-                        }).then((result) => {
-                            window.location.href = 'chamadoff.php';
-                        });
-                    </script>";
+                      new Notyf().error({
+                        message: 'Selecione um usuário.',
+                        position: {
+                          x: 'left',
+                          y: 'top',
+                      },
+                      });
+                      </script>";
                     } else {
                       if (substr($req, 0, 3) !== "REQ") {
                         $req = "REQ" . $req;
                         echo "<script>
-                            Swal.fire({
-                                title: 'Erro!',
-                                text: 'Por favor, insira a REQ CORRETAMENTE',
-                                icon: 'error'
-                            }).then((result) => {
-                                window.location.href = 'chamadoff.php';
-                            });
+                        new Notyf().error({
+                          message: 'Insira a REQ, corretamente.',
+                          position: {
+                            x: 'left',
+                            y: 'top',
+                        },
+                        });
                         </script>";
                       } else {
                         if ($descricao == "") {
                           echo "<script>
-                                Swal.fire({
-                                    title: 'Erro!',
-                                    text: 'Obrigatório descrever uma descrição para o chamado.',
-                                    icon: 'error'
-                                }).then((result) => {
-                                    window.location.href = 'chamadoff.php';
-                                });
-                            </script>";
+                          new Notyf().error({
+                            message: 'Preencha uma observação.',
+                            position: {
+                              x: 'left',
+                              y: 'top',
+                          },
+                          });
+                          </script>";
                         } else {
                           if (mysqli_query($conn, $sql)) {
                             echo "<script>
-                                    Swal.fire({
-                                        title: 'Sucesso!',
-                                        text: 'Informação Registrada com sucesso.',
-                                        icon: 'success'
-                                    }).then((result) => {
-                                        window.location.href = 'chamadoff.php';
-                                    });
-                                </script>";
+                            new Notyf().success({
+                              message: 'Chamado registrado com sucesso.',
+                              position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+                            });
+                            setTimeout(function(){
+                              window.location.href = 'chamadoff.php';
+                            }, 2000);
+                            </script>";
                           } else {
-                            echo "Erro ao registrar informação: " . mysqli_error($conn);
+                            echo "<script>
+                            new Notyf().error({
+                              message: 'Erro ao registrar informação: " . mysqli_error($conn) . "',
+                              position: {
+                                x: 'left',
+                                y: 'top',
+                            },
+                            });
+                            </script>";
                           }
                         }
                       }
@@ -417,6 +432,7 @@
           }
         }
         ?>
+
 
       </div>
     </div>
@@ -466,159 +482,6 @@
   <!-- Volt JS -->
   <script src="assets/js/volt.js"></script>
   <script src="js/custom3.js"></script>
-
-  <script>
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-primary',
-        cancelButton: 'btn btn-gray'
-      },
-      buttonsStyling: false
-    });
-
-    // SweetAlert 2
-    document.getElementById('basicAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Basic alert',
-        'You clicked the button!'
-      )
-    });
-
-    document.getElementById('infoAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Info alert',
-        'You clicked the button!',
-        'info'
-      )
-    });
-
-    document.getElementById('successAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: 'Chamado Lançado com sucesso',
-        showConfirmButton: true,
-        timer: 3500
-      })
-    });
-
-    document.getElementById('warningAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'Warning alert',
-        'You clicked the button!',
-        'warning'
-      )
-    });
-
-    document.getElementById('dangerAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        footer: '<a href>Why do I have this issue?</a>'
-      })
-    });
-
-    document.getElementById('questionAlert').addEventListener('click', function() {
-      swalWithBootstrapButtons.fire(
-        'The Internet?',
-        'That thing is still around?',
-        'question'
-      );
-    });
-
-    document.getElementById('notifyTopLeft').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'left',
-          y: 'top',
-        },
-        types: [{
-          type: 'info',
-          background: '#0948B3',
-          icon: {
-            className: 'fas fa-info-circle',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'info',
-        message: 'Send us <b>an email</b> to get support'
-      });
-    });
-
-    document.getElementById('notifyTopRight').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'right',
-          y: 'top',
-        },
-        types: [{
-          type: 'error',
-          background: '#FA5252',
-          icon: {
-            className: 'fas fa-times',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'error',
-        message: 'This action is not allowed.'
-      });
-    });
-
-    document.getElementById('notifyBottomLeft').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'left',
-          y: 'bottom',
-        },
-        types: [{
-          type: 'warning',
-          background: '#F5B759',
-          icon: {
-            className: 'fas fa-exclamation-triangle',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'warning',
-        message: 'This might be dangerous.'
-      });
-    });
-
-    document.getElementById('notifyBottomRight').addEventListener('click', function() {
-      const notyf = new Notyf({
-        position: {
-          x: 'right',
-          y: 'bottom',
-        },
-        types: [{
-          type: 'info',
-          background: '#262B40',
-          icon: {
-            className: 'fas fa-comment-dots',
-            tagName: 'span',
-            color: '#fff'
-          },
-          dismissible: false
-        }]
-      });
-      notyf.open({
-        type: 'info',
-        message: 'John Garreth: Are you ready for the presentation?'
-      });
-    });
-  </script>
 
 </body>
 

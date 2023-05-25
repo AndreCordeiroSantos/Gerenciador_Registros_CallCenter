@@ -43,7 +43,7 @@
     }
     $logado = $_SESSION['login'];
     // Check the user's type and restrict access to this page if necessary
-    if ($_SESSION['tipo'] != 'admin') {
+    if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'gerencia') {
         echo "<script>
   Swal.fire({
       title: 'Acesso Negado!',

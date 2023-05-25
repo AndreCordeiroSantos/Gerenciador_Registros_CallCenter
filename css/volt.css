@@ -30814,3 +30814,36 @@ article .h6 {
     left: 50%;
     transform: translateX(-50%);
 }
+
+.div-agenda {
+    background-color: #ffffff;
+    background-clip: border-box;
+    border: 0.0625rem solid rgba(17, 24, 39, 0.125);
+    border-radius: 0.5rem;
+    width: 40%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+
+    /* Estilos para tablet e dispositivos de largura menor */
+    .div-agenda {
+        width: 70%;
+        height: auto;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    /* Estilos para celular e dispositivos de largura ainda menor */
+    .div-agenda {
+        width: 90%;
+        height: auto;
+        padding: 5px;
+    }
+}

@@ -2,7 +2,26 @@
 <html>
 
 <head>
-    <title>Painel Plansul</title>
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Agenda</title>
 
     <!-- Sweet Alert -->
     <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
@@ -26,7 +45,6 @@
     $senha = $_SESSION['senha'];
     $nome = $_SESSION['nome'];
     $id = $_SESSION['id'];
-
     ?>
 </body>
 
@@ -48,25 +66,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
 
     <!-- Sweet Alert -->
     <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
@@ -114,9 +113,6 @@
 
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-        <a class="navbar-brand me-lg-5" href="#">
-            <img class="navbar-brand-dark" src="assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
-        </a>
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -181,7 +177,13 @@
                                 </div>
                             </a>
                             <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-
+                                <a class="dropdown-item d-flex align-items-center" href="agenda.php">
+                                    <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Agenda Perfil
+                                </a>
+                                <div role="separator" class="dropdown-divider my-1"></div>
                                 <a class="dropdown-item d-flex align-items-center" href="logoff.php">
                                     <svg class="dropdown-icon text-danger me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="#">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
@@ -200,28 +202,23 @@
         <br>
 
         <!-- Container da Agenda -->
-        <div class="container">
-            <div class="card card-body border-1 shadow mb-4">
-                <h3 class="card-title">Bem vindo a sua Agenda. </h3>
 
-                <h5><?php echo $_SESSION['nome']; ?></h5>
-                <hr>
-                <br>
-                <?php echo "<h4>Login: $logado </h4>" ?>
-                <?php echo "<h6>Sua descrição:" . $_SESSION['id'];
-                "</h6>" ?>
-                <?php echo "<h6>Permissão: $user </h6>" ?>
-                <br>
-                <hr>
-                <h4>Alterar sua senha:</h4>
-                <div>
-                    <input class="btn btn-primary" type="submit" value="Alterar" id="Alterar" name="Alterar">
-                </div>
+        <div class="div-agenda border-2 shadow mb-4 mb-xl-0">
+            <h3 class="card-title">Bem vindo a sua Agenda. </h3>
+            <h5><?php echo $_SESSION['nome']; ?></h5>
+            <hr>
+            <br>
+            <?php echo "<h4>Login: $logado </h4>" ?>
+            <?php echo "<h6>Sua ID: " . $_SESSION['id'];
+            "</h6>" ?>
+            <?php echo "<h6>Permissão: $user </h6>" ?>
+            <br>
+            <hr>
+            <h4>Alterar sua senha:</h4>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Alterar" id="Alterar" name="Alterar">
             </div>
         </div>
-        <?php
-        ?>
-
 
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -246,7 +243,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="btnAlterar">Alterar</button>
+                        <button type="button" class="btn btn-primary" id="btnAlterar">Enviar Senha</button>
                     </div>
                 </div>
             </div>
@@ -291,10 +288,15 @@
                     // Adicionar classe para o efeito de shake
                     repetirSenhaInput.classList.add("is-invalid");
                     errorText.style.display = "block";
+                } else if (novaSenhaInput.value.length < 6 || novaSenhaInput.value.trim() === "") {
+                    // Verificar se a senha tem menos de 6 caracteres ou está vazia
+                    novaSenhaInput.classList.add("is-invalid");
+                    errorText.innerText = "A senha deve ter no mínimo 6 caracteres.";
+                    errorText.style.display = "block";
                 } else {
                     // Remover classe e ocultar mensagem de erro
                     repetirSenhaInput.classList.remove("is-invalid");
-                    errorText.style.display = "none";
+                    novaSenhaInput.classList.remove("is-invalid");
 
                     // Obter a nova senha e o ID do usuário
                     var novaSenha = novaSenhaInput.value;
@@ -308,12 +310,14 @@
                             // Verificar a resposta do servidor
                             if (this.responseText === "success") {
                                 // Exibir mensagem de sucesso
-                                Swal.fire({
-                                    title: "Sucesso!",
-                                    text: "Senha atualizada com sucesso.",
-                                    icon: "success",
-                                    timer: 1000,
-                                    showConfirmButton: false
+                                const notyf = new Notyf();
+                                notyf.success({
+                                    position: {
+                                        x: 'left',
+                                        y: 'top',
+                                    },
+                                    message: "Senha atualizada com sucesso.",
+                                    duration: 1000,
                                 }).then(function() {
                                     // Recarregar a página
                                     window.location.reload();
@@ -328,7 +332,6 @@
                                     showConfirmButton: false
                                 });
                             }
-
                         }
                     };
                     xhttp.open("POST", "/archerx/public/wyntech/funcoes/atualizar_senha.php", true);
@@ -337,9 +340,6 @@
                 }
             });
         </script>
-
-
-
 
     </main>
     <!-- Core -->

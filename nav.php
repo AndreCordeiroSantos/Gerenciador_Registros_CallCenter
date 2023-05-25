@@ -1,4 +1,52 @@
+<?php
+session_start();
+
+// Verifica se o usuário não está logado e redireciona para a página de login
+if ((!isset($_SESSION['login']) || !isset($_SESSION['senha']))) {
+    header('Location: login.html');
+    exit;
+}
+
+// Verifica o tipo de usuário e oculta o menu se não for "admin"
+if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'gerencia') {
+    echo "
+    <style>
+        .menu-gerencia {
+            display: none !important;
+        }
+    </style>
+    ";
+} elseif ($_SESSION['tipo'] == 'admin') {
+    echo "
+    <style>
+        .menu-oculto {
+            display: none !important;
+        }
+    </style>
+    ";
+} 
+if ($_SESSION['tipo'] == 'visitante') {
+    echo "
+    <style>
+        .menu-oculto2 {
+            display: none !important;
+        }
+    </style>
+    ";
+}
+if ($_SESSION['tipo'] == 'colombo') {
+    echo "
+    <style>
+        .menu-oculto3 {
+            display: none !important;
+        }
+    </style>
+    ";
+}
+
+?>
 <!--verifica se há chamados abertos, para mostrar na tela-->
+
 <?php
 // Configurações do banco de dados
 $db_host = '172.10.20.47';
@@ -84,7 +132,7 @@ $total_chamados_abertos1 = $row['total'];
 <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
                         echo 'active';
                     } ?>">
-    <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-app">
+    <span class="nav-link collapsed d-flex justify-content-between align-items-center menu-gerencia" data-bs-toggle="collapse" data-bs-target="#submenu-app">
         <span>
             <span class="sidebar-icon">
                 <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
@@ -153,11 +201,11 @@ $total_chamados_abertos1 = $row['total'];
     </div>
 </li>
 
-<li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
+<li class="nav-item menu-oculto menu-oculto2 menu-oculto3<?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
                         echo 'active';
                     } ?>">
     <a href="paineluser.php" class="nav-link">
-        <span class="sidebar-icon">
+        <span class="sidebar-icon menu-oculto">
             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
                 <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path>
                 <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path>
@@ -169,11 +217,11 @@ $total_chamados_abertos1 = $row['total'];
         <?php endif; ?>
     </a>
 </li>
-<li class="nav-item acitve<?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
+<li class="nav-item menu-oculto menu-oculto2 menu-oculto3<?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
                                 echo 'active';
                             } ?>">
     <a href="pecas_wyntech.php" class="nav-link">
-        <span class="sidebar-icon">
+        <span class="sidebar-icon menu-oculto">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mouse2" viewBox="0 0 16 16">
                 <path d="M3 5.188C3 2.341 5.22 0 8 0s5 2.342 5 5.188v5.625C13 13.658 10.78 16 8 16s-5-2.342-5-5.188V5.189zm4.5-4.155C5.541 1.289 4 3.035 4 5.188V5.5h3.5V1.033zm1 0V5.5H12v-.313c0-2.152-1.541-3.898-3.5-4.154zM12 6.5H4v4.313C4 13.145 5.81 15 8 15s4-1.855 4-4.188V6.5z" />
             </svg>
@@ -184,7 +232,7 @@ $total_chamados_abertos1 = $row['total'];
         <?php endif; ?>
     </a>
 </li>
-<li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
+<li class="nav-item menu-oculto menu-oculto2 menu-oculto3<?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
                         echo 'active';
                     } ?>">
     <a href="chamadoff.php" class="nav-link">
@@ -198,7 +246,7 @@ $total_chamados_abertos1 = $row['total'];
         <span class="sidebar-text">Chamados Off</span>
     </a>
 </li>
-<li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
+<li class="nav-item menu-oculto3<?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
                         echo 'active';
                     } ?>">
     <a href="dashboard.php" class="nav-link">
@@ -210,7 +258,7 @@ $total_chamados_abertos1 = $row['total'];
         <span class="sidebar-text">Dashboards</span>
     </a>
 </li>
-<li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
+<li class="nav-item menu-oculto3<?php if ($_SERVER['PHP_SELF'] == '/pagina1.php') {
                         echo 'active';
                     } ?>">
     <a href="relatorio.php" class="nav-link">

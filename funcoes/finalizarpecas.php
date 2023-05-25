@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>Painel Principal</title>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="theme-color" content="#ffffff">
-
   <!-- Sweet Alert -->
-  <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+  <link type="text/css" href="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
   <!-- Sweet Alerts 2 -->
-  <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -46,7 +39,7 @@
                   text: 'Solicitação finalizada com sucesso.',
                   icon: 'success'
                 }).then((result) => {
-                  window.location.href = 'p_wyntech.php';
+                  window.location.href = '/archerx/public/wyntech/p_wyntech.php';
                 });
               </script>";
             }

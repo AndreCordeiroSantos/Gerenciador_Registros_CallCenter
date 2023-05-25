@@ -39,7 +39,7 @@
 
   $logado = $_SESSION['login'];
   // chekaro tipo do usuário
-  if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
+  if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia' && $_SESSION['tipo'] != 'visitante') {
     echo "<script>
   Swal.fire({
       title: 'Acesso Negado!',

@@ -60,7 +60,7 @@
 
     $logado = $_SESSION['login'];
     // Check the user's type and restrict access to this page if necessary
-    if ($_SESSION['tipo'] != 'admin') {
+    if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'gerencia') {
         echo "<script>
   Swal.fire({
       title: 'Acesso Negado!',
@@ -223,7 +223,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form form class="buscar" action="finalizarpecas.php" method="post">
+                        <form form class="buscar" action="/archerx/public/wyntech/funcoes/finalizarpecas.php" method="post">
                             <div class="form-group row">
                                 <div class="col-md-6 mb-3">
                                     <label for="num-serie">ID</label>

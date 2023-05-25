@@ -66,7 +66,7 @@
 			if ($user['tipo'] == 'admin') {
 				echo "<script>
 				Swal.fire({
-					title: 'Bem vindo $login_nome',
+					title: 'Bem vindo $logado',
 					text: 'Login feito com sucesso.',
 					icon: 'success',
 					showConfirmButton: false,
@@ -78,7 +78,7 @@
 			} else {
 				echo "<script>
 				Swal.fire({
-					title: 'Bem vindo $login_nome',
+					title: 'Bem vindo $logado',
 					text: 'Acesso feito com sucesso.',
 					icon: 'success',
 					showConfirmButton: false,
@@ -91,7 +91,7 @@
 			if ($user['tipo'] == 'visitante') {
 				echo "<script>
 				Swal.fire({
-					title: 'Bem vindo $login_nome',
+					title: 'Bem vindo $logado',
 					text: 'Acesso feito com sucesso.',
 					icon: 'success',
 					showConfirmButton: false,

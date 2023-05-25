@@ -7,7 +7,7 @@ if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true
 }
 $logado = $_SESSION['login'];
 // Check the user's type and restrict access to this page if necessary
-if ($_SESSION['tipo'] != 'admin') {
+if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'gerencia') {
 	echo "<script language='javascript' type='text/javascript'>
 alert('VOCÊ NÃO TEM ACESSO ADMIN PARA ESSA PÁGINA.');window.location
 .href='home.php';</script>";
