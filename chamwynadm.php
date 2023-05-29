@@ -313,8 +313,7 @@
               new Notyf().error({
                 message: 'As informações, Nome Lógico, Num Série, não correspondem.',
                 position: {
-                  x: 'left',
-                  y: 'top',
+                  x: 'left'
               },
               });
               </script>";

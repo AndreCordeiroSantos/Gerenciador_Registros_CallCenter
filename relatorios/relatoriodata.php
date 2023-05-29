@@ -29,6 +29,12 @@
 	<link type="text/css" href="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 	<!-- Sweet Alerts 2 -->
 	<script src="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+	<!-- Inclua essas bibliotecas no cabeçalho do seu arquivo HTML -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -42,7 +48,7 @@
 
 	$logado = $_SESSION['login'];
 	// Check the user's type and restrict access to this page if necessary
-	if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia') {
+	if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia' && $_SESSION['tipo'] != 'visitante') {
 		echo "<script language='javascript' type='text/javascript'>
     alert('VOCÊ NÃO TEM ACESSO A ESSA PÁGINA.');window.location
     .href='home.php';</script>";
@@ -55,19 +61,40 @@
 <html lang="en">
 
 <head>
+	<style>
+		/* Estilos para o botão */
+		div.dt-buttons .btn-export-csv {
+			background-color: #141f2e;
+			width: 150px;
+			height: 30px;
+			margin-left: 30px;
+			line-height: 16px;
+			cursor: pointer;
+			color: white;
+		}
 
+		div.dt-buttons :hover.btn-export-csv {
+			background-color: #243854;
+		}
+
+		div.dataTables_wrapper div.dataTables_filter input {
+			line-height: 20px;
+			height: 28px;
+		}
+	</style>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	<!-- Sweet Alert -->
-	<link type="text/css" href="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-
-	<!-- Notyf -->
-	<link type="text/css" href="/archerx/public/wyntech/vendor/notyf/notyf.min.css" rel="stylesheet">
 
 	<!-- Volt CSS -->
 	<link type="text/css" href="/archerx/public/wyntech/css/volt.css" rel="stylesheet">
 
+	<!-- Biblioteca DataTables -->
+	<script type="text/javascript" src="/archerx/public/wyntech/assets/dataTables/datatables.min.js"></script>
+	<script src="/archerx/public/wyntech/assets/dataTables/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
+
+	<!-- CSS Datatables -->
+	<link rel="stylesheet" href="../../bibli/dataTables/Buttons-2.3.6/css/buttons.dataTables.min.css">
+	<!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />-->
 </head>
 
 <body>
@@ -117,7 +144,7 @@
 				<div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
 					<div class="d-flex align-items-center">
 						<!-- Titulo da página -->
-						<h1>relatório por data</h1>
+						<h1>Relatório</h1>
 						<!-- / Titulo da página -->
 					</div>
 					<div class="d-flex align-items-center">
@@ -185,22 +212,24 @@
 					// Exibe os resultados na página
 					if (mysqli_num_rows($resultado) > 0) {
 
-						// Exibir os resultados em uma tabela
-						echo "<table>";
-						echo "<tr><th>ET</th><th>Num/Serie</th><th>Data</th><th>Ocorrência</th><th>REQ</th></tr>";
+						// Exibir os resultados em uma tabela DataTable
+						echo '<table id="tabela_dados">';
+						echo '<thead><tr><th>ET</th><th>Num/Serie</th><th>Data</th><th>Ocorrência</th><th>REQ</th></tr></thead>';
+						echo '<tbody>';
 
 						// Percorre as linhas do resultado e cria uma nova linha na tabela HTML para cada linha do resultado
 						while ($linha = mysqli_fetch_array($resultado)) {
-							echo "<tr>";
-							echo "<td>" . $linha['et'] . "</td>";
-							echo "<td>" . $linha['numserie'] . "</td>";
-							echo "<td>" . $linha['data'] . "</td>";
-							echo "<td>" . $linha['motivo'] . "</td>";
-							echo "<td>" . $linha['req'] . "</td>";
-							echo "</tr>";
+							echo '<tr>';
+							echo '<td>' . $linha['et'] . '</td>';
+							echo '<td>' . $linha['numserie'] . '</td>';
+							echo '<td>' . $linha['data'] . '</td>';
+							echo '<td>' . $linha['motivo'] . '</td>';
+							echo '<td>' . $linha['req'] . '</td>';
+							echo '</tr>';
 						}
 
-						echo "</table>";
+						echo '</tbody>';
+						echo '</table>';
 					} else {
 						echo 'Nenhum registro encontrado para a data especificada.';
 					}
@@ -239,7 +268,32 @@
 				</div>
 			</div>
 		</div>
-
+		<script>
+			$(document).ready(function() {
+				$("#tabela_dados").DataTable({
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+					},
+					"lengthMenu": [15, 30, 50],
+					"pageLength": 15,
+					dom: 'lBfrtip',
+					buttons: [{
+						extend: 'csv',
+						text: 'Exportar CSV',
+						className: 'btn-export-csv',
+						customize: function(csv) {
+							// Formata o CSV em UTF-8
+							csv = "\uFEFF" + csv;
+							// Altera o separador para ";"
+							csv = csv.replace(/,/g, ";");
+							// Remove as aspas das strings
+							csv = csv.replace(/"/g, "");
+							return csv;
+						}
+					}],
+				});
+			});
+		</script>
 		<?php include 'footer.php'; ?>
 
 	</main>

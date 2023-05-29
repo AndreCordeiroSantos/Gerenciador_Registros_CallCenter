@@ -7,7 +7,7 @@ if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true
 }
 $logado = $_SESSION['login'];
 // Check the user's type and restrict access to this page if necessary
-if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia') {
+if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia' && $_SESSION['tipo'] != 'visitante') {
     echo "<script language='javascript' type='text/javascript'>
 	alert('VOCÊ NÃO TEM ACESSO A ESSA PÁGINA.');window.location
 	.href='home.php';</script>";
@@ -17,15 +17,48 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION[
 <html lang="en">
 
 <head>
+    <title>Relatório de Ocorrência</title>
+    <style>
+        /* Estilos para o botão */
+        div.dt-buttons .btn-export-csv {
+            background-color: #141f2e;
+            width: 150px;
+            height: 28px;
+            margin-left: 30px;
+            line-height: 14px;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+        }
+
+        div.dt-buttons :hover.btn-export-csv {
+            background-color: #243854;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter input {
+            line-height: 20px;
+            height: 28px;
+        }
+    </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+    <link rel="apple-touch-icon" sizes="57x57" href="/archerx/public/wyntech/img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/archerx/public/wyntech/img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/archerx/public/wyntech/img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/archerx/public/wyntech/img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/archerx/public/wyntech/img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/archerx/public/wyntech/img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/archerx/public/wyntech/img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/archerx/public/wyntech/img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/archerx/public/wyntech/img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/archerx/public/wyntech/img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/archerx/public/wyntech/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/archerx/public/wyntech/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/archerx/public/wyntech/img/favicon-16x16.png">
+    <link rel="manifest" href="/archerx/public/wyntech/img/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/archerx/public/wyntech/img/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Sweet Alert -->
@@ -41,16 +74,19 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION[
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <!-- Biblioteca DataTables -->
+    <script type="text/javascript" src="/archerx/public/wyntech/assets/dataTables/datatables.min.js"></script>
+    <script src="/archerx/public/wyntech/assets/dataTables/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
 
+    <!-- CSS Datatables -->
+    <link rel="stylesheet" href="../../bibli/dataTables/Buttons-2.3.6/css/buttons.dataTables.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />-->
 </head>
 
 <body>
 
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-        <a class="navbar-brand me-lg-5" href="#">
-            <img class="navbar-brand-dark" src="/archerx/public/wyntech/assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
-        </a>
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -76,7 +112,7 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION[
                 </div>
             </div>
             <ul class="nav flex-column pt-3 pt-md-0">
-                <h5 class="site-title"><a href="#">PROJETO-XAXIM</a></h5>
+                <h4 style="color: #f46524;">Sistema P.X</h4>
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
                 <?php include '../nav2.php'; ?>
@@ -128,67 +164,83 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION[
         </nav>
         <br>
         <div role="separator" class="dropdown-divider my-1"></div>
+        <br>
         <div class="container">
             <div class="card card-body border-0 shadow mb-4 mb-xl-0">
 
-                <table id="minhaTabela">
-                    <thead>
-                        <tr>
-                            <th>Nome Lógico</th>
-                            <th>Num/Serie</th>
-                            <th>usuario</th>
-                            <th>motivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <?php
+                // Conectar ao banco de dados
+                $servername = "172.10.20.47";
+                $usernameDB = "archer";
+                $passwordDB = "B5n3Qz2vL7HAUs7z";
+                $dbname = "archerx";
+
+                $conn = mysqli_connect($servername, $usernameDB, $passwordDB, $dbname);
+
+                // Verificar a conexão
+                if (!$conn) {
+                    die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
+                }
+
+                // Verificar se o formulário foi enviado
+                if (isset($_POST['motivo'])) {
+                    $motivo = $_POST['motivo'];
+
+                    // Executar a consulta SQL para buscar as informações
+                    $sql = "SELECT et, numserie, data, usuario, req, motivo FROM dados_wyntech WHERE motivo = '$motivo'";
+                    $result = mysqli_query($conn, $sql);
+
+                    // Exibir os resultados na tabela DataTable
+                    if (mysqli_num_rows($result) > 0) {
+                        echo '<table id="tabela_dados">';
+                        echo '<thead><tr><th>ET</th><th>Num/Serie</th><th>Data</th><th>Usuário</th><th>REQ</th><th>Ocorrência</th></tr></thead>';
+                        echo '<tbody>';
+
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<tr>';
+                            echo '<td>' . $row['et'] . '</td>';
+                            echo '<td>' . $row['numserie'] . '</td>';
+                            echo '<td>' . $row['data'] . '</td>';
+                            echo '<td>' . $row['usuario'] . '</td>';
+                            echo '<td>' . $row['req'] . '</td>';
+                            echo '<td>' . $row['motivo'] . '</td>';
+                            echo '</tr>';
+                        }
+
+                        echo '</tbody>';
+                        echo '</table>';
+                    }
+
+                    // Fechar a conexão com o banco de dados
+                    mysqli_close($conn);
+                }
+                ?>
 
             </div>
         </div>
-
-        <!-- Adicione esse código JavaScript para inicializar o DataTables na tabela -->
-        <script type="text/javascript">
+        <script>
             $(document).ready(function() {
-                $('#minhaTabela').DataTable({
-                    // idioma portugues BR
-                    language: {
-                        url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+                $("#tabela_dados").DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                     },
-                    columns: [{
-                            data: 'et'
-                        },
-                        {
-                            data: 'numserie'
-                        },
-                        {
-                            data: 'data'
-                        },
-                        {
-                            data: 'usuario'
-                        },
-                        {
-                            data: 'motivo'
+                    dom: 'lBfrtip',
+                    buttons: [{
+                        extend: 'csv',
+                        text: 'Exportar CSV',
+                        className: 'btn-export-csv',
+                        customize: function(csv) {
+                            // Formata o CSV em UTF-8
+                            csv = "\uFEFF" + csv;
+                            // Altera o separador para ";"
+                            csv = csv.replace(/,/g, ";");
+                            // Remove as aspas das strings
+                            csv = csv.replace(/"/g, "");
+                            return csv;
                         }
-                    ],
-                    "pageLength": 15,
-                    "lengthMenu": [15, 30, 50, 100],
-                    "order": [
-                        [0, 'desc']
-                    ],
-                    ajax: {
-                        url: '/archerx/public/wyntech/funcoes/relatorio_motivo.php',
-                        type: 'POST',
-                        data: function(data) {
-                            // Obter o motivo a partir de um elemento do formulário
-                            var motivo = $('#motivo').val();
-
-                            // Adicionar o motivo aos dados enviados pelo Ajax
-                            data.motivo = motivo;
-                        },
-                        dataSrc: ''
-                    },
-                    rowId: 'id'
+                    }],
+                    "lengthMenu": [15, 30, 50],
+                    "pageLength": 15
                 });
             });
         </script>

@@ -45,6 +45,14 @@
     <!-- Volt CSS -->
     <link type="text/css" href="css/volt.css" rel="stylesheet">
 
+    <!-- Biblioteca DataTables -->
+    <script type="text/javascript" src="assets/dataTables/datatables.min.js"></script>
+    <script src="assets/dataTables/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
+
+    <!-- CSS Datatables -->
+    <link rel="stylesheet" href="../../bibli/dataTables/Buttons-2.3.6/css/buttons.dataTables.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />--> 
+
 </head>
 
 <body>

@@ -8138,12 +8138,14 @@ fieldset:disabled .btn {
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 100%;
     min-width: 0;
     word-wrap: break-word;
     background-color: #ffffff;
     background-clip: border-box;
     border: 0.0625rem solid rgba(17, 24, 39, 0.125);
     border-radius: 0.5rem;
+    margin-bottom: 10px;
 }
 
 .card>hr {
@@ -8192,12 +8194,6 @@ fieldset:disabled .btn {
     margin-bottom: 0;
 }
 
-.grid-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-}
 
 .card-body {
     flex: 1 1 auto;
@@ -8227,6 +8223,7 @@ fieldset:disabled .btn {
     background-color: #f3f3f3;
     border-bottom: 0.0625rem solid rgba(17, 24, 39, 0.125);
 }
+
 
 .card-header:first-child {
     border-radius: 0.4375rem 0.4375rem 0 0;
@@ -28896,12 +28893,12 @@ table.dataTable tbody tr td {
 
 /* Aumente o tamanho do texto nas células th */
 table.dataTable thead tr th {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 /* Adicione um efeito de hover às células da tabela */
 table.dataTable tbody tr:hover td {
-    background-color: #c9c7c7;
+    background-color: #f0ebeb;
 }
 
 .nome-logico,
@@ -28998,10 +28995,12 @@ table.display tbody tr:hover {
 
 th {
     background-color: #c5c5c5;
-    color: #1F2937;
+    color: #000;
     align-items: center;
     padding: 10px;
     border-top: 1px solid;
+    font-size: 1em;
+    font-weight: 600;
 }
 
 thead {
@@ -30846,4 +30845,120 @@ article .h6 {
         height: auto;
         padding: 5px;
     }
+}
+
+.box-corpo {
+    /* Ajuste esse valor conforme necessário */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos para tablets */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    .box-corpo {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+/* Estilos para celulares */
+@media only screen and (max-width: 600px) {
+    .box-corpo {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.card-container1 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card1,
+.card2,
+.card3 {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.card1 {
+    border: 0.0625rem solid rgba(17, 24, 39, 0.125);
+    border-radius: 0.5rem;
+    padding: 10px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.card2 {
+    border: 0.0625rem solid rgba(17, 24, 39, 0.125);
+    border-radius: 0.5rem;
+    padding: 10px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.card3 {
+    border: 0.0625rem solid rgba(17, 24, 39, 0.125);
+    border-radius: 0.5rem;
+    padding: 10px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Último card não terá margem direita */
+.card3:last-child {
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.card-ocorrencia {
+    margin-bottom: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    grid-gap: 10px;
+    width: 100%;
+}
+
+.card-graficos {
+    height: 50vh;
+    border-bottom: 0.0625rem solid rgba(17, 24, 39, 0.125);
+    border: 0.0625rem solid rgba(17, 24, 39, 0.125);
+    border-radius: 0.5rem;
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }

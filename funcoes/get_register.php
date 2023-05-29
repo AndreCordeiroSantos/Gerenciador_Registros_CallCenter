@@ -11,7 +11,7 @@
                 }
 
                 // Consulta à tabela
-                $query = "SELECT id, et, data, usuario, motivo, req FROM dados_wyntech WHERE status = 'registrado' 
+                $query = "SELECT id, et, data, usuario, motivo, req, causa, solucao, descricao FROM dados_wyntech WHERE status = 'registrado' 
                 ";
 
                 $result = mysqli_query($conn, $query);

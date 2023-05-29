@@ -17,25 +17,30 @@ if (isset($_POST['motivo'])) {
     $motivo = $_POST['motivo'];
 
     // Executar a consulta SQL para buscar as informações
-    $sql = "SELECT et, numserie, data, usuario, motivo FROM dados_wyntech
-            WHERE motivo = '$motivo'";
+    $sql = "SELECT et, numserie, data, usuario, motivo FROM dados_wyntech WHERE motivo = '$motivo'";
     $result = mysqli_query($conn, $sql);
 
-    // Criar um array vazio para armazenar os resultados
-    $data = array();
-
-    // Verificar se a consulta retornou resultados
+    // Exibir os resultados na tabela DataTable
     if (mysqli_num_rows($result) > 0) {
-        // Processar os resultados
+        echo '<table id="tabela_dados">';
+        echo '<thead><tr><th>ET</th><th>Num/Serie</th><th>Data</th><th>Usuário</th><th>Ocorrência</th></tr></thead>';
+        echo '<tbody>';
+
         while ($row = mysqli_fetch_assoc($result)) {
-            // Adicionar cada linha como um item no array de dados
-            $data[] = $row;
+            echo '<tr>';
+            echo '<td>' . $row['et'] . '</td>';
+            echo '<td>' . $row['numserie'] . '</td>';
+            echo '<td>' . $row['data'] . '</td>';
+            echo '<td>' . $row['usuario'] . '</td>';
+            echo '<td>' . $row['motivo'] . '</td>';
+            echo '</tr>';
         }
+
+        echo '</tbody>';
+        echo '</table>';
     }
 
-    // Enviar os dados como resposta JSON
-    echo json_encode($data);
+    // Fechar a conexão com o banco de dados
+    mysqli_close($conn);
 }
-
-// Fechar a conexão com o banco de dados
-mysqli_close($conn);
+?>

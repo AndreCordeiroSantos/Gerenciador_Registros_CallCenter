@@ -42,7 +42,7 @@
 
 	$logado = $_SESSION['login'];
 	// Check the user's type and restrict access to this page if necessary
-	if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia') {
+	if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'gerencia' && $_SESSION['tipo'] != 'visitante') {
 		echo "<script language='javascript' type='text/javascript'>
     alert('VOCÊ NÃO TEM ACESSO A ESSA PÁGINA.');window.location
     .href='home.php';</script>";
@@ -55,6 +55,18 @@
 <html lang="en">
 
 <head>
+	<!-- Inclua essas bibliotecas no cabeçalho do seu arquivo HTML -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+	<!-- Biblioteca DataTables -->
+	<script type="text/javascript" src="/archerx/public/wyntech/assets/dataTables/datatables.min.js"></script>
+	<script src="/archerx/public/wyntech/assets/dataTables/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
+
+	<!-- CSS Datatables -->
+	<link rel="stylesheet" href="../../bibli/dataTables/Buttons-2.3.6/css/buttons.dataTables.min.css">
+	<!--<link rel="stylesheet" type="text/css" href="../../bibli/dataTables/datatables.min.css" />-->
 
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -67,7 +79,27 @@
 
 	<!-- Volt CSS -->
 	<link type="text/css" href="/archerx/public/wyntech/css/volt.css" rel="stylesheet">
+	<style>
+		/* Estilos para o botão */
+		div.dt-buttons .btn-export-csv {
+			background-color: #141f2e;
+			width: 155px;
+			height: 25px;
+			margin-left: 25px;
+			line-height: 14px;
+			cursor: pointer;
+			color: white;
+		}
 
+		div.dt-buttons :hover.btn-export-csv {
+			background-color: #243854;
+		}
+
+		div.dataTables_wrapper div.dataTables_filter input {
+			line-height: 20px;
+			height: 25px;
+		}
+	</style>
 </head>
 
 <body>
@@ -117,7 +149,7 @@
 				<div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
 					<div class="d-flex align-items-center">
 						<!-- Titulo da página -->
-						<h1>relatório por data</h1>
+						<h1>Relatório</h1>
 						<!-- / Titulo da página -->
 					</div>
 					<div class="d-flex align-items-center">
@@ -181,23 +213,27 @@
 					$sql = "SELECT et, numserie, data, usuario, motivo, req, causa, solucao, descricao FROM dados_wyntech WHERE et = '$et'";
 					$result = mysqli_query($conn, $sql);
 
-					// Exibir os resultados na tela
+					// Exibir os resultados na tabela DataTable
 					if (mysqli_num_rows($result) > 0) {
+						echo '<table id="tabela_dados">';
+						echo '<thead><tr><th>Nome Lógico</th><th>Num/Serie</th><th>Data</th><th>Usuário</th><th>Ocorrência</th><th>Req</th><th>Causa</th><th>Solução</th><th>Observação</th></tr></thead>';
+						echo '<tbody>';
+
 						while ($row = mysqli_fetch_assoc($result)) {
-							echo "Nome Lógico: " . $row["et"] . "<br>";
-							echo "Num/Serie: " . $row["numserie"] . "<br>";
-							echo "Data: " . $row["data"] . "<br>";
-							echo "Usuário: " . $row["usuario"] . "<br>";
-							echo "Ocorrência: " . $row["motivo"] . "<br>";
-							echo "Req: " . $row["req"] . "<br>";
-							echo "Causa: " . $row["causa"] . "<br>";
-							echo "Solução: " . $row["solucao"] . "<br>";
-							echo "Observação: " . $row["descricao"] . "<br>";
-							echo "_____________________________";
-							echo "<br>";
+							echo '<tr>';
+							echo '<td>' . $row['et'] . '</td>';
+							echo '<td>' . $row['numserie'] . '</td>';
+							echo '<td>' . $row['data'] . '</td>';
+							echo '<td>' . $row['usuario'] . '</td>';
+							echo '<td>' . $row['motivo'] . '</td>';
+							echo '<td>' . $row['req'] . '</td>';
+							echo '<td>' . $row['causa'] . '</td>';
+							echo '<td>' . $row['solucao'] . '</td>';
+							echo '<td>' . $row['descricao'] . '</td>';
+							echo '</tr>';
 						}
-					} else {
-						echo "Nenhum resultado encontrado.";
+						echo '</tbody>';
+						echo '</table>';
 					}
 				}
 
@@ -215,6 +251,32 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function() {
+				$("#tabela_dados").DataTable({
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+					},
+					"lengthMenu": [15, 30, 50],
+					"pageLength": 15,
+					dom: 'lBfrtip',
+					buttons: [{
+						extend: 'csv',
+						text: 'Exportar CSV',
+						className: 'btn-export-csv',
+						customize: function(csv) {
+							// Formata o CSV em UTF-8
+							csv = "\uFEFF" + csv;
+							// Altera o separador para ";"
+							csv = csv.replace(/,/g, ";");
+							// Remove as aspas das strings
+							csv = csv.replace(/"/g, "");
+							return csv;
+						}
+					}],
+				});
+			});
+		</script>
 		<BR><BR>
 		<?php include 'footer.php'; ?>
 

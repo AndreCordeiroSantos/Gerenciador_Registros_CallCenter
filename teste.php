@@ -1,8 +1,18 @@
+</html>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Painel Plansul</title>
+
+    <!-- Sweet Alert -->
+    <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Sweet Alerts 2 -->
+    <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Dashboard</title>
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
@@ -22,13 +32,21 @@
     <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Sweet Alert -->
-    <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-    <!-- Sweet Alerts 2 -->
-    <script src="vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <!-- Volt CSS -->
+    <link type="text/css" href="css/volt.css" rel="stylesheet">
+
+    <!-- Inclua as bibliotecas Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/lang/pt-BR.js"></script>
+
 </head>
 
 <body>
+
     <?php
     session_start();
     if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
@@ -37,9 +55,11 @@
         header('location: login.html');
     }
 
+    header("Refresh: 300"); // atualiza a página a cada 300 segundos (5 minutos)
+
     $logado = $_SESSION['login'];
     // chekaro tipo do usuário
-    if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte') {
+    if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION['tipo'] != 'visitante' && $_SESSION['tipo'] != 'gerencia') {
         echo "<script>
   Swal.fire({
       title: 'Acesso Negado!',
@@ -50,83 +70,10 @@
   });
 </script>";
     }
-
-    header("Refresh: 1200"); // atualiza a página a cada 1200 segundos (20 minutos)
-
-
-    //conectar ao banco de dados
-    $servername = "172.10.20.47";
-    $usernameDB = "archer";
-    $passwordDB = "B5n3Qz2vL7HAUs7z";
-    $dbname = "archerx";
-
-    $conn = mysqli_connect($servername, $usernameDB, $passwordDB, $dbname);
-    if (!$conn) {
-        die("Conexão falhou: " . mysqli_connect_error());
-    }
     ?>
-</body>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <!-- Inclua o CSS e o JavaScript do Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <!-- Inclua essas bibliotecas no cabeçalho do seu arquivo HTML -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- Sweet Alert -->
-    <link type="text/css" href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-
-    <!-- Notyf -->
-    <link type="text/css" href="vendor/notyf/notyf.min.css" rel="stylesheet">
-
-    <!-- Volt CSS -->
-    <link type="text/css" href="css/volt.css" rel="stylesheet">
-
-    <!-- Inclua as bibliotecas do jQuery e DataTables -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-</head>
-
-<body>
-
-
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="#">
-            <img class="navbar-brand-dark" src="assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
+            <img class="navbar-brand-dark" src="img/logo.png" alt="Volt logo" /> <img class="navbar-brand-light" src="assets/img/brand/dark.svg" alt="Volt logo" />
         </a>
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -160,6 +107,7 @@
 
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
                 <br>
+
             </ul>
         </div>
     </nav>
@@ -170,8 +118,8 @@
                 <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
                     <div class="d-flex align-items-center">
                         <!-- Titulo da página -->
-                        <h1>Painel Plansul</h1>
-                        <!-- Titulo da página -->
+                        <h1>Dashboard</h1>
+                        <!-- / Titulo da página -->
                     </div>
                     <div class="d-flex align-items-center">
                     </div>
@@ -184,14 +132,21 @@
                                     <img class="avatar rounded-circle" alt="Image placeholder" src="img/149071.png">
                                     <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                                         <span class="mb-0 font-small fw-bold text-gray-900">
-                                            <?php
-                                            echo "<h4> $logado </h4>"
-                                            ?></span>
+                                            <h5> <?php
+                                                    echo $_SESSION['nome'];
+                                                    ?>
+                                        </span></h5>
                                     </div>
                                 </div>
                             </a>
                             <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-
+                                <a class="dropdown-item d-flex align-items-center" href="agenda.php">
+                                    <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="#">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Agenda Perfil
+                                </a>
+                                <div role="separator" class="dropdown-divider my-1"></div>
                                 <a class="dropdown-item d-flex align-items-center" href="logoff.php">
                                     <svg class="dropdown-icon text-danger me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="#">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
@@ -208,353 +163,474 @@
         <br>
         <div role="separator" class="dropdown-divider my-1"></div>
         <br>
-        <div class="container">
-            <div class="card card-body border-1 shadow mb-4">
-                <h3 class="card-title">Fechar Registros.</h3>
 
-                <table id="tabelaChamados">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Estação</th>
-                            <th>Número de Série</th>
-                            <th>Ocorrência</th>
-                            <th>Responsável</th>
-                            <th>Situação</th>
+        <div class="card-container1">
+            <div class="card1" id="card-dia">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+                            </svg>
+                        </div>
+                        <div class="d-sm-none">
+                            <h2 class="h5">Total do dia</h2>
+                            <?php
+                            $servername = "172.10.20.47";
+                            $username = "archer";
+                            $password = "B5n3Qz2vL7HAUs7z";
+                            $dbname = "archerx";
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                   
-                    </tbody>
-                </table>
-                <!--Contador de chamados-->
-                <?php
+                            // Criar conexão
+                            $conn = new mysqli($servername, $username, $password, $dbname);
 
-                $query = "SELECT COUNT(*) FROM dados_wyntech WHERE status='aberto'";
+                            // Verificar conexão
+                            if ($conn->connect_error) {
+                                die("Falha na conexão: " . $conn->connect_error);
+                            }
 
+                            // Consulta SQL para obter o total do dia
+                            $sql = "SELECT COUNT(*) AS total FROM dados_wyntech WHERE data = CURDATE()";
+                            $result = $conn->query($sql);
 
-                // Executa a consulta
-                $resultado = mysqli_query($conn, $query);
+                            if ($result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                $totalDia = $row["total"];
+                            } else {
+                                $totalDia = 0;
+                            }
+                            $conn->close();
 
-                // Verifica se ocorreu algum erro na execução da consulta
-                if (!$resultado) {
-                    die('Erro na consulta: ' . mysqli_error($conn));
-                }
-
-                // Recupera o valor retornado pela consulta
-                $quantidade = mysqli_fetch_row($resultado)[0];
-
-                // Exibe o valor
-                echo '<br>';
-                echo '<h5>Total: ' . $quantidade;
-                echo ' Chamados abertos.';
-                echo '</h5>';
-
-                ?>
-
-
-                <h6 style="color: #f46524">Atenção ao fechar os chamados, por favor verifiquem se as REQ estão corretas.</h6>
-                <p></p>
-
-        <!-- Adicione esse código JavaScript para inicializar o DataTables na tabela -->
-        <script type="text/javascript">
-          $(document).ready(function() {
-            $('#tabelaChamados').DataTable({
-              // idioma portugues BR
-              language: {
-                url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
-              },
-              columns: [{
-                  data: 'id'
-                },
-                {
-                  data: 'et'
-                },
-                {
-                  data: 'numserie'
-                },
-                {
-                  data: 'motivo'
-                },
-                {
-                  data: 'usuario'
-                },
-                {
-                  data: 'status'
-                },
-
-              ],
-              "pageLength": 15,
-              "lengthMenu": [15, 30, 50, 100],
-              "order": [
-                [0, 'desc']
-              ],
-              ajax: {
-                url: '/archerx/public/wyntech/datatables/get_paineluser.php',
-                dataSrc: ''
-              },
-              rowId: 'id'
-            });
-          });
-        </script>
-
-                <script>
-                    //chamar a função de clicar na tabela
-                    //$('#tabelaChamados tbody tr:not(:first-child)').on('click', function()
-                    // Obtenha os valores das células da linha var 
-                    //id = $(this).find('td:eq(0)').text();
-                    //var et = $(this).find('td:eq(1)').text(); 
-                    //var numserie = $(this).find('td:eq(2)').text(); 
-                    //var motivo = $(this).find('td:eq(3)').text(); 
-                    //var status = $(this).find('td:eq(4)').text(); 
-                    // Atualize o conteúdo do modal com os valores das células 
-                    //$('#Id').val(id); 
-                    //$('#Et').val(et); 
-                    //$('#modalNumserie').val(numserie); 
-                    //$('#modalMotivo').val(motivo); 
-                    //$('#modalStatus').val(status); 
-                    // Exiba o modal $('#myModal').modal('show'); }); 
-                    // Botão de Fechar o Modal 
-                    //$('#closeButton').on('click', function() 
-                    //{ // Feche o modal $('#myModal').modal('hide'); });//
-
-                    // Adicione um evento de clique ao elemento SVG
-                    $('svg.bi-pencil-square').on('click', function() {
-                        // Obtenha a linha da tabela que contém o elemento SVG clicado
-                        var row = $(this).closest('tr');
-
-                        // Verifique se a coluna de situação da linha que contém o elemento SVG clicado é "registrado"
-                        if ($(this).closest('tr').find('.status').text().trim() == 'registrado') {
-                            // Exiba uma mensagem de erro usando o SweetAlert2
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Atenção!',
-                                text: 'Esse chamado já está registrado',
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                        } else {
-                            // Obtenha os valores das células da linha
-                            var id = row.find('td:eq(0)').text();
-                            var et = row.find('td:eq(1)').text();
-                            var numserie = row.find('td:eq(2)').text();
-                            var motivo = row.find('td:eq(3)').text();
-                            var status = row.find('td:eq(5)').text();
-
-                            // Atualize o conteúdo do modal com os valores das células
-                            $('#Id').val(id);
-                            $('#Et').val(et);
-                            $('#modalNumserie').val(numserie);
-                            $('#modalMotivo').val(motivo);
-                            $('#modalStatus').val(status);
-
-                            // Exiba o modal
-                            $('#myModal').modal('show');
-                        }
-                    });
-
-                    // Botão de Fechar o Modal
-                    $('#closeButton').on('click', function() {
-                        // Feche o modal
-                        $('#myModal').modal('hide');
-                    });
-                </script>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Informações do registro</h5>
-                        <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            ?>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form form class="buscar" id="buscar" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="Id">ID</label>
-                                    <input type="text" readonly="" class="borda-arredondadas" id="Id" name="id">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="Et">Estação</label>
-                                    <input type="text" readonly="" class="form-control3" id="Et" name="et">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="modalNumserie">Número de Série</label>
-                                    <input type="text" readonly="" class="form-control3" id="modalNumserie">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="modalMotivo">Ocorrência</label>
-                                    <input type="text" readonly="" class="form-control3" id="modalMotivo">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="modalStatus">Situação</label>
-                                    <input type="text" readonly="" class="form-control3" id="modalStatus">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="REQ">REQ</label>
-                                    <input type="text" class="form-control3" id="req" name="req">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input class="btn btn-primary" type="submit" value="Registrar" name="Registrar">
-                            </div>
-                        </form>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h6 text-gray-400 mb-0">Registros feitos no dia.</h2>
+                            <?php echo "<h5 class='fw-extrabold mb-1'>Chamados do Dia:</h5><h1>" . $totalDia . "</h1>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card2" id="card-mes">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16">
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                            </svg>
+                        </div>
+                        <div class="d-sm-none">
+                            <h2 class="h5">Total Mês</h2>
+                            <?php
+                            $servername = "172.10.20.47";
+                            $username = "archer";
+                            $password = "B5n3Qz2vL7HAUs7z";
+                            $dbname = "archerx";
+
+                            // Criar conexão
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+
+                            // Verificar conexão
+                            if ($conn->connect_error) {
+                                die("Falha na conexão: " . $conn->connect_error);
+                            }
+
+                            // Consulta SQL para obter o total do dia
+                            $sql = "SELECT COUNT(*) AS total FROM dados_wyntech WHERE DATE_FORMAT(data, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
+
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                $totalMes = $row["total"];
+                            } else {
+                                $totalMes = 0;
+                            }
+                            $conn->close();
+
+                            setlocale(LC_TIME, 'pt_BR'); // Define a localização para português brasileiro
+                            $mesAtual = strftime('%B'); // Obtém o nome do mês atual
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h6 text-gray-400 mb-0">Registros no mês atual</h2>
+                            <?php echo "<h5 class='fw-extrabold mb-1'>Total do mês de " . $mesAtual . ":</h3><h1>" . $totalMes . "</h1>"; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card3" id="card-tudo">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                            </svg>
+                        </div>
+                        <div class="d-sm-none">
+
+                            <?php
+                            $servername = "172.10.20.47";
+                            $username = "archer";
+                            $password = "B5n3Qz2vL7HAUs7z";
+                            $dbname = "archerx";
+
+                            // Criar conexão
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+
+                            // Verificar conexão
+                            if ($conn->connect_error) {
+                                die("Falha na conexão: " . $conn->connect_error);
+                            }
+                            $query = "SELECT COUNT(*) FROM dados_wyntech WHERE status='registrado'";
+
+
+                            // Executa a consulta
+                            $resultado = mysqli_query($conn, $query);
+
+                            // Verifica se ocorreu algum erro na execução da consulta
+                            if (!$resultado) {
+                                die('Erro na consulta: ' . mysqli_error($conn));
+                            }
+
+                            // Recupera o valor retornado pela consulta
+                            $quantidade = mysqli_fetch_row($resultado)[0];
+                            $conn->close();
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h6 text-gray-400 mb-0">Total registrados</h2>
+                            <?php echo "<h5 class='fw-extrabold mb-1'>Chamados Registrados:</h5><h1>" . $quantidade . "</h1>"; ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <br>
 
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //Incluir a conexao com o banco de dados
-            $servername = "172.10.20.47";
-            $usernameDB = "archer";
-            $passwordDB = "B5n3Qz2vL7HAUs7z";
-            $dbname = "archerx";
+        <div class="grid-container">
+            <div class="card-graficos d-sm-flex flex-row align-items-center flex-0">
+                <div id="container" style="width: 100%; max-width: 100%; height: 50vh;"></div>
+            </div>
+            <div class="card-graficos d-sm-flex flex-row align-items-center flex-0">
+                <div id="ct-chart" style="width: 100%; max-width: 100%; height: 50vh;"></div>
+            </div>
+        </div>
+        <br>
+        <div class="card bg-gray-50 border-1 shadow">
+            <div class="card-header d-sm-flex flex-row align-items-center flex-0">
+                <div id="bar-chart" style="width: 100%; max-width: 100%; height: 60vh;"></div>
+            </div>
+        </div>
 
-            $con = new PDO("mysql:host=$servername;dbname=" . $dbname, $usernameDB, $passwordDB);
-            if (!$con) {
-                die("Conexão falhou: " . mysqli_connect_error());
-            }
 
-            //Receber os dados do formulário
-            if (isset($_POST['Registrar'])) {
-                $id = $_POST['id'];
-                $usuario = $_SESSION['login'];
-                $req = $_POST['req'];
-                $et = $_POST['et'];
-            }
+        <!--DIVISÃO DE GRÁFICOS-->
+        <script>
+            // Dados retornados da consulta SQL em PHP
+            var dados = [
+                <?php
+                $servername = "172.10.20.47";
+                $username = "archer";
+                $password = "B5n3Qz2vL7HAUs7z";
+                $dbname = "archerx";
 
-            // SELECT PARA VERIFICAR SE O CHAMADO JA SE ENCONTRA REGISTRADO
-            $sql = "SELECT status FROM dados_wyntech WHERE id=:id";
-            $stmt = $con->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            $status = $stmt->fetchColumn();
+                // Cria a conexão com o banco de dados
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                if ($conn->connect_error) {
+                    die("Falha ao conectar ao banco de dados: " . $conn->connect_error);
+                }
 
-            if ($status == 'registrado') {
-                // se o status ja for registrado, apresentar a mensagem de erro
-                echo "<script>
-            Swal.fire({
-              title: 'Atenção!',
-              text: 'A ID desse chamado, já está registrado.',
-              icon: 'warning'
-            }).then((result) => {
-              window.location.href = 'paineluser.php';
-            });
-          </script>";
-            } else {
-                // Verificar se req já existe no banco de dados
-                $checkReq = "SELECT * FROM dados_wyntech WHERE req=:req";
-                $stmt = $con->prepare($checkReq);
-                $stmt->bindParam(':req', $req);
-                $stmt->execute();
-                if ($stmt->rowCount() > 0) {
-                    // req já existe no banco de dados
-                    echo "<script>
-            Swal.fire({
-              title: 'Atenção!',
-              text: 'A req desse chamado, já está registrado.',
-              icon: 'warning'
-            }).then((result) => {
-              window.location.href = 'paineluser.php';
-            });
-          </script>";
-                } else {
-                    //Preparar a query de update:
-                    $sql = "UPDATE dados_wyntech SET usuario=:usuario, status = 'registrado', req=:req WHERE id=:id";
-                    $stmt = $con->prepare($sql);
+                // Seleciona as informações da coluna "motivo"
+                $sql = "SELECT motivo, COUNT(*) AS quantidade FROM dados_wyntech GROUP BY motivo";
+                $result = $conn->query($sql);
 
-                    //Vincular os valores aos parâmetros da query:
-                    $stmt->bindParam(':id', $id);
-                    $stmt->bindParam(':usuario', $usuario);
-                    $stmt->bindParam(':req', $req);
-
-                    //tratativa de erros caso alguma informação do formulário esteja faltando
-
-                    if ($et == "") {
-                        echo "<script>
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: 'btn btn-primary',
-                        cancelButton: 'btn btn-gray'
-                    },
-                    buttonsStyling: false
-                });
-        
-                swalWithBootstrapButtons.fire({
-                    title: 'Erro!',
-                    text: 'Não há informação para registrar.',
-                    icon: 'error',
-                    showCancelButton: true,
-                    confirmButtonText: 'OK',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'paineluser.php';
+                // Itera sobre o resultado e gera os dados para o gráfico
+                if ($result->num_rows > 0) {
+                    $data = array();
+                    while ($row = $result->fetch_assoc()) {
+                        $data[] = "['" . $row["motivo"] . "', " . $row["quantidade"] . "]";
                     }
-                });
-            </script>";
-                    } else {
-                        if ($usuario == "") {
-                            echo "<script>
-              Swal.fire({
-                icon: 'error',
-                title: 'Erro!',
-                text: 'Por favor , coloque o responsável.',
-                showConfirmButton: false,
-                timer: 2000
-              });
-              </script>";
-                        } else {
-                            if (substr($req, 0, 3) !== "REQ") {
-                                $req = "REQ" . $req;
-                                echo "<script>
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Erro!',
-                  text: 'Por favor , coloque a REQ corretamente .',
-                  showConfirmButton: false,
-                  timer: 2000
-                });
-          </script>";
-                            } else {
-                                if ($stmt->execute()) {
-                                    echo "<script>
-            Swal.fire({
-              title: 'Sucesso!',
-              text: 'Sucesso, chamado registrado.',
-              icon: 'success'
-            }).then((result) => {
-              window.location.href = 'paineluser.php';
+                    echo implode(",", $data);
+                }
+
+                // Fecha a conexão com o banco de dados
+                $conn->close();
+                ?>
+            ];
+
+            // Configurações de tradução para o Português (Brasil)
+            Highcharts.setOptions({
+                lang: {
+                    contextButtonTitle: "Menu de opções",
+                    downloadJPEG: "Baixar imagem JPEG",
+                    downloadPDF: "Baixar documento PDF",
+                    downloadPNG: "Baixar imagem PNG",
+                    downloadSVG: "Baixar vetor SVG",
+                    printChart: "Imprimir gráfico",
+                    viewFullscreen: "Ver em tela cheia"
+                }
             });
-          </script>";
-                                } else {
-                                    echo "Erro ao inserir informação: ";
-                                }
+
+            // Cria o gráfico de pizza em 3D com os dados dinâmicos
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0,
+                        depth: 50,
+                        viewDistance: 25
+                    }
+                },
+                title: {
+                    text: 'Gráfico de Ocorrências'
+                },
+                subtitle: {
+                    text: 'Ocorrências'
+                },
+                credits: {
+                    enabled: false
+                },
+
+                plotOptions: {
+                    pie: {
+                        innerSize: 90,
+                        depth: 45
+                    }
+                },
+                series: [{
+                    name: 'Total',
+                    data: dados
+                }]
+            });
+        </script>
+
+        <!--DIVISÃO DE GRÁFICOS-->
+
+        <script>
+            // Dados retornados da consulta SQL em PHP
+            var dados = [
+                <?php
+                // Faz a conexão com o banco de dados
+                $conn = mysqli_connect("172.10.20.47", "archer", "B5n3Qz2vL7HAUs7z", "archerx");
+                // Executa a consulta SQL
+                $query = "SELECT et, COUNT(*) AS count FROM dados_wyntech GROUP BY et ORDER BY count DESC LIMIT 20";
+                $result = mysqli_query($conn, $query);
+
+                // Itera sobre o resultado e gera os dados para o gráfico
+                if ($result->num_rows > 0) {
+                    $data1 = array();
+                    while ($row = $result->fetch_assoc()) {
+                        $data1[] = "['" . $row["et"] . "', " . $row["count"] . "]";
+                    }
+                    echo implode(",", $data1);
+                }
+                ?>
+            ];
+
+            // Cria o gráfico com os dados dinâmicos
+            function createChart() {
+                Highcharts.chart('bar-chart', {
+                    chart: {
+                        type: 'column',
+                        options3d: {
+                            enabled: true,
+                            alpha: 50
+                        }
+                    },
+                    title: {
+                        text: 'Ocorrências por Estações'
+                    },
+                    subtitle: {
+                        text: 'Nomes Lógicos'
+                    },
+                    plotOptions: {
+                        column: {
+                            depth: 25
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    xAxis: {
+                        type: 'category', // Define o tipo de eixo como categoria
+                        labels: {
+                            rotation: -45, // Rotaciona os rótulos do eixo x para melhor exibição
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
                             }
                         }
-                    }
-                }
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        }
+                    },
+                    series: [{
+                        name: 'Total',
+                        data: dados,
+                        color: '#202536'
+                    }]
+                });
             }
-        }
-        ?>
 
+            // Chama a função para criar o gráfico quando a página estiver carregada
+            document.addEventListener('DOMContentLoaded', createChart);
+        </script>
+
+
+        <!--DIVISÃO DE GRÁFICOS-->
+
+        <script>
+            // Configurações de tradução para o Português (Brasil)
+            Highcharts.setOptions({
+                lang: {
+                    contextButtonTitle: "Menu de opções",
+                    downloadJPEG: "Baixar imagem JPEG",
+                    downloadPDF: "Baixar documento PDF",
+                    downloadPNG: "Baixar imagem PNG",
+                    downloadSVG: "Baixar vetor SVG",
+                    printChart: "Imprimir gráfico",
+                    viewFullscreen: "Ver em tela cheia"
+                }
+            });
+            Highcharts.chart('ct-chart', {
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: 'Quantidade de chamados por mês'
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    categories: [
+                        <?php
+                        $servername = "172.10.20.47";
+                        $username = "archer";
+                        $password = "B5n3Qz2vL7HAUs7z";
+                        $dbname = "archerx";
+
+                        // Criar conexão
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+
+                        // Verificar conexão
+                        if ($conn->connect_error) {
+                            die("Falha na conexão: " . $conn->connect_error);
+                        }
+
+                        // Consulta SQL para obter a contagem de registros por mês
+                        $sql = "SELECT DATE_FORMAT(data, '%c') AS mes, COUNT(*) AS total FROM dados_wyntech GROUP BY DATE_FORMAT(data, '%Y-%m')";
+
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $mes_numero = intval($row['mes']);
+                                $mes_nome = '';
+                                switch ($mes_numero) {
+                                    case 1:
+                                        $mes_nome = 'Janeiro';
+                                        break;
+                                    case 2:
+                                        $mes_nome = 'Fevereiro';
+                                        break;
+                                    case 3:
+                                        $mes_nome = 'Março';
+                                        break;
+                                    case 4:
+                                        $mes_nome = 'Abril';
+                                        break;
+                                    case 5:
+                                        $mes_nome = 'Maio';
+                                        break;
+                                    case 6:
+                                        $mes_nome = 'Junho';
+                                        break;
+                                    case 7:
+                                        $mes_nome = 'Julho';
+                                        break;
+                                    case 8:
+                                        $mes_nome = 'Agosto';
+                                        break;
+                                    case 9:
+                                        $mes_nome = 'Setembro';
+                                        break;
+                                    case 10:
+                                        $mes_nome = 'Outubro';
+                                        break;
+                                    case 11:
+                                        $mes_nome = 'Novembro';
+                                        break;
+                                    case 12:
+                                        $mes_nome = 'Dezembro';
+                                        break;
+                                }
+                                echo "'" . $mes_nome . "', ";
+                            }
+                        }
+
+                        $conn->close();
+                        ?>
+                    ]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Contagem'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false,
+                    }
+                },
+
+                series: [{
+                    name: 'Registros recentes',
+                    data: [
+                        <?php
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+
+                        if ($conn->connect_error) {
+                            die("Falha na conexão: " . $conn->connect_error);
+                        }
+
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo $row['total'] . ", ";
+                            }
+                        }
+
+                        $conn->close();
+                        ?>
+                    ]
+                }]
+            });
+        </script>
+
+
+        <!--DIVISÃO DE GRÁFICOS-->
 
         <?php include 'footer.php'; ?>
 
     </main>
+
     <!-- Core -->
     <script src="vendor/@popperjs/core/dist/umd/popper.min.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -595,7 +671,7 @@
 
     <!-- Volt JS -->
     <script src="assets/js/volt.js"></script>
-    <script src="js/custom.js"></script>
+
 
 </body>
 

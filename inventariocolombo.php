@@ -55,24 +55,22 @@ $logado = $_SESSION['login'];
 
   <style>
     .red {
-      background-color: rgb(255, 0, 0);
+      color: rgb(255, 0, 0);
       /* vermelho */
     }
 
     .green {
-      background-color: rgb(76, 175, 80);
+      color: rgb(76, 175, 80);
       /* verde */
     }
 
     /* Adicione estilos para as células com as classes red e green */
     td.red {
-      background-color: rgb(255, 0, 0);
-      color: white;
+      color: red;
     }
 
     td.green {
-      background-color: rgb(76, 175, 80);
-      color: white;
+      color: green;
     }
 
     /* Estilos para o botão */
@@ -352,8 +350,6 @@ $logado = $_SESSION['login'];
 
       <br>
     </div>
-    <button class="export-button" onclick="window.location.href='/archerx/public/wyntech/exportarcsv/inventariocolombo.php'">Exportar em CSV (COLOMBO)</button>
-    <br><br>
 
     <?php include 'footer.php'; ?>
 
@@ -366,9 +362,9 @@ $logado = $_SESSION['login'];
           // Desative a ordenação inicial da tabela
           "order": [],
           //página aberta incial
-          "pageLength": 15,
+          "pageLength": 30,
           // Opções de exibição de registros por página
-          "lengthMenu": [15, 50, 70, 100, 200, 500],
+          "lengthMenu": [30, 50, 70, 100, 200, 500],
           // Opção de paginação
           "paging": true,
           // Habilita a responsividade da tabela
