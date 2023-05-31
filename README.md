@@ -54,7 +54,7 @@ https://drive.google.com/file/d/1kUeas9KscaQcbOYH640RlaCnMTaaM3-z/view?usp=shari
 Informações:
 Existem 2 menus: "Inventário" e "Histórico de Informações de Mudanças". O inventário foi criado para monitorar as máquinas da central, exibindo informações como nomes lógicos, números de série, posição na central, memória, processadores, tamanho dos HDs e a porcentagem de espaço livre nos HDs. Ao clicar no nome lógico, um modal é aberto com todas as informações dos softwares instalados, incluindo nome e versões do sistema, incluindo atualizações do Windows. Essa função utiliza JavaScript para obter informações de dois bancos de dados através de arrays associativas, a fim de incluir as informações dos dois bancos de dados na tabela. Há um DataTable e um botão para exportar o arquivo em Excel para análises e relatórios.
 
-OBS: Por motivos de segurança, a coluna "domínio" da tabela foi ocultada.
+OBS: Por motivos de segurança, a coluna "domínio" da tabela foi ocultada, assim como o IP.
 
 segue imagens:
 https://drive.google.com/file/d/1b93dYPeLiFZ27sjU0L0INsGZSwPDoni9/view?usp=sharing
