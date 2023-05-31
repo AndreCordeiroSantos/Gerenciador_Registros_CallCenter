@@ -1,5 +1,6 @@
 # Gerenciador de Registros em um ambiente de Call Center.
-# Desenvolvido por André Rafael Cordeiro dos Santos.
+Desenvolvido por André Rafael Cordeiro dos Santos.
+
 O sistema é uma plataforma de gerenciamento de chamados e controle de usuários, desenvolvido em um "Banco Nacional" dentro de um ambiente de Call Center, projetado para fornecer um ambiente eficiente de suporte. Com uma interface intuitiva e diversos recursos, o sistema oferece aos administradores a capacidade de monitorar chamados registrados, solicitações de peças e gerenciar usuários de forma simplificada.
 
 Com menus organizados, como Painel Principal, Usuários, Alterar Registros, Painel do Usuário, Solicitar Material, Chamados Off, Dashboard, Relatórios e Informações, o sistema permite fácil navegação entre as funcionalidades. Além disso, painéis informativos fornecem estatísticas atualizadas sobre os chamados registrados, facilitando o acompanhamento e análise.
