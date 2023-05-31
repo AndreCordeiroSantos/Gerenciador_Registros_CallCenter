@@ -2,9 +2,9 @@
 <html>
 <head>
   <!-- Sweet Alert -->
-  <link type="text/css" href="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+  <link type="text/css" href="/archerx/public/wyntech/style/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
   <!-- Sweet Alerts 2 -->
-  <script src="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="/archerx/public/wyntech/style/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>

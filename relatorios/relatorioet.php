@@ -26,9 +26,9 @@
 
 	</title>
 	<!-- Sweet Alert -->
-	<link type="text/css" href="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+	<link type="text/css" href="/archerx/public/wyntech/style/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 	<!-- Sweet Alerts 2 -->
-	<script src="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script src="/archerx/public/wyntech/style/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -72,10 +72,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<!-- Sweet Alert -->
-	<link type="text/css" href="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+	<link type="text/css" href="/archerx/public/wyntech/style/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
 	<!-- Notyf -->
-	<link type="text/css" href="/archerx/public/wyntech/vendor/notyf/notyf.min.css" rel="stylesheet">
+	<link type="text/css" href="/archerx/public/wyntech/style/notyf/notyf.min.css" rel="stylesheet">
 
 	<!-- Volt CSS -->
 	<link type="text/css" href="/archerx/public/wyntech/css/volt.css" rel="stylesheet">
@@ -194,10 +194,10 @@
 				<?php
 
 				//conectar ao banco de dados
-				$servername = "172.10.20.47";
-				$usernameDB = "archer";
-				$passwordDB = "B5n3Qz2vL7HAUs7z";
-				$dbname = "archerx";
+				$servername = "#";
+				$usernameDB = "#";
+				$passwordDB = "#";
+				$dbname = "#";
 
 				$conn = mysqli_connect($servername, $usernameDB, $passwordDB, $dbname);
 				if (!$conn) {
@@ -210,7 +210,7 @@
 					$et = mysqli_real_escape_string($conn, $_POST['et']);
 
 					// Executar a consulta SQL para buscar as informações
-					$sql = "SELECT et, numserie, data, usuario, motivo, req, causa, solucao, descricao FROM dados_wyntech WHERE et = '$et'";
+					$sql = "SELECT et, numserie, data, usuario, motivo, req, causa, solucao, descricao FROM sua_tabela WHERE et = '$et'";
 					$result = mysqli_query($conn, $sql);
 
 					// Exibir os resultados na tabela DataTable
@@ -283,39 +283,39 @@
 	</main>
 
 	<!-- Core -->
-	<script src="/archerx/public/wyntech/vendor/@popperjs/core/dist/umd/popper.min.js"></script>
-	<script src="/archerx/public/wyntech/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/archerx/public/wyntech/style/@popperjs/core/dist/umd/popper.min.js"></script>
+	<script src="/archerx/public/wyntech/style/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- Vendor JS -->
-	<script src="/archerx/public/wyntech/vendor/onscreen/dist/on-screen.umd.min.js"></script>
+	<!-- style JS -->
+	<script src="/archerx/public/wyntech/style/onscreen/dist/on-screen.umd.min.js"></script>
 
 	<!-- Slider -->
-	<script src="/archerx/public/wyntech/vendor/nouislider/distribute/nouislider.min.js"></script>
+	<script src="/archerx/public/wyntech/style/nouislider/distribute/nouislider.min.js"></script>
 
 	<!-- Smooth scroll -->
-	<script src="/archerx/public/wyntech/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+	<script src="/archerx/public/wyntech/style/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
 
 	<!-- Charts -->
-	<script src="/archerx/public/wyntech/vendor/chartist/dist/chartist.min.js"></script>
-	<script src="/archerx/public/wyntech/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+	<script src="/archerx/public/wyntech/style/chartist/dist/chartist.min.js"></script>
+	<script src="/archerx/public/wyntech/style/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 
 	<!-- Datepicker -->
-	<script src="/archerx/public/wyntech/vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+	<script src="/archerx/public/wyntech/style/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
 
 	<!-- Sweet Alerts 2 -->
-	<script src="/archerx/public/wyntech/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script src="/archerx/public/wyntech/style/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
 	<!-- Moment JS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
 
 	<!-- Vanilla JS Datepicker -->
-	<script src="/archerx/public/wyntech/vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+	<script src="/archerx/public/wyntech/style/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
 
 	<!-- Notyf -->
-	<script src="/archerx/public/wyntech/vendor/notyf/notyf.min.js"></script>
+	<script src="/archerx/public/wyntech/style/notyf/notyf.min.js"></script>
 
 	<!-- Simplebar -->
-	<script src="/archerx/public/wyntech/vendor/simplebar/dist/simplebar.min.js"></script>
+	<script src="/archerx/public/wyntech/style/simplebar/dist/simplebar.min.js"></script>
 
 	<!-- Github buttons -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>

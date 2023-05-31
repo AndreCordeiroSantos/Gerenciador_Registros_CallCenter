@@ -7,10 +7,10 @@ if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true
 }
 
 // Conexão com o banco de dados
-$servername = "172.10.20.47";
-$usernameDB = "archer";
-$passwordDB = "B5n3Qz2vL7HAUs7z";
-$dbname = "archerx";
+$servername = "#";
+$usernameDB = "#";
+$passwordDB = "#";
+$dbname = "#";
 $conn = new mysqli($servername, $usernameDB, $passwordDB, $dbname);
 
 // Verificar a conexão
@@ -23,7 +23,7 @@ $id = $_POST['idUsuario'];
 $novaSenha = $_POST['novaSenha'];
 
 // Realizar a atualização da senha na tabela
-$sql = "UPDATE usuarios_wyntech SET SENHA = '$novaSenha' WHERE ID = $id";
+$sql = "UPDATE sua_tabela SET SENHA = '$novaSenha' WHERE ID = $id";
 if ($conn->query($sql) === TRUE) {
     echo "success"; // Informar que a atualização foi bem-sucedida
 } else {
