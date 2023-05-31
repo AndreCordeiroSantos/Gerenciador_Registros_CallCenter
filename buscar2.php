@@ -25,7 +25,7 @@ $et = filter_input(INPUT_GET, 'et', FILTER_SANITIZE_STRING);
 If(!empty($et)){
 
     //Criar a Query para recuperar os dados da ET
-    $sql = "SELECT numserie FROM consulta2 WHERE et like :et";
+    $sql = "SELECT numserie FROM sua_tabela WHERE et like :et";
 
     //preparar a QUERY
     $result_et = $conn->prepare($sql);

@@ -143,10 +143,10 @@ $logado = $_SESSION['login'];
                 <h6 style="color: #f46524">Histórico feito por data e ordem.</h6>
                 <?php
                 // Configurações de conexão com o banco de dados
-                $servername = "172.10.20.47";
-                $username = "archer";
-                $password = "B5n3Qz2vL7HAUs7z";
-                $dbname = "archerx";
+                $servername = "#";
+                $username = "#";
+                $password = "#";
+                $dbname = "#";
 
                 // Criando a conexão
                 $conn = new mysqli($servername, $username, $password, $dbname);

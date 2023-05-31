@@ -110,8 +110,6 @@
 </head>
 
 <body>
-
-
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -334,7 +332,7 @@
                             }
                         }
                     };
-                    xhttp.open("POST", "/archerx/public/wyntech/funcoes/atualizar_senha.php", true);
+                    xhttp.open("POST", "#", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("novaSenha=" + novaSenha + "&idUsuario=" + idUsuario);
                 }

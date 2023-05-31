@@ -289,10 +289,10 @@
           <?php
           if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //conectar ao banco de dados
-            $usuario_db = 'archer';
-            $senha_db = 'B5n3Qz2vL7HAUs7z';
-            $database_db = 'archerx';
-            $host_db = '172.10.20.47';
+            $usuario_db = '#';
+            $senha_db = '#';
+            $database_db = '#';
+            $host_db = '#';
 
             $conn = new mysqli($host_db, $usuario_db, $senha_db, $database_db);
 
@@ -305,7 +305,7 @@
             $descricao = $_POST['descricao'];
 
             // Verificar se et corresponde a numserie na tabela consulta2
-            $checkEtNumserie = "SELECT * FROM consulta2 WHERE et='$et' AND numserie='$numserie'";
+            $checkEtNumserie = "SELECT * FROM sua_tabela WHERE et='$et' AND numserie='$numserie'";
             $resultEtNumserie = mysqli_query($conn, $checkEtNumserie);
             if (mysqli_num_rows($resultEtNumserie) == 0) {
               // et e numserie não correspondem na tabela consulta2
@@ -319,7 +319,7 @@
               </script>";
             } else {
               // Inserir informações no banco de dados
-              $sql = "INSERT INTO dados_wyntech (et, numserie, data, motivo, causa, solucao, status, descricao) 
+              $sql = "INSERT INTO sua_tabela (et, numserie, data, motivo, causa, solucao, status, descricao) 
               VALUES 
               ('PR6534ET$et', '$numserie', now(), '$motivo', '$causa', '$solucao', 'aberto', '$descricao')";
 
@@ -407,7 +407,7 @@
 
           <?php
           // Consulta à tabela
-          $result = mysqli_query($conn, "SELECT * FROM dados_wyntech WHERE status='aberto' ORDER BY id DESC LIMIT 15");
+          $result = mysqli_query($conn, "SELECT * FROM sua_tabela WHERE status='aberto' ORDER BY id DESC LIMIT 15");
 
           // Verifica se a consulta retornou algum resultado
           if (mysqli_num_rows($result) > 0) {
@@ -438,7 +438,7 @@
           <!--Contador de chamados-->
           <?php
 
-          $query = "SELECT COUNT(*) FROM dados_wyntech WHERE status='aberto'";
+          $query = "SELECT COUNT(*) FROM sua_tabela WHERE status='aberto'";
 
 
           // Executa a consulta

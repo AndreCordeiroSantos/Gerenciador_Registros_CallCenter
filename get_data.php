@@ -1,7 +1,7 @@
 
     <?php
     // Conecta ao banco de dados
-    $conn = new PDO('mysql:host=172.10.20.53;dbname=ocsweb', 'andre', 'somores013');
+    $conn = new PDO('mysql:host=#;dbname=#', '#', '.');
 
     if (isset($_POST['name'])) {
         $name = $_POST['name'];

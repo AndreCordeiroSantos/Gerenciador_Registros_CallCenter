@@ -176,10 +176,10 @@
                         <div class="d-sm-none">
                             <h2 class="h5">Total do dia</h2>
                             <?php
-                            $servername = "172.10.20.47";
-                            $username = "archer";
-                            $password = "B5n3Qz2vL7HAUs7z";
-                            $dbname = "archerx";
+                            $servername = "#";
+                            $username = "#";
+                            $password = "#";
+                            $dbname = "#";
 
                             // Criar conexão
                             $conn = new mysqli($servername, $username, $password, $dbname);
@@ -190,7 +190,7 @@
                             }
 
                             // Consulta SQL para obter o total do dia
-                            $sql = "SELECT COUNT(*) AS total FROM dados_wyntech WHERE data = CURDATE()";
+                            $sql = "SELECT COUNT(*) AS total FROM sua_tabela WHERE data = CURDATE()";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
@@ -223,10 +223,10 @@
                         <div class="d-sm-none">
                             <h2 class="h5">Total Mês</h2>
                             <?php
-                            $servername = "172.10.20.47";
-                            $username = "archer";
-                            $password = "B5n3Qz2vL7HAUs7z";
-                            $dbname = "archerx";
+                            $servername = "#";
+                            $username = "#";
+                            $password = "#";
+                            $dbname = "#";
 
                             // Criar conexão
                             $conn = new mysqli($servername, $username, $password, $dbname);
@@ -237,7 +237,7 @@
                             }
 
                             // Consulta SQL para obter o total do dia
-                            $sql = "SELECT COUNT(*) AS total FROM dados_wyntech WHERE DATE_FORMAT(data, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
+                            $sql = "SELECT COUNT(*) AS total FROM sua_tabela WHERE DATE_FORMAT(data, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
 
                             $result = $conn->query($sql);
 
@@ -273,10 +273,10 @@
                         <div class="d-sm-none">
 
                             <?php
-                            $servername = "172.10.20.47";
-                            $username = "archer";
-                            $password = "B5n3Qz2vL7HAUs7z";
-                            $dbname = "archerx";
+                            $servername = "#";
+                            $username = "#";
+                            $password = "@";
+                            $dbname = "#";
 
                             // Criar conexão
                             $conn = new mysqli($servername, $username, $password, $dbname);
@@ -285,7 +285,7 @@
                             if ($conn->connect_error) {
                                 die("Falha na conexão: " . $conn->connect_error);
                             }
-                            $query = "SELECT COUNT(*) FROM dados_wyntech WHERE status='registrado'";
+                            $query = "SELECT COUNT(*) FROM sua_tabela WHERE status='registrado'";
 
 
                             // Executa a consulta
@@ -334,10 +334,10 @@
             // Dados retornados da consulta SQL em PHP
             var dados = [
                 <?php
-                $servername = "172.10.20.47";
-                $username = "archer";
-                $password = "B5n3Qz2vL7HAUs7z";
-                $dbname = "archerx";
+                $servername = "#";
+                $username = "#";
+                $password = "#";
+                $dbname = "#";
 
                 // Cria a conexão com o banco de dados
                 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -346,7 +346,7 @@
                 }
 
                 // Seleciona as informações da coluna "motivo"
-                $sql = "SELECT motivo, COUNT(*) AS quantidade FROM dados_wyntech GROUP BY motivo";
+                $sql = "SELECT motivo, COUNT(*) AS quantidade FROM sua_tabela GROUP BY motivo";
                 $result = $conn->query($sql);
 
                 // Itera sobre o resultado e gera os dados para o gráfico
@@ -418,9 +418,9 @@
             var dados = [
                 <?php
                 // Faz a conexão com o banco de dados
-                $conn = mysqli_connect("172.10.20.47", "archer", "B5n3Qz2vL7HAUs7z", "archerx");
+                $conn = mysqli_connect("#", "#", "#", "#");
                 // Executa a consulta SQL
-                $query = "SELECT et, COUNT(*) AS count FROM dados_wyntech GROUP BY et ORDER BY count DESC LIMIT 20";
+                $query = "SELECT et, COUNT(*) AS count FROM sua_tabela GROUP BY et ORDER BY count DESC LIMIT 20";
                 $result = mysqli_query($conn, $query);
 
                 // Itera sobre o resultado e gera os dados para o gráfico
@@ -514,10 +514,10 @@
                 xAxis: {
                     categories: [
                         <?php
-                        $servername = "172.10.20.47";
-                        $username = "archer";
-                        $password = "B5n3Qz2vL7HAUs7z";
-                        $dbname = "archerx";
+                        $servername = "#";
+                        $username = "#";
+                        $password = "#";
+                        $dbname = "#";
 
                         // Criar conexão
                         $conn = new mysqli($servername, $username, $password, $dbname);
@@ -528,7 +528,7 @@
                         }
 
                         // Consulta SQL para obter a contagem de registros por mês
-                        $sql = "SELECT DATE_FORMAT(data, '%c') AS mes, COUNT(*) AS total FROM dados_wyntech GROUP BY DATE_FORMAT(data, '%Y-%m')";
+                        $sql = "SELECT DATE_FORMAT(data, '%c') AS mes, COUNT(*) AS total FROM sua_tabela GROUP BY DATE_FORMAT(data, '%Y-%m')";
 
                         $result = $conn->query($sql);
 

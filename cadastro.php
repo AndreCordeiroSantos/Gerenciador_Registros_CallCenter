@@ -4,21 +4,21 @@
   $nome = $_POST["nome"];
 
   // Conecte-se ao banco de dados
-  $usuario_db = 'archer';
-  $senha_db = 'B5n3Qz2vL7HAUs7z';
-  $database_db = 'archerx';
-  $host_db = '172.10.20.47';
+  $usuario_db = '#';
+  $senha_db = '#';
+  $database_db = '#';
+  $host_db = '#';
   
   $conn = new mysqli($host_db, $usuario_db, $senha_db, $database_db);
 
    // Verifique se o usuário já existe no banco de dados
-   $sql = "SELECT id FROM usuarios_wyntech WHERE login = '$username'";
+   $sql = "SELECT id FROM sua_tabela WHERE login = '$username'";
   $result = mysqli_query($conn, $sql);
   if (mysqli_num_rows($result) == 0) {
     // Hash da senha
     $hash = password_hash($password, PASSWORD_DEFAULT);
     // Inserir o novo usuário no banco de dados
-    $sql = "INSERT INTO usuarios_wyntech (login, senha, nome)
+    $sql = "INSERT INTO sua_tabela (login, senha, nome)
     VALUES ('$username', '$password', '$nome')";
     if (mysqli_query($conn, $sql)) {
       echo"<script language='javascript' type='text/javascript'>

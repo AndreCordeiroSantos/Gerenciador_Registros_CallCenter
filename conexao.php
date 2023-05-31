@@ -13,10 +13,10 @@ if ($_SESSION['tipo'] != 'admin' && $_SESSION['tipo'] != 'suporte' && $_SESSION[
 	alert('VOCÊ NÃO TEM ACESSO A ESSA PÁGINA.');window.location
 	.href='inventario.php';</script>";
 }
- $servername = "172.10.20.47";
- $usernameDB = "archer";
- $passwordDB = "B5n3Qz2vL7HAUs7z";
- $dbname = "archerx";
+ $servername = "#";
+ $usernameDB = "#";
+ $passwordDB = "#";
+ $dbname = "#";
 
  $conn = new PDO("mysql:host=$servername;dbname=" . $dbname, $usernameDB, $passwordDB);
  if (!$conn) {

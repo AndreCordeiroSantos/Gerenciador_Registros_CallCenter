@@ -8,7 +8,7 @@ if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true
 }
 $logado = $_SESSION['login'];
 // Conecta ao banco de dados
-$db = new mysqli('172.10.20.47', 'archer', 'B5n3Qz2vL7HAUs7z', 'archerx');
+$db = new mysqli('#', '#', '#', '#');
 
 // Obtém os dados do novo usuário a partir da solicitação
 $newUserName = $_POST['newUserName'];
@@ -17,7 +17,7 @@ $newUserPassword = $_POST['newUserPassword'];
 $newUserType = $_POST['newUserType'];
 
 // Prepara a consulta SQL
-$stmt = $db->prepare('INSERT INTO usuarios_wyntech (nome, login, senha, tipo) VALUES (?, ?, ?, ?)');
+$stmt = $db->prepare('INSERT INTO sua_tabela (nome, login, senha, tipo) VALUES (?, ?, ?, ?)');
 $stmt->bind_param('ssss', $newUserName, $newUserLogin, $newUserPassword, $newUserType);
 
 // Executa a consulta

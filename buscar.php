@@ -23,7 +23,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 If(!empty($id)){
 
     //Criar a Query para recuperar os dados do ID
-    $sql = "SELECT et, numserie, motivo, status FROM dados_wyntech WHERE id =:id";
+    $sql = "SELECT et, numserie, motivo, status FROM sua_tabela WHERE id =:id";
 
     //preparar a QUERY
     $result_id = $conn->prepare($sql);
