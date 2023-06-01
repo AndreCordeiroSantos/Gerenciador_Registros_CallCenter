@@ -9,7 +9,7 @@ Os usuários têm acesso a um painel personalizado, onde podem visualizar e inte
 
 Com recursos de relatórios avançados, é possível obter insights valiosos sobre os chamados abertos, registros por requisição, estações e ocorrências. Além disso, o sistema possui um inventário detalhado das máquinas da central, com informações relevantes, como softwares instalados e espaço livre nos HDs.
 
-Em resumo, nosso sistema oferece uma solução completa para o gerenciamento de chamados, controle de usuários e monitoramento de inventário. Com uma interface amigável e recursos avançados, ele proporciona uma experiência eficiente e produtiva, tornando-se uma ferramenta indispensável para equipes de suporte.
+Em resumo, meu sistema oferece uma solução completa para o gerenciamento de chamados, controle de usuários e monitoramento de inventário. Com uma interface amigável e recursos avançados, ele proporciona uma experiência eficiente e produtiva, tornando-se uma ferramenta indispensável para equipes de suporte.
 
 Principais funções:
 
