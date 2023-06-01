@@ -32,6 +32,8 @@ Paineluser:
 Os chamados abertos são exibidos na cor verde, enquanto os chamados registrados ficam em roxo. Ao clicar no ícone de fechar, se o chamado estiver registrado, uma mensagem informa que ele já está registrado. Se for um chamado aberto, um modal é aberto com todas as informações do chamado para permitir o encerramento do registro. A tabela utiliza o DataTable e possui um botão para exportar todo o conteúdo em CSV.
 segue imagens:
 https://drive.google.com/file/d/1oVFEk_fcD3pRLCcrtue5R9C2d0y85TmV/view?usp=sharing
+https://drive.google.com/file/d/1E_7RhtaZppS7qiGkYiV7ulrCRN54DM-A/view?usp=sharing
+https://drive.google.com/file/d/1-uBMW3hHA2nLcPI4LafRbnOiajr_Job9/view?usp=sharing
 
 Solicitar Material:
 Ao clicar no botão "Solicitar", um modal é aberto com todas as informações necessárias para a abertura do pedido de material. O pedido só é realizado se todas as informações forem preenchidas corretamente; caso contrário, uma mensagem de erro é exibida. Há um botão de atualização em JavaScript para atualizar a tabela, junto com um ícone de atualização. O DataTable é utilizado na tabela.
